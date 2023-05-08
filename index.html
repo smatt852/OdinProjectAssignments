@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Michroma&display=swap"
+      rel="stylesheet"
+    />
+    <title>Rock Paper Scissors</title>
+    <style>
+      body {
+        font-family: "Michroma";
+        height: 100%;
+        background-color: rgb(4, 123, 128);
+      }
+      .navigation {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .navbox {
+        display: flex;
+        flex: 1;
+        margin: 2vw;
+        justify-content: center;
+        color: rgb(4, 187, 194);
+        font-size: 3vw;
+      }
+      a:link {
+        color: rgb(4, 187, 194);
+        text-decoration: none;
+      }
+
+      a:visited {
+        color: rgb(4, 187, 194);
+        text-decoration: none;
+      }
+      .playBox {
+        /*container for play button*/
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 2vw;
+        margin-bottom: 5vw;
+        padding: 0vw;
+      }
+      .choicesBox {
+        /*container for choices buttons*/
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-left: 5vw;
+        margin-right: 5vw;
+        margin-top: 0vw;
+        margin-bottom: 2vw;
+        padding: 0vw;
+      }
+      .roundBox {
+        /*container for score and results*/
+        display: flex;
+        flex-direction: row;
+      }
+      .playerBox {
+        /*container for player score and results*/
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        align-items: self-end;
+        margin-right: 2vw;
+        padding: 1vw;
+      }
+      .compBox {
+        /*container for computer score and results*/
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        align-items: first baseline;
+        margin-left: 3vw;
+        padding: 1vw;
+      }
+      .result {
+        /*turns the winner red*/
+        background-color: red;
+      }
+      .playButton {
+        font-family: "Michroma";
+        border: 0.7vw rgb(5, 158, 163) solid;
+        box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.8);
+        margin-top: 2vw;
+        margin-bottom: 0vw;
+        padding: 0vw;
+        font-weight: 600;
+        font-style: bold;
+        font-size: 2vw;
+        width: 18vw;
+        height: 7vw;
+        color: white;
+        background-color: transparent;
+      }
+      .choiceButton {
+        font-size: 2.5vw;
+        border: 2vw rgb(4, 187, 194) solid;
+        box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.8);
+        border-radius: 100%;
+        width: 20vw;
+        height: 20vw;
+        color: rgb(134, 133, 133);
+      }
+      p {
+        /*font for scores*/
+        font-size: 4vw;
+        font-weight: 600;
+        color: white;
+        margin: 0vw;
+      }
+      .p2 {
+        /*small font for results*/
+        font-size: 2vw;
+        font-weight: 600;
+        color: white;
+        margin: 0vw;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="navigation">
+      <div class="navbox"><a href="calculator.html">Calculator</a></div>
+      <div class="navbox"><a href="ttt.html">Tic Tac Toe</a></div>
+      <div class="navbox"><a href="etchAsketch.html">Etch-A-Sketch</a></div>
+  </div>
+    <div class="playBox">
+      <button class="playButton" id="play" onClick="window.location.reload();">
+        Play Again
+      </button>
+    </div>
+    <div class="choicesBox">
+      <button class="choiceButton" id="rock">ROCK</button>
+      <button class="choiceButton" id="paper">PAPER</button>
+      <button class="choiceButton" id="scissors">SCISSORS</button>
+    </div>
+    <div class="navigation" style="color: white; justify-content: center">
+      First to 5 points wins
+    </div>
+    <div class="roundBox">
+      <div class="playerBox" id="playerBox">
+        <p>
+          <b>Player ... <span id="playerScore">0</span></b>
+        </p>
+      </div>
+      <div class="compBox" id="compBox">
+        <p>
+          <b><span id="compScore">0</span> ... Computer</b>
+        </p>
+      </div>
+    </div>
+  </body>
+  <script>
+// call playRound with the player's choice from the button clicked
+let rockButton = document.getElementById("rock");
+rockButton.addEventListener("click", () => {
+  playRound("rock");
+});
+let paperButton = document.getElementById("paper");
+paperButton.addEventListener("click", () => {
+  playRound("paper");
+});
+let scissorsButton = document.getElementById("scissors");
+scissorsButton.addEventListener("click", () => {
+  playRound("scissors");
+});
+
+// increase the scores
+function pScore() {
+  let playerScore = document.getElementById("playerScore");
+  playerScore.innerText = parseInt(playerScore.innerText) + 1;
+}
+
+function cScore() {
+  let compScore = document.getElementById("compScore");
+  compScore.innerText = parseInt(compScore.innerText) + 1;
+}
+
+// generate a random choice for the computer
+function compChoice() {
+  let choices = ["rock", "paper", "scissors"];
+  random_num = Math.floor(Math.random() * choices.length);
+  return choices[random_num];
+}
+
+function playRound(fromButton) {
+  playerSelection = fromButton;
+  compSelection = compChoice();
+  let player = 0;
+  let comp = 0;
+  if (playerSelection === compSelection) {
+    player = 0;
+    comp = 0;
+  } else if (
+    (playerSelection === "rock" && compSelection === "scissors") ||
+    (playerSelection === "paper" && compSelection === "rock") ||
+    (playerSelection === "scissors" && compSelection === "paper")
+  ) {
+    player = 1;
+    comp = 0;
+    pScore();
+    gameEnd();
+  } else {
+    player = 0;
+    comp = 1;
+    cScore();
+    gameEnd();
+  }
+  //make a p element, fill it with the choice and
+  //set the style then put it in the results box
+  let q1 = document.getElementById("playerBox");
+  let pRound = document.createElement("p");
+  pRound.innerText = playerSelection;
+  pRound.setAttribute("class", "p2");
+  q1.appendChild(pRound);
+  //as above, for the computer choice and results
+  let q2 = document.getElementById("compBox");
+  let cRound = document.createElement("p");
+  cRound.innerText = compSelection;
+  cRound.setAttribute("class", "p2");
+  q2.appendChild(cRound);
+}
+
+function gameEnd() {
+  let x = document.getElementById("compScore");
+  let y = document.getElementById("playerScore");
+  //when someone reaches 5 games, disable the buttons
+  if (x.innerText === "5" || y.innerText === "5") {
+    document.getElementById("rock").disabled = true;
+    document.getElementById("paper").disabled = true;
+    document.getElementById("scissors").disabled = true;
+  }
+  //color the background red for the winner
+  if (y.innerText === "5") {
+    let f1 = document.getElementById("playerBox");
+    f1.setAttribute("class", "playerBox result");
+  }
+  if (x.innerText === "5") {
+    let f2 = document.getElementById("compBox");
+    f2.setAttribute("class", "compBox result");
+  }
+}
+  </script>
+</html>

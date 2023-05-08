@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+      charset="UTF-8"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Share&display=swap"
+      rel="stylesheet"
+    />
+    <title>Calculator</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Michroma&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background-color: rgba(21, 92, 12, 0.932);
+      }
+      .base {
+        display: flex;
+        flex-direction: row;
+      }
+      .column {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .mainColumn {
+        display: flex;
+        flex-direction: column;
+        align-items: space-between;
+        justify-content: top;
+        gap: 1vw;
+        flex: 2;
+      }
+      .navigation {
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+        margin-bottom: 5vw;
+      }
+      .navbox {
+        display: flex;
+        flex: 1;
+        font-size: 2vw;
+        font-family: "Michroma";
+      }
+      a:link,
+      a:visited {
+        color: black;
+        text-decoration: none;
+        color: rgba(46, 201, 25, 0.932);
+      }
+      .display {
+        display: flex;
+        flex-direction: row;
+        justify-content: right;
+        align-items: self-end;
+        border: 0.5vw solid black;
+        font-family: "Share";
+        word-break: break-word;
+        font-size: 5vw;
+        height: 8vw;
+        box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.8);
+        background-color: #fff;
+        margin-bottom: 2vw;
+      }
+      .row {
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+        gap: 1vw;
+        justify-content: center;
+      }
+      button {
+        display: flex;
+        flex: 1;
+        box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.8);
+        font-size: 5vw;
+        border-radius: 10%;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body onload="clearDisplay()">
+    <div class="base">
+      <div class="column"></div>
+      <div class="mainColumn">
+        <div class="navigation">
+          <div class="navbox">
+            <a href="index.html">Rock Paper Scissors</a>
+          </div>
+          <div class="navbox">
+            <a href="ttt.html">Tic Tac Toe</a>
+          </div>
+          <div class="navbox">
+            <a href="etchAsketch.html">Etch-A-Sketch</a>
+          </div>
+        </div>
+        <div class="display" id="display"></div>
+        <div class="row">
+          <button value="0" id="0" onclick="addToString('0')">0</button>
+          <button
+            value="C"
+            id="C"
+            style="color: white; background-color: red"
+            onclick="clearDisplay()"
+          >
+            C
+          </button>
+          <button
+            value="="
+            id="="
+            style="color: white; background-color: rgba(36, 158, 20, 0.884)"
+            onclick="calculate()"
+          >
+            =
+          </button>
+          <button
+            value="+"
+            id="+"
+            style="color: white; background-color: rgba(0, 0, 255, 0.384)"
+            onclick="addToString('+')"
+          >
+            +
+          </button>
+        </div>
+        <div class="row">
+          <button value="1" id="1" onclick="addToString('1')">1</button>
+          <button value="2" id="2" onclick="addToString('2')">2</button>
+          <button value="3" id="3" onclick="addToString('3')">3</button>
+          <button
+            value="-"
+            id="-"
+            style="color: white; background-color: rgba(0, 0, 255, 0.384)"
+            onclick="addToString('-')"
+          >
+            -
+          </button>
+        </div>
+        <div class="row">
+          <button value="4" id="4" onclick="addToString('4')">4</button>
+          <button value="5" id="5" onclick="addToString('5')">5</button>
+          <button value="6" id="6" onclick="addToString('6')">6</button>
+          <button
+            value="*"
+            id="*"
+            style="color: white; background-color: rgba(0, 0, 255, 0.384)"
+            onclick="addToString('*')"
+          >
+            *
+          </button>
+        </div>
+        <div class="row">
+          <button value="7" id="7" onclick="addToString('7')">7</button>
+          <button value="8" id="8" onclick="addToString('8')">8</button>
+          <button value="9" id="9" onclick="addToString('9')">9</button>
+          <button
+            value="/"
+            id="/"
+            style="color: white; background-color: rgba(0, 0, 255, 0.384)"
+            onclick="addToString('/')"
+          >
+            /
+          </button>
+        </div>
+      </div>
+      <div class="column"></div>
+    </div>
+  </body>
+  <script>
+    const addToString = function (x) {
+      let input = document.getElementById("display");
+      input.innerHTML = input.innerHTML + x;
+      return input.innerHTML;
+    };
+
+    const clearDisplay = function () {
+      let input = document.getElementById("display");
+      input.innerHTML = "";
+      return input.innerHTML;
+    };
+
+    const hasNumber = function (myString) {
+      return /\d/.test(myString);
+    };
+
+    const count = function (arr) {
+      return arr.reduce(
+        (prev, curr) => ((prev[curr] = ++prev[curr] || 1), prev),
+        {}
+      );
+    };
+
+    const condense = function (num1, num2, x) {
+      if (x === "*") {
+        newNum = num1 * num2;
+      } else if (x === "/") {
+        newNum = num2 / num1;
+      } else if (x === "+") {
+        newNum = num1 + num2;
+      } else if (x === "-") {
+        newNum = num2 - num1;
+      }
+      return newNum;
+    };
+
+    const op = ["*", "/", "+", "-"];
+
+    const operation = function (str, x) {
+      //find all indexes where the operation occurs
+      let occurs = count(str);
+      for (let k = 0; k < occurs[x]; k++) {
+        console.log(occurs[x]);
+        let indices = [];
+        let newNum = "";
+        for (let i = 0; i < str.length; i++) {
+          if (str[i] === x) indices.push(i);
+        }
+        //get the numbers on either side
+        let num1 = [];
+        let num2 = [];
+        let right = 0;
+        let left = 0;
+        //the numbers to the right
+        i = indices[0] + 1;
+        while (i < str.length && hasNumber(str[i])) {
+          num1.push(str[i]);
+          i++;
+          right++;
+        }
+        num1 = num1.join("");
+        num1 = parseInt(num1);
+        //the number to the left
+        i = indices[0] - 1;
+        while (i >= 0 && hasNumber(str[i])) {
+          num2.push(str[i]);
+          i--;
+          left++;
+        }
+        num2 = num2.reverse().join("");
+        num2 = parseInt(num2);
+        //perform the math operation
+        newNum = condense(num1, num2, x);
+        //put the answer into the string
+        newNum = newNum.toString();
+        snippet = left + right + 1;
+        str.splice(indices[0] - left, snippet, newNum);
+      }
+      return str;
+    };
+    //perform each type of math operation in order
+    const calculate = function () {
+      let disp = document.getElementById("display");
+      str = disp.innerHTML;
+      str = str.split("");
+      for (m = 0; m < 4; m++) {
+        operation(str, op[m]);
+      }
+      disp.innerHTML = str;
+      console.log(disp.innerHTML);
+      return disp.innerHTML;
+    };
+  </script>
+</html>

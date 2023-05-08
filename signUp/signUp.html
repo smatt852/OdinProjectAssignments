@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Urbanist:wght@100;500&display=swap"
+      rel="stylesheet"
+    />
+    <title>Sign Up</title>
+    <style>
+      .container {
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+        color: white;
+        font-family: "Urbanist";
+      }
+      .half {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+      }
+      .rightHalf {
+        background-color: rgba(57, 139, 101, 0.726);
+        padding: 1.7vw;
+      }
+      p {
+        padding: 0vw;
+        margin: 0vw;
+        margin-bottom: 1.9vw;
+      }
+      .heading {
+        font-size: 7vw;
+        text-align: center;
+        margin-bottom: 3vw;
+        margin-top: 0vw;
+        padding: 0vw;
+        font-weight: 500;
+      }
+      input {
+        border-left: 0vw;
+        border-right: 0vw;
+        border-top: 0vw;
+        border-bottom: 0.1vw solid lightgrey;
+        background-color: transparent;
+        color: white;
+        font-family: "Urbanist";
+      }
+      .inputClass::placeholder {
+        /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: lightgrey;
+        opacity: 1; /* Firefox */
+      }
+      .inputClass:-ms-input-placeholder {
+        /* Internet Explorer 10-11 */
+        color: lightgrey;
+      }
+      .inputClass::-ms-input-placeholder {
+        /* Microsoft Edge */
+        color: lightgrey;
+      }
+      form {
+        margin-left: 6vw;
+      }
+      input[type="submit"] {
+        border: solid 0.3vw lightgrey;
+        box-shadow: 5px 5px 5px black;
+      }
+      input[type="submit"]:disabled {
+        background-color: transparent;
+        box-shadow: 0px 0px 0px transparent;
+        color: transparent;
+        border: none;
+      }
+      a:link,
+      a:visited {
+        text-decoration: none;
+        color: rgb(2, 124, 32);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="half">
+        <img style="width: 100%; object-fit: cover" src="treeBranch.JPG" />
+      </div>
+
+      <div class="half rightHalf">
+        <div class="heading">Sign Up</div>
+        <p>
+          This is a fake sign up form. It was an assignment for the Odin
+          Project. But you should sign up anyway.
+        </p>
+        <p>Let's do this !</p>
+        <form>
+          <input
+            type="text"
+            class="inputClass"
+            id="firstName"
+            name="firstName"
+            required
+            placeholder="first name"
+          /><br />
+          <input
+            type="text"
+            class="inputClass"
+            id="lastName"
+            name="lastName"
+            required
+            placeholder="last name"
+          /><br /><br />
+          <input
+            type="email"
+            class="inputClass"
+            id="email"
+            name="email"
+            required
+            placeholder="email"
+          /><br />
+          <input
+            type="tel"
+            class="inputClass"
+            id="phone"
+            name="phone"
+            pattern="\(?\b[0-9]{3}\)?[-. ]?[0-9]{3}[-. ]?[0-9]{4}\b"
+            placeholder="phone"
+          /><br /><br />
+          <input
+            type="password"
+            class="inputClass"
+            minlength="8"
+            id="password"
+            name="password"
+            placeholder="password"
+            onkeyup="checkPass()"
+          /><br />
+          <input
+            type="password"
+            class="inputClass"
+            minlength="8"
+            id="confirmPassword"
+            name="confirmPassword"
+            placeholder="confirm password"
+            onkeyup="checkPass()"
+          /><br /><br />
+          <input
+            type="submit"
+            id="submit"
+            value="create account"
+            disabled
+          /><br />
+        </form>
+        <p>
+          <br />
+          Already have an account? <a href="FormExample.html">Login</a>
+        </p>
+      </div>
+    </div>
+  </body>
+  <script>
+    function checkPass() {
+      if (
+        document.getElementById("password").value ===
+        document.getElementById("confirmPassword").value
+      ) {
+        document.getElementById("submit").disabled = false;
+      } else {
+        document.getElementById("submit").disabled = true;
+      }
+    }
+  </script>
+</html>

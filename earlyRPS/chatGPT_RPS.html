@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>RPS</title>
+  </head>
+
+  <body>
+    <script>
+      const choices = ["rock", "paper", "scissors"];
+      let userScore = 0;
+      let compScore = 0;
+      let userChoice = "none";
+
+      // for loop for 5 rounds//
+      for (let i = 1; i <= 5; i++) {
+        //get choices//
+        do {
+          userChoice = prompt("Choose rock, paper, or scissors.", "rock");
+          userChoice = userChoice.toLowerCase();
+        } while (!choices.includes(userChoice));
+        let compChoice = choices[Math.floor(Math.random() * 3)];
+
+        //score game//
+        let result = "";
+        if (userChoice === compChoice) {
+          result = "tie";
+        } else if (
+          (userChoice == "rock" && compChoice === "scissors") ||
+          (userChoice == "paper" && compChoice === "rock") ||
+          (userChoice == "scissors" && compChoice === "paper")
+        ) {
+          result = "player";
+          userScore++;
+        } else {
+          result = "computer";
+          compScore++;
+        }
+
+        //output results//
+        console.log(
+          `round ${i} ${userChoice} VS ${compChoice} \nRESULT:${result}`
+        );
+        if (userScore >= 3) {
+          console.log("Player wins!");
+          break;
+        } else if (compScore >= 3) {
+          console.log("Player loses.");
+          break;
+        }
+      }
+    </script>
+  </body>
+</html>
