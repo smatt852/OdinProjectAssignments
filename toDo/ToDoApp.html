@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>To-Do List</title>
+</head>
+<body>
+	<h1>To-Do List</h1>
+	<input type="text" id="taskName" placeholder="Task Name">
+	<input type="date" id="deadline">
+	<input type="text" id="details" placeholder="Details">
+  <input type="checkbox" id="complete">
+    <label for="project">Choose a project:</label>
+    <select name="project" id="project"></select>
+	<button onclick="addTask()">Add Task</button>
+	<h2>Tasks:</h2>
+	<ul id="taskList"></ul>
+
+    <input type="text" id="projectName" placeholder="Project Name">
+	<button onclick="addProject()">Add Project</button>
+	<h2>Projects:</h2>
+	<ul id="projectList"></ul>
+</body>
+<script>
+// get project array from local storage
+const projectList = JSON.parse(localStorage.getItem('projectList')) || [];
+// save project array to local storage
+function saveProjects() {
+  localStorage.setItem('projectList', JSON.stringify(projectList));
+}
+
+// project constructor
+function Project(projectName) {
+    this.projectName = projectName;
+}
+// get input from page, make a new project, put it in task array
+function addProject() {
+  const projectName = document.getElementById("projectName").value;
+  const newProject = new Project(projectName);
+  projectList.push(newProject);
+  saveProjects();
+  displayProjects();
+  clearFields();
+}
+// display a list of projects, each with a delete button and a list of tasks
+function displayProjects() {
+  const projectListElement = document.getElementById("projectList");
+  projectListElement.innerHTML = "";
+  projectList.forEach((project, index) => {
+    const li = document.createElement("li");
+    const deleteButton = document.createElement("button");
+    deleteButton.innerHTML = "Delete";
+    deleteButton.onclick = function () {
+      projectList.splice(index, 1);
+      saveProjects();
+      displayProjects();
+    };
+    // Find tasks for the current project
+    const tasksForProject = taskList.filter((task) => task.project === project.projectName);
+    const taskListElement = document.createElement("ul");
+    // Add each task to the project's task list
+    tasksForProject.forEach((task) => {
+      const taskListItem = document.createElement("li");
+      taskListItem.innerHTML = `${task.taskName} - ${task.details} - ${task.deadline} - ${task.complete}`;
+      taskListElement.appendChild(taskListItem);
+    });
+    // append the name, the delete button, and the task list
+    // of each project to the project list
+    li.innerHTML = `${project.projectName}`;
+    li.appendChild(deleteButton);
+    li.appendChild(taskListElement);
+    projectListElement.appendChild(li);
+  });
+}
+
+// make the project options for the tasks come from the project array
+const projectSelectElement = document.getElementById("project");
+projectSelectElement.innerHTML = ""; // remove all current options
+projectList.forEach((project) => {
+  const option = document.createElement("option");
+  option.value = project.projectName;
+  option.textContent = project.projectName;
+  projectSelectElement.appendChild(option);
+});
+////////////////////////////////////////////////////////////////////
+// get task array from local storage
+const taskList = JSON.parse(localStorage.getItem('taskList')) || [];
+
+// save task array to local storage
+function saveTasks() {
+  localStorage.setItem('taskList', JSON.stringify(taskList));
+}
+
+// task constructor
+function Task(taskName, deadline, details, project, complete) {
+    this.taskName = taskName;
+    this.deadline = deadline;
+    this.details = details;
+    this.complete = complete;
+    this.project = project;
+}
+
+// get input from page, make a new task, put it in task array
+function addTask() {
+  const taskName = document.getElementById("taskName").value;
+  const deadline = document.getElementById("deadline").value;
+  const details = document.getElementById("details").value;
+  const complete = document.getElementById("complete").value;
+  const project = document.getElementById("project").value;
+  const newTask = new Task(taskName, deadline, details, project, complete);
+  taskList.push(newTask);
+  saveTasks();
+  displayTasks();
+  clearFields();
+}
+
+// clear input fields
+function clearFields() {
+  document.getElementById("taskName").value = "";
+  document.getElementById("deadline").value = "";
+  document.getElementById("details").value = "";
+  document.getElementById("complete").value = "";
+  document.getElementById("projectName").value = "";
+}
+
+// display a list of tasks, each with a delete button
+function displayTasks() {
+  const taskListElement = document.getElementById("taskList");
+  taskListElement.innerHTML = "";
+  taskList.forEach((task, index) => {
+      const li = document.createElement("li");
+      const deleteButton = document.createElement("button");
+      deleteButton.innerHTML = "Delete";
+      deleteButton.onclick = function () {
+        taskList.splice(index, 1);
+        saveTasks();
+        displayTasks();
+      };
+      li.innerHTML = `${task.taskName} - ${task.details} - ${task.complete} - ${task.deadline}- ${task.project}`;
+      li.appendChild(deleteButton);
+      taskListElement.appendChild(li);
+  });
+}
+
+
+
+displayTasks();
+displayProjects();
+</script>
+</html>
