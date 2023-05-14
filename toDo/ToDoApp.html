@@ -1,28 +1,142 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
 	<title>To-Do List</title>
+  <style>
+* { 
+    font-family: "Itim"; 
+  }
+.content {
+    display: grid;
+    grid-template-rows: 8vw 15vw 1vw;
+}
+.header {
+    grid-row: 1/2;
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-rows: 5vw 2.5vw;
+    background-color: red;
+    margin: 0px;
+    padding: 0px;
+}
+footer {
+    grid-row: 3/4;
+    text-align: right;
+    background-color: red;
+    margin: 0px;
+    padding: 0px;
+}
+.title {
+    text-align: center;
+    grid-column: 1/3;
+    grid-row: 1/2;
+    padding: 0px;
+    margin: 0px; 
+    font-size: 3.5vw; 
+    padding-top: 2vw;
+}
+.linkbox {
+    grid-row: 2/3;
+    grid-column: 3/4;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+button {
+  border-radius: 30px;
+}
+.active {
+    background-color: #f8cb02;
+    color: black;
+}
+.main {
+    grid-row: 2/3;
+    display: grid; 
+    grid-template-columns: 1fr 4fr 1fr;
+}
+.home, .newTask, .today {
+    grid-column: 2/3;
+}
+.col1 {
+    grid-column: 1/2;
+    background-color: black;
+}
+.col2 {
+    grid-column: 3/4;
+    background-color: black;
+}
+.allTasks, .addForm, .todayTasks {
+    grid-column: 2/3;
+}
+.imageFit {
+    object-fit: cover;
+    width: 100%;
+    max-height: 100%;
+}
+  </style>
 </head>
+
 <body>
-	<h1>To-Do List</h1>
-	<input type="text" id="taskName" placeholder="Task Name">
+<div class="=content">
+  <div class="header">
+    <div class="title">Get 'er Done !</div>
+    <div class="linkbox">
+      <button>New Task</button>
+      <button>Due Today</button>
+    </div>
+  </div>
+  <div class="main">
+    <div class="col1"></div>
+    <div class="home">
+      <ul id="allTaskList"></ul>
+    </div>
+    <div class="col2"></div>
+  </div>
+  <footer id="footer"></footer>
+</div>
+	
+  
+  <input type="text" id="taskName" placeholder="Task Name">
 	<input type="date" id="deadline">
 	<input type="text" id="details" placeholder="Details">
-  <input type="checkbox" id="complete">
+    <select name="complete" id="complete">
+        <option value="not-complete">Not Complete</option>
+        <option value="complete">Complete</option>
+    </select>    
+    <select name="urgent" id="urgent">
+        <option value="normal">Normal</option>
+        <option value="urgent">Urgent</option>
+    </select>
     <label for="project">Choose a project:</label>
     <select name="project" id="project"></select>
-	<button onclick="addTask()">Add Task</button>
-	<h2>Tasks:</h2>
-	<ul id="taskList"></ul>
-
+    <button onclick="addTask()">Add Task</button>
+    <h2>Tasks:</h2>
+    
     <input type="text" id="projectName" placeholder="Project Name">
-	<button onclick="addProject()">Add Project</button>
-	<h2>Projects:</h2>
-	<ul id="projectList"></ul>
+    <button onclick="addProject()">Add Project</button>
+    <h2>Projects:</h2>
+    <ul id="projectList"></ul>
+    <h2>Today:</h2>
+    <ul id="todayList"></ul>
+  </div>
 </body>
 <script>
-// get project array from local storage
-const projectList = JSON.parse(localStorage.getItem('projectList')) || [];
+const footer = document.getElementById('footer');
+footer.innerHTML = `Copyright © ${new Date().getFullYear()} SLM`;
+
+
+function getProjectList() {
+  const projectList = JSON.parse(localStorage.getItem('projectList')) || [];
+  return projectList;
+}
+const projectList = getProjectList();
+
 // save project array to local storage
 function saveProjects() {
   localStorage.setItem('projectList', JSON.stringify(projectList));
@@ -32,14 +146,12 @@ function saveProjects() {
 function Project(projectName) {
     this.projectName = projectName;
 }
-// get input from page, make a new project, put it in task array
+// get input from page, make a new project, put it in project array
 function addProject() {
   const projectName = document.getElementById("projectName").value;
   const newProject = new Project(projectName);
   projectList.push(newProject);
-  saveProjects();
-  displayProjects();
-  clearFields();
+  update();
 }
 // display a list of projects, each with a delete button and a list of tasks
 function displayProjects() {
@@ -51,8 +163,7 @@ function displayProjects() {
     deleteButton.innerHTML = "Delete";
     deleteButton.onclick = function () {
       projectList.splice(index, 1);
-      saveProjects();
-      displayProjects();
+      update();
     };
     // Find tasks for the current project
     const tasksForProject = taskList.filter((task) => task.project === project.projectName);
@@ -60,7 +171,7 @@ function displayProjects() {
     // Add each task to the project's task list
     tasksForProject.forEach((task) => {
       const taskListItem = document.createElement("li");
-      taskListItem.innerHTML = `${task.taskName} - ${task.details} - ${task.deadline} - ${task.complete}`;
+      taskListItem.innerHTML = `${task.taskName} - ${task.details} - ${task.deadline} - ${task.complete} - ${task.urgent}`;
       taskListElement.appendChild(taskListItem);
     });
     // append the name, the delete button, and the task list
@@ -73,17 +184,19 @@ function displayProjects() {
 }
 
 // make the project options for the tasks come from the project array
-const projectSelectElement = document.getElementById("project");
-projectSelectElement.innerHTML = ""; // remove all current options
-projectList.forEach((project) => {
-  const option = document.createElement("option");
-  option.value = project.projectName;
-  option.textContent = project.projectName;
-  projectSelectElement.appendChild(option);
-});
+function projectOptions() {
+    const projectSelectElement = document.getElementById("project");
+    projectSelectElement.innerHTML = "";
+    projectList.forEach((project) => {
+    const option = document.createElement("option");
+    option.value = project.projectName;
+    option.textContent = project.projectName;
+    projectSelectElement.appendChild(option);
+    });
+}
 ////////////////////////////////////////////////////////////////////
 // get task array from local storage
-const taskList = JSON.parse(localStorage.getItem('taskList')) || [];
+let taskList = JSON.parse(localStorage.getItem('taskList')) || [];
 
 // save task array to local storage
 function saveTasks() {
@@ -91,11 +204,12 @@ function saveTasks() {
 }
 
 // task constructor
-function Task(taskName, deadline, details, project, complete) {
+function Task(taskName, deadline, details, complete, urgent, project) {
     this.taskName = taskName;
     this.deadline = deadline;
     this.details = details;
     this.complete = complete;
+    this.urgent = urgent;
     this.project = project;
 }
 
@@ -105,12 +219,11 @@ function addTask() {
   const deadline = document.getElementById("deadline").value;
   const details = document.getElementById("details").value;
   const complete = document.getElementById("complete").value;
+  const urgent = document.getElementById("urgent").value;
   const project = document.getElementById("project").value;
-  const newTask = new Task(taskName, deadline, details, project, complete);
+  const newTask = new Task(taskName, deadline, details, complete, urgent, project);
   taskList.push(newTask);
-  saveTasks();
-  displayTasks();
-  clearFields();
+  update();
 }
 
 // clear input fields
@@ -119,31 +232,89 @@ function clearFields() {
   document.getElementById("deadline").value = "";
   document.getElementById("details").value = "";
   document.getElementById("complete").value = "";
+  document.getElementById("urgent").value = "";
   document.getElementById("projectName").value = "";
 }
 
-// display a list of tasks, each with a delete button
+// display a list of tasks, each with a delete and edit button
 function displayTasks() {
-  const taskListElement = document.getElementById("taskList");
+  const taskListElement = document.getElementById("allTaskList");
   taskListElement.innerHTML = "";
+  // put in date order
+  taskList = taskList.sort(function (a, b) {
+      var dateA = new Date(a.deadline).getTime();
+      var dateB = new Date(b.deadline).getTime();
+      return dateA < dateB ? -1 : 1;
+    });
   taskList.forEach((task, index) => {
       const li = document.createElement("li");
       const deleteButton = document.createElement("button");
       deleteButton.innerHTML = "Delete";
       deleteButton.onclick = function () {
         taskList.splice(index, 1);
-        saveTasks();
-        displayTasks();
+        update();
       };
-      li.innerHTML = `${task.taskName} - ${task.details} - ${task.complete} - ${task.deadline}- ${task.project}`;
+      const editButton = document.createElement("button");
+      editButton.innerHTML = "Edit";
+      editButton.onclick = function () {
+        editTask(index);
+        update();
+      };
+      li.innerHTML = `${task.taskName} - ${task.details} - ${task.complete} - ${task.urgent} - ${task.deadline} - ${task.project}`;
       li.appendChild(deleteButton);
+      li.appendChild(editButton);
       taskListElement.appendChild(li);
   });
 }
 
+function editTask(index) {
+  const task = taskList[index];
+  const newTaskName = prompt("Enter new task name:", task.taskName);
+  const newDeadline = prompt("Enter new deadline:", task.deadline);
+  const newDetails = prompt("Enter new details:", task.details);
+  const newComplete = prompt("Is the task complete, yes or no?", task.complete);
+  const newUrgent = prompt("Is the task urgent or normal?", task.urgent);
+  const newProject = prompt("Enter project:", task.project);
+  task.taskName = newTaskName;
+  task.deadline = newDeadline;
+  task.details = newDetails;
+  task.complete = newComplete;
+  task.urgent = newUrgent;
+  task.project = newProject;
+  update();
+}
 
 
-displayTasks();
-displayProjects();
+// Find tasks for the current day
+function todayTasks() {
+    let currentDate = new Date().toLocaleDateString("fr-CA", {year:"numeric", month: "2-digit", day:"2-digit"})
+    const tasksForToday = taskList.filter((task) => task.deadline === currentDate);
+    return tasksForToday;
+}
+
+// display a list of tasks for today
+function displayTodayTasks() {
+  const todayListElement = document.getElementById("todayList");
+  todayListElement.innerHTML = "";
+  let tasksForToday = todayTasks();
+  tasksForToday.forEach((task, index) => {
+      const li = document.createElement("li");
+      li.innerHTML = `${task.taskName} - ${task.details} - ${task.complete} - ${task.urgent} - ${task.project}`;
+      todayListElement.appendChild(li);
+  });
+}
+
+function update() {
+    saveTasks();
+    saveProjects();
+    displayTasks();
+    displayProjects();
+    displayTodayTasks();
+    projectOptions();
+    clearFields();
+}
+
+update();
+
 </script>
 </html>
