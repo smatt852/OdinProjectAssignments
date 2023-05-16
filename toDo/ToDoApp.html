@@ -12,14 +12,14 @@
 * { 
     font-family: "Itim"; 
   }
-.content {
+.container {
     display: grid;
-    grid-template-rows: 8vw 15vw 1vw;
+    grid-template-rows: 8vw 20vw 2vw;
 }
 .header {
     grid-row: 1/2;
     display: grid;
-    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-columns: 2fr 4fr 2fr;
     grid-template-rows: 5vw 2.5vw;
     background-color: red;
     margin: 0px;
@@ -33,8 +33,9 @@ footer {
     padding: 0px;
 }
 .title {
-    text-align: center;
-    grid-column: 1/3;
+    /* text-align: center; */
+    justify-self: center;
+    grid-column: 1/4;
     grid-row: 1/2;
     padding: 0px;
     margin: 0px; 
@@ -58,9 +59,9 @@ button {
 .main {
     grid-row: 2/3;
     display: grid; 
-    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-columns: 2fr 4fr 2fr;
 }
-.home, .newTask, .today {
+.content {
     grid-column: 2/3;
 }
 .col1 {
@@ -71,8 +72,20 @@ button {
     grid-column: 3/4;
     background-color: black;
 }
-.allTasks, .addForm, .todayTasks {
-    grid-column: 2/3;
+.complete {
+  text-decoration: line-through;
+}
+.urgent {
+  color: red;
+  font-style: bold;
+}
+.project {
+  list-style-type: none;
+  font-size: larger;
+}
+.projectTasks {
+  list-style-type: circle;
+  font-size: smaller;
 }
 .imageFit {
     object-fit: cover;
@@ -82,41 +95,20 @@ button {
   </style>
 </head>
 
-<body>
-<div class="=content">
+<body onload="displayTasks()">
+<div id="container" class="container">
   <div class="header">
     <div class="title">Get 'er Done !</div>
-    <div class="linkbox">
-      <button>New Task</button>
-      <button>Due Today</button>
+    <div id="linkbox" class="linkbox">
     </div>
   </div>
   <div class="main">
     <div class="col1"></div>
-    <div class="home">
-      <ul id="allTaskList"></ul>
-    </div>
+    <div id="content" class="content"></div>
     <div class="col2"></div>
   </div>
   <footer id="footer"></footer>
 </div>
-	
-  
-  <input type="text" id="taskName" placeholder="Task Name">
-	<input type="date" id="deadline">
-	<input type="text" id="details" placeholder="Details">
-    <select name="complete" id="complete">
-        <option value="not-complete">Not Complete</option>
-        <option value="complete">Complete</option>
-    </select>    
-    <select name="urgent" id="urgent">
-        <option value="normal">Normal</option>
-        <option value="urgent">Urgent</option>
-    </select>
-    <label for="project">Choose a project:</label>
-    <select name="project" id="project"></select>
-    <button onclick="addTask()">Add Task</button>
-    <h2>Tasks:</h2>
     
     <input type="text" id="projectName" placeholder="Project Name">
     <button onclick="addProject()">Add Project</button>
@@ -127,119 +119,95 @@ button {
   </div>
 </body>
 <script>
+
+// get task array from local storage
+let taskList = JSON.parse(localStorage.getItem('taskList')) || [];
+// get project array from local storage
+let projectList = JSON.parse(localStorage.getItem('projectList')) || [];
+
+
+
+// Make the footer
 const footer = document.getElementById('footer');
 footer.innerHTML = `Copyright © ${new Date().getFullYear()} SLM`;
 
+// Make the buttons for the header
+const allTasksButton = document.createElement('button')
+allTasksButton.setAttribute('id', 'allTasks')
+allTasksButton.textContent = 'All Tasks'
+allTasksButton.addEventListener('click', (e) => {
+  e.target.classList.add('active')
+  const btn1 = document.getElementById('newTask')
+  btn1.classList.remove('active')
+  const btn2 = document.getElementById('dueToday')
+  btn2.classList.remove('active')
+  const btn3 = document.getElementById('projects')
+  btn3.classList.remove('active')
+  let content = document.getElementById('content')
+  content.innerHTML = "";
+  displayTasks()
+})
 
-function getProjectList() {
-  const projectList = JSON.parse(localStorage.getItem('projectList')) || [];
-  return projectList;
-}
-const projectList = getProjectList();
+const newTaskButton = document.createElement('button')
+newTaskButton.setAttribute('id', 'newTask')
+newTaskButton.textContent = 'New Task'
+newTaskButton.addEventListener('click', (e) => {
+  e.target.classList.add('active')
+  const btn1 = document.getElementById('allTasks')
+  btn1.classList.remove('active')
+  const btn2 = document.getElementById('dueToday')
+  btn2.classList.remove('active')
+  const btn3 = document.getElementById('projects')
+  btn3.classList.remove('active')
+  let content = document.getElementById('content')
+  content.innerHTML = "";
+  makeNewTaskForm();
+})
 
-// save project array to local storage
-function saveProjects() {
-  localStorage.setItem('projectList', JSON.stringify(projectList));
-}
+const dueTodayButton = document.createElement('button')
+dueTodayButton.setAttribute('id', 'dueToday')
+dueTodayButton.textContent = 'Due Today'
+dueTodayButton.addEventListener('click', (e) => {
+  e.target.classList.add('active')
+  const btn1 = document.getElementById('allTasks')
+  btn1.classList.remove('active')
+  const btn2 = document.getElementById('newTask')
+  btn2.classList.remove('active')
+  const btn3 = document.getElementById('projects')
+  btn3.classList.remove('active')
+  let content = document.getElementById('content')
+  content.innerHTML = "";
+})
 
-// project constructor
-function Project(projectName) {
-    this.projectName = projectName;
-}
-// get input from page, make a new project, put it in project array
-function addProject() {
-  const projectName = document.getElementById("projectName").value;
-  const newProject = new Project(projectName);
-  projectList.push(newProject);
-  update();
-}
-// display a list of projects, each with a delete button and a list of tasks
-function displayProjects() {
-  const projectListElement = document.getElementById("projectList");
-  projectListElement.innerHTML = "";
-  projectList.forEach((project, index) => {
-    const li = document.createElement("li");
-    const deleteButton = document.createElement("button");
-    deleteButton.innerHTML = "Delete";
-    deleteButton.onclick = function () {
-      projectList.splice(index, 1);
-      update();
-    };
-    // Find tasks for the current project
-    const tasksForProject = taskList.filter((task) => task.project === project.projectName);
-    const taskListElement = document.createElement("ul");
-    // Add each task to the project's task list
-    tasksForProject.forEach((task) => {
-      const taskListItem = document.createElement("li");
-      taskListItem.innerHTML = `${task.taskName} - ${task.details} - ${task.deadline} - ${task.complete} - ${task.urgent}`;
-      taskListElement.appendChild(taskListItem);
-    });
-    // append the name, the delete button, and the task list
-    // of each project to the project list
-    li.innerHTML = `${project.projectName}`;
-    li.appendChild(deleteButton);
-    li.appendChild(taskListElement);
-    projectListElement.appendChild(li);
-  });
-}
+const projectsButton = document.createElement('button')
+projectsButton.setAttribute('id', 'projects')
+projectsButton.textContent = 'Projects'
+projectsButton.addEventListener('click', (e) => {
+  e.target.classList.add('active')
+  const btn1 = document.getElementById('allTasks')
+  btn1.classList.remove('active')
+  const btn2 = document.getElementById('newTask')
+  btn2.classList.remove('active')
+  const btn3 = document.getElementById('dueToday')
+  btn3.classList.remove('active')
+  let content = document.getElementById('content')
+  content.innerHTML = "";
+  displayProjects();
+})
 
-// make the project options for the tasks come from the project array
-function projectOptions() {
-    const projectSelectElement = document.getElementById("project");
-    projectSelectElement.innerHTML = "";
-    projectList.forEach((project) => {
-    const option = document.createElement("option");
-    option.value = project.projectName;
-    option.textContent = project.projectName;
-    projectSelectElement.appendChild(option);
-    });
-}
-////////////////////////////////////////////////////////////////////
-// get task array from local storage
-let taskList = JSON.parse(localStorage.getItem('taskList')) || [];
+let link = document.getElementById('linkbox')
+link.appendChild(allTasksButton);
+link.appendChild(newTaskButton);
+link.appendChild(dueTodayButton);
+link.appendChild(projectsButton);
 
-// save task array to local storage
-function saveTasks() {
-  localStorage.setItem('taskList', JSON.stringify(taskList));
-}
-
-// task constructor
-function Task(taskName, deadline, details, complete, urgent, project) {
-    this.taskName = taskName;
-    this.deadline = deadline;
-    this.details = details;
-    this.complete = complete;
-    this.urgent = urgent;
-    this.project = project;
-}
-
-// get input from page, make a new task, put it in task array
-function addTask() {
-  const taskName = document.getElementById("taskName").value;
-  const deadline = document.getElementById("deadline").value;
-  const details = document.getElementById("details").value;
-  const complete = document.getElementById("complete").value;
-  const urgent = document.getElementById("urgent").value;
-  const project = document.getElementById("project").value;
-  const newTask = new Task(taskName, deadline, details, complete, urgent, project);
-  taskList.push(newTask);
-  update();
-}
-
-// clear input fields
-function clearFields() {
-  document.getElementById("taskName").value = "";
-  document.getElementById("deadline").value = "";
-  document.getElementById("details").value = "";
-  document.getElementById("complete").value = "";
-  document.getElementById("urgent").value = "";
-  document.getElementById("projectName").value = "";
-}
 
 // display a list of tasks, each with a delete and edit button
 function displayTasks() {
-  const taskListElement = document.getElementById("allTaskList");
-  taskListElement.innerHTML = "";
+  allTasksButton.classList.add('active');
+  let content=document.getElementById('content');
+  content.innerHTML="";
+  const taskListElement = document.createElement('div');
   // put in date order
   taskList = taskList.sort(function (a, b) {
       var dateA = new Date(a.deadline).getTime();
@@ -252,19 +220,185 @@ function displayTasks() {
       deleteButton.innerHTML = "Delete";
       deleteButton.onclick = function () {
         taskList.splice(index, 1);
-        update();
+        saveTasks();
+        displayTasks();
       };
       const editButton = document.createElement("button");
       editButton.innerHTML = "Edit";
       editButton.onclick = function () {
         editTask(index);
-        update();
       };
-      li.innerHTML = `${task.taskName} - ${task.details} - ${task.complete} - ${task.urgent} - ${task.deadline} - ${task.project}`;
+
+      li.innerHTML = `${task.deadline} ${task.taskName} ${task.details} ${task.project}`;
+      if (task.complete === 'complete') {
+        li.classList.add('complete');
+      };
+      if (task.urgent === 'urgent') {
+        li.classList.add('urgent');
+      };
       li.appendChild(deleteButton);
       li.appendChild(editButton);
       taskListElement.appendChild(li);
+      taskListElement.setAttribute('style', 'list-style-type: none;');
   });
+  content.appendChild(taskListElement);
+}
+
+// make the form to add a task
+function makeNewTaskForm () {
+  document.getElementById("content").innerHTML = "";
+  let form = document.createElement("form");
+
+  let taskNameInput = document.createElement("input");
+  taskNameInput.setAttribute("type", "text");
+  taskNameInput.setAttribute("id", "taskName");
+  taskNameInput.setAttribute("placeholder", "Task Name");
+  form.appendChild(taskNameInput);
+
+  let deadlineInput = document.createElement("input");
+  deadlineInput.setAttribute("type", "date");
+  deadlineInput.setAttribute("id", "deadline");
+  deadlineInput.setAttribute("placeholder", "Deadline");
+  form.appendChild(deadlineInput);
+
+  let detailsInput = document.createElement("input");
+  detailsInput.setAttribute("type", "text");
+  detailsInput.setAttribute("id", "details");
+  detailsInput.setAttribute("placeholder", "Details");
+  form.appendChild(detailsInput);
+
+  let completeInput = document.createElement('select');
+  completeInput.setAttribute('id', 'complete');
+  let opt = ["not complete","complete"];
+  let options="";
+  opt.map((op,i)=>{
+    options+=`<option value="${op}" id="${i}" style="border-radius: 5px;"">${op}</option>`
+  });
+  completeInput.innerHTML=options;
+  form.appendChild(completeInput);
+
+  let urgentInput = document.createElement('select');
+  urgentInput.setAttribute('id', 'urgent');
+  let opt2 = ["normal","urgent"];
+  let options2="";
+  opt2.map((op,i)=>{
+    options2+=`<option value="${op}" id="${i}" style="border-radius: 5px;"">${op}</option>`
+  });
+  urgentInput.innerHTML=options2;
+  form.appendChild(urgentInput);
+
+  let projectInput = document.createElement('select');
+  projectInput.setAttribute('id', 'project');
+  projectInput.innerHTML = "";
+  projectList.forEach((project) => {
+    let option = document.createElement("option");
+    option.value = project.projectName;
+    option.textContent = project.projectName;
+    projectInput.appendChild(option);
+    });
+  form.appendChild(projectInput);
+
+  let addTaskButton = document.createElement('button')
+  addTaskButton.setAttribute('id', 'addTask')
+  addTaskButton.textContent = 'Add Task'
+  addTaskButton.addEventListener('click', (e) => {
+    addTask() 
+  })
+  form.appendChild(addTaskButton);
+
+  document.getElementById("content").appendChild(form);
+  makeNewProjectForm();
+}
+// make the form to add a project
+function makeNewProjectForm () {
+  let form2 = document.createElement("form2");
+
+  let projectNameInput = document.createElement("input");
+  projectNameInput.setAttribute("type", "text");
+  projectNameInput.setAttribute("id", "projectName");
+  projectNameInput.setAttribute("placeholder", "Project Name");
+  form2.appendChild(projectNameInput);
+  
+  let addProjectButton = document.createElement('button')
+  addProjectButton.setAttribute('id', 'addProject')
+  addProjectButton.textContent = 'Add Project'
+  addProjectButton.addEventListener('click', (e) => {
+    addProject() 
+  })
+  form2.appendChild(addProjectButton);
+
+  document.getElementById("content").appendChild(form2);
+}
+
+// get input from page, make a new task, put it in task array
+function addTask() { 
+  const taskName = document.getElementById("taskName").value;
+  const deadline = document.getElementById("deadline").value;
+  const details = document.getElementById("details").value;
+  const complete = document.getElementById("complete").value;
+  const urgent = document.getElementById("urgent").value;
+  const project = document.getElementById("project").value;
+  const newTask = new Task(taskName, deadline, details, complete, urgent, project);
+  taskList.push(newTask);
+  saveTasks();
+}
+
+// get input from page, make a new project, put it in project array
+function addProject() {
+  const projectName = document.getElementById("projectName").value;
+  const newProject = new Project(projectName);
+  projectList.push(newProject);
+  saveProjects();
+  makeNewTaskForm();
+}
+
+
+
+
+
+
+// display a list of projects, each with a delete button and a list of tasks
+function displayProjects() {
+  let content=document.getElementById('content');
+  content.innerHTML="";
+  const projectListElement = document.createElement('div');
+
+  projectList.forEach((project, index) => {
+    const projectLi = document.createElement("li");
+    const deleteButton = document.createElement("button");
+    deleteButton.innerHTML = "Delete";
+    deleteButton.onclick = function () {
+      projectList.splice(index, 1);
+      saveProjects();
+      removeDeletedProject(project.projectName);
+      displayProjects();
+    };
+
+    // Find tasks for the current project
+    const tasksForProject = taskList.filter((task) => task.project === project.projectName);
+    const taskListElement = document.createElement("ul");
+    // Add each task to the project's task list
+    tasksForProject.forEach((task) => {
+      const taskLi = document.createElement("li");
+      taskLi.innerHTML = `${task.deadline} ${task.taskName} ${task.details}`;
+      if (task.complete === 'complete') {
+        taskLi.classList.add('complete');
+      };
+      if (task.urgent === 'urgent') {
+        taskLi.classList.add('urgent');
+      };
+      taskListElement.appendChild(taskLi);
+    });
+    // append the name, the delete button, and the task list
+    // of each project to the project list
+    projectLi.innerHTML = `${project.projectName}`;
+    projectLi.appendChild(deleteButton);
+    taskListElement.classList.add('projectTasks')
+    projectLi.appendChild(taskListElement);
+    projectListElement.appendChild(projectLi);
+    projectListElement.classList.add('project');
+  });
+  content.appendChild(projectListElement);
 }
 
 function editTask(index) {
@@ -281,7 +415,8 @@ function editTask(index) {
   task.complete = newComplete;
   task.urgent = newUrgent;
   task.project = newProject;
-  update();
+  saveTasks();
+  displayTasks();
 }
 
 
@@ -304,17 +439,39 @@ function displayTodayTasks() {
   });
 }
 
-function update() {
-    saveTasks();
-    saveProjects();
-    displayTasks();
-    displayProjects();
-    displayTodayTasks();
-    projectOptions();
-    clearFields();
+
+
+// save task array to local storage
+function saveTasks() {
+  localStorage.setItem('taskList', JSON.stringify(taskList));
 }
 
-update();
+// task constructor
+function Task(taskName, deadline, details, complete, urgent, project) {
+    this.taskName = taskName;
+    this.deadline = deadline;
+    this.details = details;
+    this.complete = complete;
+    this.urgent = urgent;
+    this.project = project;
+}
 
+// save project array to local storage
+function saveProjects() {
+  localStorage.setItem('projectList', JSON.stringify(projectList));
+}
+
+// project constructor
+function Project(projectName) {
+    this.projectName = projectName;
+}
+
+function removeDeletedProject(project) {
+  const tasksInProject = taskList.filter((task) => task.project === project);
+  tasksInProject.forEach((task) => {
+    task.project = "";
+    saveTasks();
+  });
+}
 </script>
 </html>
