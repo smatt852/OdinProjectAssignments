@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 	<title>To-Do List</title>
   <style>
 * { 
@@ -52,6 +53,11 @@ footer {
 button {
   border-radius: 30px;
 }
+.noButton {
+  background-color: transparent;
+  border: none;
+  font-family:"Material Symbols Outlined";
+}
 .active {
     background-color: #f8cb02;
     color: black;
@@ -82,10 +88,22 @@ button {
 .project {
   list-style-type: none;
   font-size: larger;
+  margin: 2vw;
+  font-style: italic;
 }
 .projectTasks {
-  list-style-type: circle;
+  list-style-type: disc;
   font-size: smaller;
+  margin-top: 0px;
+  font-style: normal;
+}
+.tasks {
+  list-style-type: none;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 20px;
+  margin: 2vw;
 }
 .imageFit {
     object-fit: cover;
@@ -109,14 +127,6 @@ button {
   </div>
   <footer id="footer"></footer>
 </div>
-    
-    <input type="text" id="projectName" placeholder="Project Name">
-    <button onclick="addProject()">Add Project</button>
-    <h2>Projects:</h2>
-    <ul id="projectList"></ul>
-    <h2>Today:</h2>
-    <ul id="todayList"></ul>
-  </div>
 </body>
 <script>
 
@@ -177,6 +187,7 @@ dueTodayButton.addEventListener('click', (e) => {
   btn3.classList.remove('active')
   let content = document.getElementById('content')
   content.innerHTML = "";
+  displayTodayTasks();
 })
 
 const projectsButton = document.createElement('button')
@@ -217,6 +228,7 @@ function displayTasks() {
   taskList.forEach((task, index) => {
       const li = document.createElement("li");
       const deleteButton = document.createElement("button");
+      deleteButton.classList.add('noButton');
       deleteButton.innerHTML = "Delete";
       deleteButton.onclick = function () {
         taskList.splice(index, 1);
@@ -224,12 +236,12 @@ function displayTasks() {
         displayTasks();
       };
       const editButton = document.createElement("button");
+      editButton.classList.add('noButton')
       editButton.innerHTML = "Edit";
       editButton.onclick = function () {
         editTask(index);
       };
-
-      li.innerHTML = `${task.deadline} ${task.taskName} ${task.details} ${task.project}`;
+      li.innerHTML = `${task.deadline} ${task.taskName}  :  ${task.details} <i>${task.project}</i>`;
       if (task.complete === 'complete') {
         li.classList.add('complete');
       };
@@ -239,7 +251,7 @@ function displayTasks() {
       li.appendChild(deleteButton);
       li.appendChild(editButton);
       taskListElement.appendChild(li);
-      taskListElement.setAttribute('style', 'list-style-type: none;');
+      taskListElement.classList.add('tasks');
   });
   content.appendChild(taskListElement);
 }
@@ -262,9 +274,10 @@ function makeNewTaskForm () {
   form.appendChild(deadlineInput);
 
   let detailsInput = document.createElement("input");
-  detailsInput.setAttribute("type", "text");
+  detailsInput.setAttribute("type", "textarea");
   detailsInput.setAttribute("id", "details");
   detailsInput.setAttribute("placeholder", "Details");
+  detailsInput.setAttribute('style', 'cols:30; rows:3;');
   form.appendChild(detailsInput);
 
   let completeInput = document.createElement('select');
@@ -352,11 +365,6 @@ function addProject() {
   makeNewTaskForm();
 }
 
-
-
-
-
-
 // display a list of projects, each with a delete button and a list of tasks
 function displayProjects() {
   let content=document.getElementById('content');
@@ -380,7 +388,7 @@ function displayProjects() {
     // Add each task to the project's task list
     tasksForProject.forEach((task) => {
       const taskLi = document.createElement("li");
-      taskLi.innerHTML = `${task.deadline} ${task.taskName} ${task.details}`;
+      taskLi.innerHTML = `${task.deadline} ${task.taskName}   :  ${task.details}`;
       if (task.complete === 'complete') {
         taskLi.classList.add('complete');
       };
@@ -427,16 +435,25 @@ function todayTasks() {
     return tasksForToday;
 }
 
-// display a list of tasks for today
+// 
 function displayTodayTasks() {
-  const todayListElement = document.getElementById("todayList");
-  todayListElement.innerHTML = "";
+  let content=document.getElementById('content');
+  content.innerHTML="";
+  const taskListElement = document.createElement('div');
   let tasksForToday = todayTasks();
-  tasksForToday.forEach((task, index) => {
-      const li = document.createElement("li");
-      li.innerHTML = `${task.taskName} - ${task.details} - ${task.complete} - ${task.urgent} - ${task.project}`;
-      todayListElement.appendChild(li);
+  tasksForToday.forEach((task) => {
+    const li = document.createElement("li");
+    li.innerHTML = `${task.taskName}   :  ${task.details} <i>${task.project}</i>`;
+    if (task.complete === 'complete') {
+      li.classList.add('complete');
+    };
+    if (task.urgent === 'urgent') {
+      li.classList.add('urgent');
+    };
+    taskListElement.appendChild(li);
+    taskListElement.classList.add('tasks');
   });
+  content.appendChild(taskListElement);
 }
 
 
