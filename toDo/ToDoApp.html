@@ -12,25 +12,31 @@
   <style>
 * { 
     font-family: "Itim"; 
+    font-size: 1.5vw;
+  }
+  body {
+    background-image:url(city.jpg);
+    background-attachment:scroll;
+    background-position:center;
+    background-size:cover;
+    background-repeat:no-repeat;
   }
 .container {
     display: grid;
-    grid-template-rows: 8vw 20vw 2vw;
+    grid-template-rows: 8vw 27vw 2vw;
 }
 .header {
     grid-row: 1/2;
     display: grid;
     grid-template-columns: 2fr 4fr 2fr;
     grid-template-rows: 5vw 2.5vw;
-    background-color: red;
     margin: 0px;
     padding: 0px;
 }
 footer {
     grid-row: 3/4;
     text-align: right;
-    background-color: red;
-    margin: 0px;
+    margin-right: 5px;
     padding: 0px;
 }
 .title {
@@ -52,6 +58,7 @@ footer {
 }
 button {
   border-radius: 30px;
+  font-size: 1vw;
 }
 .noButton {
   background-color: transparent;
@@ -66,17 +73,11 @@ button {
     grid-row: 2/3;
     display: grid; 
     grid-template-columns: 2fr 4fr 2fr;
+    overflow: hidden;
 }
 .content {
     grid-column: 2/3;
-}
-.col1 {
-    grid-column: 1/2;
-    background-color: black;
-}
-.col2 {
-    grid-column: 3/4;
-    background-color: black;
+    overflow-y:auto;
 }
 .complete {
   text-decoration: line-through;
@@ -102,15 +103,21 @@ button {
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  gap: 20px;
-  margin: 2vw;
+  gap: 10px;
+  margin: 1vw;
 }
 .imageFit {
     object-fit: cover;
     width: 100%;
     max-height: 100%;
 }
-  </style>
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
+}
+</style>
 </head>
 
 <body onload="displayTasks()">
@@ -121,9 +128,7 @@ button {
     </div>
   </div>
   <div class="main">
-    <div class="col1"></div>
     <div id="content" class="content"></div>
-    <div class="col2"></div>
   </div>
   <footer id="footer"></footer>
 </div>
@@ -171,7 +176,9 @@ newTaskButton.addEventListener('click', (e) => {
   btn3.classList.remove('active')
   let content = document.getElementById('content')
   content.innerHTML = "";
-  makeNewTaskForm();
+  let edit = false;
+  let index = null;
+  makeNewTaskForm(index, edit);
 })
 
 const dueTodayButton = document.createElement('button')
@@ -232,16 +239,19 @@ function displayTasks() {
       deleteButton.innerHTML = "Delete";
       deleteButton.onclick = function () {
         taskList.splice(index, 1);
-        saveTasks();
+        storeTasks();
         displayTasks();
       };
       const editButton = document.createElement("button");
       editButton.classList.add('noButton')
       editButton.innerHTML = "Edit";
       editButton.onclick = function () {
-        editTask(index);
-      };
-      li.innerHTML = `${task.deadline} ${task.taskName}  :  ${task.details} <i>${task.project}</i>`;
+        openEditForm(index);
+        }
+
+      let name = task.taskName;
+      name = name.toUpperCase();
+      li.innerHTML = `${task.deadline}&nbsp&nbsp&nbsp${name}&nbsp${task.details}&nbsp<i>${task.project}</i>`;
       if (task.complete === 'complete') {
         li.classList.add('complete');
       };
@@ -257,14 +267,16 @@ function displayTasks() {
 }
 
 // make the form to add a task
-function makeNewTaskForm () {
+function makeNewTaskForm (index, edit) {
   document.getElementById("content").innerHTML = "";
   let form = document.createElement("form");
+  form.setAttribute('id', 'addEditForm');
 
   let taskNameInput = document.createElement("input");
   taskNameInput.setAttribute("type", "text");
   taskNameInput.setAttribute("id", "taskName");
-  taskNameInput.setAttribute("placeholder", "Task Name");
+  taskNameInput.setAttribute("size", "25");
+  taskNameInput.setAttribute("placeholder", "Task");
   form.appendChild(taskNameInput);
 
   let deadlineInput = document.createElement("input");
@@ -276,6 +288,7 @@ function makeNewTaskForm () {
   let detailsInput = document.createElement("input");
   detailsInput.setAttribute("type", "textarea");
   detailsInput.setAttribute("id", "details");
+  taskNameInput.setAttribute("size", "40");
   detailsInput.setAttribute("placeholder", "Details");
   detailsInput.setAttribute('style', 'cols:30; rows:3;');
   form.appendChild(detailsInput);
@@ -302,6 +315,7 @@ function makeNewTaskForm () {
 
   let projectInput = document.createElement('select');
   projectInput.setAttribute('id', 'project');
+  projectInput.setAttribute('placeholder', 'Project');
   projectInput.innerHTML = "";
   projectList.forEach((project) => {
     let option = document.createElement("option");
@@ -311,21 +325,22 @@ function makeNewTaskForm () {
     });
   form.appendChild(projectInput);
 
-  let addTaskButton = document.createElement('button')
-  addTaskButton.setAttribute('id', 'addTask')
-  addTaskButton.textContent = 'Add Task'
-  addTaskButton.addEventListener('click', (e) => {
-    addTask() 
+  let saveTaskButton = document.createElement('button')
+  saveTaskButton.setAttribute('id', 'saveTask')
+  saveTaskButton.textContent = 'Save Task'
+  saveTaskButton.addEventListener('click', (e) => {
+    saveTask(index, edit);
   })
-  form.appendChild(addTaskButton);
+  form.appendChild(saveTaskButton);
 
   document.getElementById("content").appendChild(form);
   makeNewProjectForm();
 }
+
 // make the form to add a project
 function makeNewProjectForm () {
-  let form2 = document.createElement("form2");
-
+  let form2 = document.createElement("form");
+  form2.setAttribute('id', 'newProjectForm');
   let projectNameInput = document.createElement("input");
   projectNameInput.setAttribute("type", "text");
   projectNameInput.setAttribute("id", "projectName");
@@ -334,9 +349,9 @@ function makeNewProjectForm () {
   
   let addProjectButton = document.createElement('button')
   addProjectButton.setAttribute('id', 'addProject')
-  addProjectButton.textContent = 'Add Project'
+  addProjectButton.textContent = 'Add New Project'
   addProjectButton.addEventListener('click', (e) => {
-    addProject() 
+    addProject();
   })
   form2.appendChild(addProjectButton);
 
@@ -344,16 +359,26 @@ function makeNewProjectForm () {
 }
 
 // get input from page, make a new task, put it in task array
-function addTask() { 
-  const taskName = document.getElementById("taskName").value;
-  const deadline = document.getElementById("deadline").value;
-  const details = document.getElementById("details").value;
-  const complete = document.getElementById("complete").value;
-  const urgent = document.getElementById("urgent").value;
-  const project = document.getElementById("project").value;
-  const newTask = new Task(taskName, deadline, details, complete, urgent, project);
-  taskList.push(newTask);
-  saveTasks();
+function saveTask(index, edit) { 
+    const taskName = document.getElementById("taskName").value;
+    const deadline = document.getElementById("deadline").value;
+    const details = document.getElementById("details").value;
+    const complete = document.getElementById("complete").value;
+    const urgent = document.getElementById("urgent").value;
+    const project = document.getElementById("project").value;
+
+    if(edit === true) {
+        taskList[index].taskName = taskName;
+        taskList[index].deadline = deadline;
+        taskList[index].details = details;
+        taskList[index].complete = complete;
+        taskList[index].urgent = urgent;
+        taskList[index].project = project;
+    } else {
+    const newTask = new Task(taskName, deadline, details, complete, urgent, project);
+    taskList.push(newTask);
+    }
+    storeTasks();
 }
 
 // get input from page, make a new project, put it in project array
@@ -361,8 +386,7 @@ function addProject() {
   const projectName = document.getElementById("projectName").value;
   const newProject = new Project(projectName);
   projectList.push(newProject);
-  saveProjects();
-  makeNewTaskForm();
+  storeProjects();
 }
 
 // display a list of projects, each with a delete button and a list of tasks
@@ -374,10 +398,11 @@ function displayProjects() {
   projectList.forEach((project, index) => {
     const projectLi = document.createElement("li");
     const deleteButton = document.createElement("button");
+    deleteButton.classList.add('noButton');
     deleteButton.innerHTML = "Delete";
     deleteButton.onclick = function () {
       projectList.splice(index, 1);
-      saveProjects();
+      storeProjects();
       removeDeletedProject(project.projectName);
       displayProjects();
     };
@@ -388,7 +413,9 @@ function displayProjects() {
     // Add each task to the project's task list
     tasksForProject.forEach((task) => {
       const taskLi = document.createElement("li");
-      taskLi.innerHTML = `${task.deadline} ${task.taskName}   :  ${task.details}`;
+      let name = task.taskName;
+      name = name.toUpperCase();
+      taskLi.innerHTML = `${task.deadline}&nbsp&nbsp&nbsp${name} ${task.details}`;
       if (task.complete === 'complete') {
         taskLi.classList.add('complete');
       };
@@ -409,22 +436,33 @@ function displayProjects() {
   content.appendChild(projectListElement);
 }
 
-function editTask(index) {
-  const task = taskList[index];
-  const newTaskName = prompt("Enter new task name:", task.taskName);
-  const newDeadline = prompt("Enter new deadline:", task.deadline);
-  const newDetails = prompt("Enter new details:", task.details);
-  const newComplete = prompt("Is the task complete, yes or no?", task.complete);
-  const newUrgent = prompt("Is the task urgent or normal?", task.urgent);
-  const newProject = prompt("Enter project:", task.project);
-  task.taskName = newTaskName;
-  task.deadline = newDeadline;
-  task.details = newDetails;
-  task.complete = newComplete;
-  task.urgent = newUrgent;
-  task.project = newProject;
-  saveTasks();
-  displayTasks();
+// Function to open the edit form
+function openEditForm(index) {
+    let edit = true;
+    // Display the form and populate it with the object's data
+  makeNewTaskForm(index, edit);
+  const objectToEdit = taskList[index];
+  let taskNameInput = document.getElementById('taskName');
+  taskNameInput.value = objectToEdit.taskName;
+  let deadlineInput = document.getElementById('deadline');
+  deadlineInput.value = objectToEdit.deadline;
+  let detailsInput = document.getElementById('details');
+  detailsInput.value = objectToEdit.details;
+  let completeInput = document.getElementById('complete');
+  urgentInput.value = objectToEdit.urgent;
+  let projectInput = document.getElementById('project');
+  projectInput.value = objectToEdit.project;
+
+  // Display projects in the dropdown list
+  const projectDropdown = document.getElementById('project');
+  projectDropdown.innerHTML = ""; 
+  projectList.forEach(project => {
+    const option = document.createElement("option");
+    option.value = project;
+    option.text = project;
+    projectDropdown.appendChild(option);
+  });
+  projectDropdown.value = objectToEdit.project;
 }
 
 
@@ -443,7 +481,9 @@ function displayTodayTasks() {
   let tasksForToday = todayTasks();
   tasksForToday.forEach((task) => {
     const li = document.createElement("li");
-    li.innerHTML = `${task.taskName}   :  ${task.details} <i>${task.project}</i>`;
+    let name = task.taskName;
+    name = name.toUpperCase();
+    li.innerHTML = `${name} ${task.details} <i>${task.project}</i>`;
     if (task.complete === 'complete') {
       li.classList.add('complete');
     };
@@ -459,7 +499,7 @@ function displayTodayTasks() {
 
 
 // save task array to local storage
-function saveTasks() {
+function storeTasks() {
   localStorage.setItem('taskList', JSON.stringify(taskList));
 }
 
@@ -474,7 +514,7 @@ function Task(taskName, deadline, details, complete, urgent, project) {
 }
 
 // save project array to local storage
-function saveProjects() {
+function storeProjects() {
   localStorage.setItem('projectList', JSON.stringify(projectList));
 }
 
@@ -487,7 +527,7 @@ function removeDeletedProject(project) {
   const tasksInProject = taskList.filter((task) => task.project === project);
   tasksInProject.forEach((task) => {
     task.project = "";
-    saveTasks();
+    storeTasks();
   });
 }
 </script>
