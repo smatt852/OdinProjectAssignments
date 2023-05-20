@@ -13,23 +13,34 @@
 * { 
     font-family: "Itim"; 
     font-size: 1.5vw;
+    text-shadow: 1px 1px 5px white;
   }
-  body {
-    background-image:url(city.jpg);
-    background-attachment:scroll;
-    background-position:center;
-    background-size:cover;
-    background-repeat:no-repeat;
-  }
+body:before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  background-image:url(city52.jpg);
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: cover;
+}
+.back {
+  position: relative;
+}
 .container {
     display: grid;
-    grid-template-rows: 10vw 35vw 2vw;
+    grid-template-rows: 6vw 30vw 2vw;
 }
 .header {
     grid-row: 1/2;
     display: grid;
     grid-template-columns: 2fr 4fr 2fr;
-    grid-template-rows: 5vw 2.5vw;
+    grid-template-rows: 2vw 2.5vw;
     margin: 0px;
     padding: 0px;
 }
@@ -47,7 +58,6 @@ footer {
     padding: 0px;
     margin: 0px; 
     font-size: 3.5vw; 
-    padding-top: 2vw;
 }
 .linkbox {
     grid-row: 2/3;
@@ -114,24 +124,31 @@ button {
 form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 7px;
   margin-top: 15px;
+}
+.saveButton {
+  border-radius: 30px;
+  width: 6vw;
+  height: 2.7vw;
 }
 </style>
 </head>
 
 <body onload="displayTasks()">
-<div id="container" class="container">
-  <div class="header">
-    <div class="title">Get 'er Done !</div>
-    <div id="linkbox" class="linkbox">
+  <div class="back">
+    <div id="container" class="container">
+      <div class="header">
+        <div class="title">Get 'er Done !</div>
+        <div id="linkbox" class="linkbox">
+        </div>
+      </div>
+      <div class="main">
+        <div id="content" class="content"></div>
+      </div>
+      <footer id="footer"></footer>
     </div>
   </div>
-  <div class="main">
-    <div id="content" class="content"></div>
-  </div>
-  <footer id="footer"></footer>
-</div>
 </body>
 <script>
 
@@ -277,7 +294,6 @@ function makeNewTaskForm (index, edit) {
   let taskNameInput = document.createElement("input");
   taskNameInput.setAttribute("type", "text");
   taskNameInput.setAttribute("id", "taskName");
-  taskNameInput.setAttribute("size", "25");
   taskNameInput.setAttribute("placeholder", "Task");
   form.appendChild(taskNameInput);
 
@@ -329,6 +345,7 @@ function makeNewTaskForm (index, edit) {
 
   let saveTaskButton = document.createElement('button')
   saveTaskButton.setAttribute('id', 'saveTask')
+  saveTaskButton.classList.add('saveButton');
   saveTaskButton.textContent = 'Save Task'
   saveTaskButton.addEventListener('click', (e) => {
     saveTask(index, edit);
@@ -352,6 +369,7 @@ function makeNewProjectForm () {
   let addProjectButton = document.createElement('button')
   addProjectButton.setAttribute('id', 'addProject')
   addProjectButton.setAttribute('type', 'button')
+  addProjectButton.classList.add('saveButton');
   addProjectButton.textContent = 'Add New Project'
   addProjectButton.addEventListener('click', (e) => {
     addProject();
