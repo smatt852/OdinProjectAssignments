@@ -23,7 +23,7 @@
   }
 .container {
     display: grid;
-    grid-template-rows: 8vw 27vw 2vw;
+    grid-template-rows: 10vw 35vw 2vw;
 }
 .header {
     grid-row: 1/2;
@@ -246,6 +246,8 @@ function displayTasks() {
       editButton.classList.add('noButton')
       editButton.innerHTML = "Edit";
       editButton.onclick = function () {
+        let btn = document.getElementById('allTasks');
+        btn.classList.remove('active');
         openEditForm(index);
         }
 
@@ -349,6 +351,7 @@ function makeNewProjectForm () {
   
   let addProjectButton = document.createElement('button')
   addProjectButton.setAttribute('id', 'addProject')
+  addProjectButton.setAttribute('type', 'button')
   addProjectButton.textContent = 'Add New Project'
   addProjectButton.addEventListener('click', (e) => {
     addProject();
@@ -384,6 +387,12 @@ function saveTask(index, edit) {
 // get input from page, make a new project, put it in project array
 function addProject() {
   const projectName = document.getElementById("projectName").value;
+  
+  let x = document.getElementById("project");
+  let option = document.createElement("option");
+  option.text = projectName;
+  x.add(option);
+  
   const newProject = new Project(projectName);
   projectList.push(newProject);
   storeProjects();
