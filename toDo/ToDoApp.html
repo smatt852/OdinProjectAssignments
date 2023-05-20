@@ -23,7 +23,7 @@ body:before {
   top: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.4;
+  opacity: 0.2;
   background-image:url(city52.jpg);
   background-repeat: no-repeat;
   background-position: 50% 0;
@@ -127,10 +127,34 @@ form {
   gap: 7px;
   margin-top: 15px;
 }
+.inputBox {
+  display: flex;
+  flex-direction: row;
+  gap: 1vw;
+}
+.newProjectButton {
+  border-radius: 30px;
+  width: 6vw;
+  height: 2.5vw;
+  line-height: 0.8;
+}
 .saveButton {
   border-radius: 30px;
   width: 6vw;
-  height: 2.7vw;
+  height: 2.5vw;
+  margin-top: 3vw;
+  align-self: center;
+}
+.input {
+  border: none;
+  border-bottom: 0.5px solid white;
+  background-color:transparent;
+}
+.input::placeholder {
+  color: black;
+}
+.input:focus {
+  background-color: white;
 }
 </style>
 </head>
@@ -293,46 +317,60 @@ function makeNewTaskForm (index, edit) {
 
   let taskNameInput = document.createElement("input");
   taskNameInput.setAttribute("type", "text");
+  taskNameInput.required = 'true';
   taskNameInput.setAttribute("id", "taskName");
   taskNameInput.setAttribute("placeholder", "Task");
+  taskNameInput.setAttribute("autocomplete", "off");
+  taskNameInput.classList.add('input');
   form.appendChild(taskNameInput);
+
+  let inputBox = document.createElement('div');
+  inputBox.classList.add('inputBox');
 
   let deadlineInput = document.createElement("input");
   deadlineInput.setAttribute("type", "date");
   deadlineInput.setAttribute("id", "deadline");
   deadlineInput.setAttribute("placeholder", "Deadline");
-  form.appendChild(deadlineInput);
-
-  let detailsInput = document.createElement("input");
-  detailsInput.setAttribute("type", "textarea");
-  detailsInput.setAttribute("id", "details");
-  taskNameInput.setAttribute("size", "40");
-  detailsInput.setAttribute("placeholder", "Details");
-  detailsInput.setAttribute('style', 'cols:30; rows:3;');
-  form.appendChild(detailsInput);
+  deadlineInput.classList.add('input');
+  inputBox.appendChild(deadlineInput);
 
   let completeInput = document.createElement('select');
   completeInput.setAttribute('id', 'complete');
+  completeInput.classList.add('input');
+  completeInput.setAttribute("placeholder", "Complete or Not");
   let opt = ["not complete","complete"];
   let options="";
   opt.map((op,i)=>{
     options+=`<option value="${op}" id="${i}" style="border-radius: 5px;"">${op}</option>`
   });
   completeInput.innerHTML=options;
-  form.appendChild(completeInput);
+  inputBox.appendChild(completeInput);
 
   let urgentInput = document.createElement('select');
   urgentInput.setAttribute('id', 'urgent');
+  urgentInput.classList.add('input');
+  urgentInput.setAttribute("placeholder", "Urgent or Normal");
   let opt2 = ["normal","urgent"];
   let options2="";
   opt2.map((op,i)=>{
     options2+=`<option value="${op}" id="${i}" style="border-radius: 5px;"">${op}</option>`
   });
   urgentInput.innerHTML=options2;
-  form.appendChild(urgentInput);
+  inputBox.appendChild(urgentInput);
+  form.appendChild(inputBox);
+
+  let detailsInput = document.createElement("input");
+  detailsInput.setAttribute("type", "textarea");
+  detailsInput.setAttribute("id", "details");
+  detailsInput.setAttribute("placeholder", "Details");
+  detailsInput.setAttribute("autocomplete", "off");
+  detailsInput.setAttribute('style', 'cols:200; rows:3;');
+  detailsInput.classList.add('input');
+  form.appendChild(detailsInput);
 
   let projectInput = document.createElement('select');
   projectInput.setAttribute('id', 'project');
+  projectInput.classList.add('input');
   projectInput.setAttribute('placeholder', 'Project');
   projectInput.innerHTML = "";
   projectList.forEach((project) => {
@@ -343,9 +381,33 @@ function makeNewTaskForm (index, edit) {
     });
   form.appendChild(projectInput);
 
+  let inputBox2 = document.createElement('div');
+  inputBox2.classList.add('inputBox');
+
+  let addProjectButton = document.createElement('button')
+  addProjectButton.setAttribute('id', 'addProject')
+  addProjectButton.setAttribute('type', 'button')
+  addProjectButton.classList.add('newProjectButton');
+  addProjectButton.textContent = 'Add New Project'
+  addProjectButton.addEventListener('click', (e) => {
+    addProject();
+  })
+  inputBox2.appendChild(addProjectButton);
+
+  let projectNameInput = document.createElement("input");
+  projectNameInput.setAttribute("type", "text");
+  projectNameInput.setAttribute("id", "projectName");
+  projectNameInput.setAttribute("placeholder", "New Project Name");
+  projectNameInput.setAttribute("autocomplete", "off");
+  projectNameInput.classList.add('input');
+  inputBox2.appendChild(projectNameInput);
+  
+  form.appendChild(inputBox2);
+
   let saveTaskButton = document.createElement('button')
   saveTaskButton.setAttribute('id', 'saveTask')
   saveTaskButton.classList.add('saveButton');
+  saveTaskButton.classList.add('active');
   saveTaskButton.textContent = 'Save Task'
   saveTaskButton.addEventListener('click', (e) => {
     saveTask(index, edit);
@@ -353,30 +415,6 @@ function makeNewTaskForm (index, edit) {
   form.appendChild(saveTaskButton);
 
   document.getElementById("content").appendChild(form);
-  makeNewProjectForm();
-}
-
-// make the form to add a project
-function makeNewProjectForm () {
-  let form2 = document.createElement("form");
-  form2.setAttribute('id', 'newProjectForm');
-  let projectNameInput = document.createElement("input");
-  projectNameInput.setAttribute("type", "text");
-  projectNameInput.setAttribute("id", "projectName");
-  projectNameInput.setAttribute("placeholder", "Project Name");
-  form2.appendChild(projectNameInput);
-  
-  let addProjectButton = document.createElement('button')
-  addProjectButton.setAttribute('id', 'addProject')
-  addProjectButton.setAttribute('type', 'button')
-  addProjectButton.classList.add('saveButton');
-  addProjectButton.textContent = 'Add New Project'
-  addProjectButton.addEventListener('click', (e) => {
-    addProject();
-  })
-  form2.appendChild(addProjectButton);
-
-  document.getElementById("content").appendChild(form2);
 }
 
 // get input from page, make a new task, put it in task array
