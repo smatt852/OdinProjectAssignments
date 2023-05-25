@@ -4,10 +4,15 @@ import { displayProjects } from './display'
 
 export { getTasks, getProjects, saveTask, addProject, storeTasks, storeProjects, removeDeletedProject }
 
-// get task array from local storage
-// const taskList = JSON.parse(localStorage.getItem('taskList')) || []
-// get project array from local storage
-// const projectList = JSON.parse(localStorage.getItem('projectList')) || []
+// task constructor
+function Task (taskName, deadline, details, complete, urgent, project) {
+  this.taskName = taskName
+  this.deadline = deadline
+  this.details = details
+  this.complete = complete
+  this.urgent = urgent
+  this.project = project
+}
 
 // get task array from local storage
 function getTasks () {
@@ -62,16 +67,6 @@ function addProject () {
 // save task array to local storage
 function storeTasks (taskList) {
   localStorage.setItem('taskList', JSON.stringify(taskList))
-}
-
-// task constructor
-function Task (taskName, deadline, details, complete, urgent, project) {
-  this.taskName = taskName
-  this.deadline = deadline
-  this.details = details
-  this.complete = complete
-  this.urgent = urgent
-  this.project = project
 }
 
 // save project array to local storage

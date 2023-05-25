@@ -142,6 +142,7 @@ form {
   height: 2.5vw;
   margin-top: 3vw;
   align-self: center;
+  background-color: #f8cb02;
 }
 .input {
   border: none;

@@ -1,7 +1,7 @@
 // DISPLAY.JS displays tasks and projects in lists and forms in content div
 
 import { getTasks, getProjects, saveTask, addProject, storeTasks, storeProjects, removeDeletedProject } from './readWrite.js'
-export { displayTasks, makeNewTaskForm, displayProjects, openEditForm, displayTodayTasks }
+export { displayTasks, makeNewTaskForm, displayProjects, displayTodayTasks }
 
 // put tasks in date order
 function sortFunction (a, b) {
@@ -12,8 +12,7 @@ function sortFunction (a, b) {
 
 // display a list of tasks, each with a delete and edit button
 function displayTasks () {
-  const allTasksButton = document.getElementById('allTasks')
-  allTasksButton.classList.add('active')
+  document.getElementById('allTasks').classList.add('active')
   const content = document.getElementById('content')
   content.innerHTML = ''
   const taskListElement = document.createElement('div')
@@ -22,7 +21,7 @@ function displayTasks () {
   const taskList = getTasks()
   taskList.sort(sortFunction)
   for (let i = 0; i < taskList.length; i++) {
-    const li = document.createElement('li')
+    const taskLi = document.createElement('li')
 
     // add delete button
     const deleteButton = document.createElement('button')
@@ -33,13 +32,12 @@ function displayTasks () {
       storeTasks(taskList)
       displayTasks()
     }
+
     // add edit button
     const editButton = document.createElement('button')
     editButton.classList.add('noButton')
     editButton.innerHTML = 'edit'
     editButton.onclick = function () {
-      const btn = document.getElementById('allTasks')
-      btn.classList.remove('active')
       openEditForm(i)
     }
 
@@ -47,20 +45,20 @@ function displayTasks () {
     const task = taskList[i]
     let name = task.taskName
     name = name.toUpperCase()
-    li.innerHTML = `${task.deadline}&nbsp&nbsp&nbsp${name}&nbsp${task.details}&nbsp<i>${task.project}</i>`
+    taskLi.innerHTML = `${task.deadline}&nbsp&nbsp&nbsp${name}&nbsp${task.details}&nbsp<i>${task.project}</i>`
     if (task.complete === 'complete') {
-      li.classList.add('complete')
+      taskLi.classList.add('complete')
     };
     if (task.urgent === 'urgent') {
-      li.classList.add('urgent')
+      taskLi.classList.add('urgent')
     };
 
     // put it all together and append it to the content div
-    li.appendChild(deleteButton)
-    li.appendChild(editButton)
-    taskListElement.appendChild(li)
-    taskListElement.classList.add('tasks')
+    taskLi.appendChild(deleteButton)
+    taskLi.appendChild(editButton)
+    taskListElement.appendChild(taskLi)
   }
+  taskListElement.classList.add('tasks')
   content.appendChild(taskListElement)
 }
 
@@ -163,7 +161,6 @@ function makeNewTaskForm (index, edit) {
   const saveTaskButton = document.createElement('button')
   saveTaskButton.setAttribute('id', 'saveTask')
   saveTaskButton.classList.add('saveButton')
-  saveTaskButton.classList.add('active')
   saveTaskButton.textContent = 'Save Task'
   saveTaskButton.addEventListener('click', (e) => {
     saveTask(index, edit)
@@ -229,6 +226,10 @@ function displayProjects () {
 
 // recall task from storage and put the values in the edit form
 function openEditForm (index) {
+  // unhighlight the All Tasks button while editing
+  const btn = document.getElementById('allTasks')
+  btn.classList.remove('active')
+  // pass edit=true through makeNewTaskForm to saveTasks because if youre saving a new task its just pushed to the array, otherwise the properties are saved
   const edit = true
   makeNewTaskForm(index, edit)
   const taskList = getTasks()

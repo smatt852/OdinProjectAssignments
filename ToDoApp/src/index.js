@@ -41,76 +41,29 @@ footer.innerHTML = `Copyright © ${new Date().getFullYear()} SLM`
 container.appendChild(footer)
 
 // Make the buttons for the header
-const allTasksButton = document.createElement('button')
-allTasksButton.setAttribute('id', 'allTasks')
-allTasksButton.textContent = 'All Tasks'
-allTasksButton.addEventListener('click', (e) => {
-  e.target.classList.add('active')
-  const btn1 = document.getElementById('newTask')
-  btn1.classList.remove('active')
-  const btn2 = document.getElementById('dueToday')
-  btn2.classList.remove('active')
-  const btn3 = document.getElementById('projects')
-  btn3.classList.remove('active')
-  const content = document.getElementById('content')
-  content.innerHTML = ''
-  displayTasks()
-})
+// make the buttons that call the functions to display and edit tasks
+function makeButton (id, text, parent, cssClass, func, ...args) {
+  const btn = document.createElement('button')
+  btn.setAttribute('id', id)
+  btn.textContent = text
+  const par = parent
+  par.appendChild(btn)
+  btn.classList.add(cssClass)
+  btn.onclick = func
+}
 
-const newTaskButton = document.createElement('button')
-newTaskButton.setAttribute('id', 'newTask')
-newTaskButton.textContent = 'New Task'
-newTaskButton.addEventListener('click', (e) => {
-  e.target.classList.add('active')
-  const btn1 = document.getElementById('allTasks')
-  btn1.classList.remove('active')
-  const btn2 = document.getElementById('dueToday')
-  btn2.classList.remove('active')
-  const btn3 = document.getElementById('projects')
-  btn3.classList.remove('active')
-  const content = document.getElementById('content')
-  content.innerHTML = ''
-  const edit = false
-  const index = null
-  makeNewTaskForm(index, edit)
-})
+makeButton('allTasks', 'All Tasks', linkbox, 'button', displayTasks)
+makeButton('newTask', 'New Task', linkbox, 'button', makeNewTaskForm, null, false)
+makeButton('dueToday', 'Due Today', linkbox, 'button', displayTodayTasks)
+makeButton('projects', 'Projects', linkbox, 'button', displayProjects)
 
-const dueTodayButton = document.createElement('button')
-dueTodayButton.setAttribute('id', 'dueToday')
-dueTodayButton.textContent = 'Due Today'
-dueTodayButton.addEventListener('click', (e) => {
-  e.target.classList.add('active')
-  const btn1 = document.getElementById('allTasks')
-  btn1.classList.remove('active')
-  const btn2 = document.getElementById('newTask')
-  btn2.classList.remove('active')
-  const btn3 = document.getElementById('projects')
-  btn3.classList.remove('active')
-  const content = document.getElementById('content')
-  content.innerHTML = ''
-  displayTodayTasks()
+// highlight the active button
+document.querySelectorAll('button').forEach((button) => {
+  button.addEventListener('click', (event) => {
+    document.querySelectorAll('button').forEach(e => e.classList.remove('active'))
+    button.classList.add('active')
+  })
 })
-
-const projectsButton = document.createElement('button')
-projectsButton.setAttribute('id', 'projects')
-projectsButton.textContent = 'Projects'
-projectsButton.addEventListener('click', (e) => {
-  e.target.classList.add('active')
-  const btn1 = document.getElementById('allTasks')
-  btn1.classList.remove('active')
-  const btn2 = document.getElementById('newTask')
-  btn2.classList.remove('active')
-  const btn3 = document.getElementById('dueToday')
-  btn3.classList.remove('active')
-  const content = document.getElementById('content')
-  content.innerHTML = ''
-  displayProjects()
-})
-
-linkbox.appendChild(allTasksButton)
-linkbox.appendChild(newTaskButton)
-linkbox.appendChild(dueTodayButton)
-linkbox.appendChild(projectsButton)
 
 window.onload = function () {
   displayTasks()
