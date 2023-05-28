@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap" rel="stylesheet">
+    <title>Slide in Menu</title>
+    <style>
+        :root {
+            font-size: 3vw;
+            display: flex;
+            flex: 1;
+            color: white;
+            font-family: 'Barlow Condensed'
+        }
+        .level1 {
+            justify-content: center;
+            align-items: center;
+            padding: 2vw;
+            background-color: dodgerblue;
+            position: absolute;
+            top: 0;
+            left: 0;
+            }
+        .level2 {
+            width: min-content;
+            white-space: nowrap;
+            padding: 2vw;
+            flex-direction: column;
+            background-color: dodgerblue;
+            position: absolute;
+            top: 0;
+            left: 200px;
+            transition: left 1s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        /* .level1:hover .level2{
+            left: 0;
+            opacity: 1;
+        } */
+        a:link, a:visited {
+            color: white;
+            text-decoration: none;
+        }
+        a:hover {
+            color: gold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="level1">Vacations
+            <div class="level2">
+                <div class="level2Item"><a href="#">Malaysia</a></div>
+                <div class="level2Item"><a href="#">California Redwoods</a></div>
+                <div class="level2Item"><a href="#">Grand Canyon</a></div>
+                <div class="level2Item"><a href="#">Ecuador</a></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    let level1=document.querySelector('.level1');
+    let level2=document.querySelector('.level2');
+    level1.addEventListener('mouseover', () => {
+        level2.setAttribute('style', 'opacity:1; left:0; pointer-events: initial');
+    })
+    level1.addEventListener('mouseout', () => {
+        level2.setAttribute('style', 'opacity:0; left: 200px;');
+    })
+
+</script>
+</html>
