@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        let picNum = 3;
+        for(let i = 1; i<= picNum; i++){
+            let link=document.createElement('link');
+            link.setAttribute('rel', 'preload');
+            link.setAttribute('href', `Images/Beau${i}.png`);
+            link.setAttribute('as', 'image');
+            document.head.appendChild(link);
+        }
+    </script>
+    <title>Slideshow 2</title>
+</head>
+<body>
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding:0;
+    }
+    .container {
+        display: grid;
+        grid-template-rows: 16fr 2fr;
+    }
+    .pic  {
+    grid-row: 1/2;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-color: grey;
+    background-position: center;
+    }
+    .box {
+        grid-row: 2/3;
+        background-color: lightgrey;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+    }
+    .dotbox {
+        grid-column: 2/3;
+        grid-row: 2/3;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+    .dot {
+        width: 10px;
+        height: 10px;
+        background-color: blue;
+        border-radius: 50%;
+        margin: 5px;
+    }
+    .fadeIn {
+        transition: all 5s;
+        -webkit-transition: all 5s;
+        opacity: 0;
+    }
+    .invisible {
+        opacity: 0;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <div id="pic" class="pic"></div>
+        <div class="box">
+            <div class="dotbox"></div>
+        </div>
+    </div>
+</body>
+<script>
+    
+    let dotbox = document.getElementsByClassName('dotbox')[0];
+    for(let i=0; i<picNum; i++) {
+        let dot = document.createElement('div');
+        dot.className = 'dot';
+        dotbox.appendChild(dot);
+    }
+
+    let pic = document.getElementById('pic');
+    let count = picNum;
+    let i = 0;
+    setInterval(function() {
+        count++;
+        i = count % picNum + 1;
+        pic.setAttribute('style', `background: url("Images/Beau${i}.png");
+        grid-row: 1/2;
+        background-size:contain; background-repeat: no-repeat; 
+        background-color: grey; background-position: center; opacity: 1`);
+        pic.classList.add('fadeIn');
+    }, 5000);
+</script>
+</html>
