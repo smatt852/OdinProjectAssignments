@@ -106,8 +106,9 @@
   font-size: 26px;
   color: #666;
   text-decoration: none;
+  border: none;
 }
-.btn:hover{
+.btn:hover, .selected{
 background: radial-gradient(circle,  #0ff 0%, #e0e5ec 60%);
   color: rgba(102,102,102,.5); 
 }
@@ -131,8 +132,9 @@ background: radial-gradient(circle,  #0ff 0%, #e0e5ec 60%);
         <button class="btn" onclick="backward()">
             <i class="fas fa-backward"></i>
         </button>
-        <a href="#" class="btn">1
-        </a>
+        <button class="btn" name="numBtn" id="1" onclick="selectPic(1)">1</button>
+        <button class="btn" name="numBtn" id="2" onclick="selectPic(2)">2</button>
+        <button class="btn" name="numBtn" id="3" onclick="selectPic(3)">3</button>
         <button class="btn" onclick="forward()">
             <i class="fas fa-forward" ></i>
         </button>
@@ -159,6 +161,14 @@ background: radial-gradient(circle,  #0ff 0%, #e0e5ec 60%);
     }
 
     function display () {
+
+        let selPic=document.getElementById(i);
+        let otherPic = document.getElementsByName('numBtn');
+        otherPic.forEach((element) => {
+            element.classList.remove('selected');
+        });
+        selPic.classList.add('selected');
+
         if (direction === 'backward') {
             i--;
             if(i < 1) {
@@ -170,6 +180,9 @@ background: radial-gradient(circle,  #0ff 0%, #e0e5ec 60%);
             if(i > picNum) {
                 i = 1;
             }
+        }
+        if (direction === 'neither') {
+            i = i;
         }
         pic.setAttribute('style', `background: url("Images/Beau${i}.png");
         grid-row: 1/2;
@@ -184,6 +197,10 @@ background: radial-gradient(circle,  #0ff 0%, #e0e5ec 60%);
         }, 5000);
     }
     
+    function selectPic(num) {
+        i = num;
+        direction = 'neither';
+    }
     
     scrolly();
 
