@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <script>
         let picNum = 3;
         for(let i = 1; i<= picNum; i++){
@@ -63,36 +64,131 @@
     .invisible {
         opacity: 0;
     }
+
+
+.frame{
+    grid-row: 2/3;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+   box-shadow:
+   -7px -7px 20px 0px #fff9,
+   -4px -4px 5px 0px #fff9,
+   7px 7px 20px 0px #0002,
+   4px 4px 5px 0px #0001,
+   inset 0px 0px 0px 0px #fff9,
+   inset 0px 0px 0px 0px #0001,
+   inset 0px 0px 0px 0px #fff9,        
+   inset 0px 0px 0px 0px #0001;
+ transition:box-shadow 0.6s cubic-bezier(.79,.21,.06,.81);
+   border-radius: 10px;
+}
+
+.btn{
+  height: 50px;
+  width: 50px;
+  border-radius: 3px;
+  background: #e0e5ec;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
+  box-shadow:
+   -7px -7px 20px 0px #fff9,
+   -4px -4px 5px 0px #fff9,
+   7px 7px 20px 0px #0002,
+   4px 4px 5px 0px #0001;
+ transition:box-shadow 0.6s cubic-bezier(.79,.21,.06,.81);
+  font-size: 26px;
+  color: #666;
+  text-decoration: none;
+}
+.btn:hover{
+background: radial-gradient(circle,  #0ff 0%, #e0e5ec 60%);
+  color: rgba(102,102,102,.5); 
+}
+.btn:active{
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.5),
+    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+}
+
 </style>
 </head>
 <body>
     <div class="container">
         <div id="pic" class="pic"></div>
-        <div class="box">
+        <!-- <div class="box">
             <div class="dotbox"></div>
-        </div>
+        </div> -->
+        <div class ="frame">
+   
+        <button class="btn" onclick="backward()">
+            <i class="fas fa-backward"></i>
+        </button>
+        <a href="#" class="btn">1
+        </a>
+        <button class="btn" onclick="forward()">
+            <i class="fas fa-forward" ></i>
+        </button>
     </div>
 </body>
 <script>
     
-    let dotbox = document.getElementsByClassName('dotbox')[0];
-    for(let i=0; i<picNum; i++) {
-        let dot = document.createElement('div');
-        dot.className = 'dot';
-        dotbox.appendChild(dot);
+    // let dotbox = document.getElementsByClassName('dotbox')[0];
+    // for(let i=0; i<picNum; i++) {
+    //     let dot = document.createElement('div');
+    //     dot.className = 'dot';
+    //     dotbox.appendChild(dot);
+    // }
+    let pic = document.getElementById('pic');
+    let i = 1;
+    let direction = 'forward';
+
+    function forward () {
+        direction = 'forward';
     }
 
-    let pic = document.getElementById('pic');
-    let count = picNum;
-    let i = 0;
-    setInterval(function() {
-        count++;
-        i = count % picNum + 1;
+    function backward () {
+        direction = 'backward';
+    }
+
+    function display () {
+        if (direction === 'backward') {
+            i--;
+            if(i < 1) {
+                i = picNum;
+            }
+        }
+        if (direction === 'forward') {
+            i++;
+            if(i > picNum) {
+                i = 1;
+            }
+        }
         pic.setAttribute('style', `background: url("Images/Beau${i}.png");
         grid-row: 1/2;
         background-size:contain; background-repeat: no-repeat; 
         background-color: grey; background-position: center; opacity: 1`);
         pic.classList.add('fadeIn');
-    }, 5000);
+        }    
+
+    function scrolly() {
+        setInterval(function() {
+            display();
+        }, 5000);
+    }
+    
+    
+    scrolly();
+
+        
+
+    
 </script>
 </html>
