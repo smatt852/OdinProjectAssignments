@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #image-container {
+            position: absolute;
+            top:0;
+            bottom:0;
+            left:0;
+            right:0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #image {
+            max-width: 100%;
+            max-height:100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        #image:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+        #button-container {
+            text-align: center;
+            position: absolute;
+            bottom: 20px;
+            left:0;
+            right:0;
+        }
+        .numbered-button {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ccc;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="image-container">
+        <img id="image" src="Images/Beau1.png" alt="image">
+    </div>
+    <div id="button-container">
+        <button class="numbered-button" onclick="changeImage(1)">1</button>
+        <button class="numbered-button" onclick="changeImage(2)">2</button>
+        <button class="numbered-button" onclick="changeImage(3)">3</button>
+    </div>
+</body>
+<script>
+    function changeImage(imageNumber) {
+        let image = document.getElementById('image');
+        image.src = `Images/Beau${imageNumber}.png`
+    }
+</script>
+</html>
