@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <script>
+        // preloads the images for smoother transitions
         let picNum = 3;
         for(let i = 1; i<= picNum; i++){
             let link=document.createElement('link');
@@ -15,89 +16,82 @@
             document.head.appendChild(link);
         }
     </script>
-    <title>Slideshow 2a</title>
-</head>
-<body>
+    <title>Slideshow</title>
+
 <style>
-body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
 #container {
     position: absolute;
     top:0;
-    bottom:0;
+    bottom:7vw;
     left:0;
     right:0;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(214, 212, 212);
+    background-color: white;
+    padding: 0.9vw;
 }
 #pic {
     opacity: 0;
     max-width: 100%;
     max-height:100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: box-shadow 0.3s ease-in-out;
-}
-#pic:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 #frame {
     text-align: center;
     position: absolute;
-    bottom: 20px;
+    bottom: 1vw;
     left:0;
     right:0;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    padding: 0.9vw;
 }
-.niceShadow {
+/* got the shadows and buttons from Free Frontend */
+.niceShadow { 
     box-shadow:
-   -7px -7px 20px 0px #fff9,
-   -4px -4px 5px 0px #fff9,
-   7px 7px 20px 0px #0002,
-   4px 4px 5px 0px #0001,
-   inset 0px 0px 0px 0px #fff9,
-   inset 0px 0px 0px 0px #0001,
-   inset 0px 0px 0px 0px #fff9,        
-   inset 0px 0px 0px 0px #0001;
- transition:box-shadow 0.6s cubic-bezier(.79,.21,.06,.81);
-   border-radius: 10px;
+    -7px -7px 20px 0px #fff9,
+    -4px -4px 5px 0px #fff9,
+    7px 7px 20px 0px #0002,
+    4px 4px 5px 0px #0001,
+    inset 0px 0px 0px 0px #fff9,
+    inset 0px 0px 0px 0px #0001,
+    inset 0px 0px 0px 0px #fff9,        
+    inset 0px 0px 0px 0px #0001;
+    transition:box-shadow 0.6s cubic-bezier(.79,.21,.06,.81);
+    border-radius: 10px;
 }
 .btn{
-  height: 50px;
-  width: 50px;
-  border-radius: 3px;
-  background: #e0e5ec;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  -webkit-tap-highlight-color: transparent;
-  box-shadow:
-   -7px -7px 20px 0px #fff9,
-   -4px -4px 5px 0px #fff9,
-   7px 7px 20px 0px #0002,
-   4px 4px 5px 0px #0001;
- transition:box-shadow 0.6s cubic-bezier(.79,.21,.06,.81);
-  font-size: 26px;
-  color: #666;
-  text-decoration: none;
-  border: none;
+    height: 3.5vw;
+    width: 3.5vw;
+    border-radius: 3px;
+    background: #e0e5ec;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+    box-shadow:
+        -7px -7px 20px 0px #fff9,
+        -4px -4px 5px 0px #fff9,
+        7px 7px 20px 0px #0002,
+        4px 4px 5px 0px #0001;
+    transition:box-shadow 0.6s cubic-bezier(.79,.21,.06,.81);
+    font-size: 2vw;
+    color: #666;
+    text-decoration: none;
+    border: none;
 }
 .btn:hover, .selected{
-background: radial-gradient(circle,  #0ff 0%, #e0e5ec 60%);
-  color: rgba(102,102,102,.5); 
+    background: radial-gradient(circle, #0ff 0%, #e0e5ec 60%);
+    color: rgba(102,102,102,.5); 
 }
 .btn:active{
-  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
-              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    box-shadow:  
+    4px 4px 6px 0 rgba(255,255,255,.5),
+    -4px -4px 6px 0 rgba(116, 125, 136, .2), 
     inset -4px -4px 6px 0 rgba(255,255,255,.5),
     inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
 }
@@ -111,16 +105,16 @@ background: radial-gradient(circle,  #0ff 0%, #e0e5ec 60%);
     }
 }
 .fadeIn {
-  animation:fadeIn 3s forwards;
+    animation:fadeIn 3s forwards;
 }
-
 </style>
 </head>
+
 <body>
     <div id="container" class = "niceShadow">
-        <img id="pic" src="Images/Beau1.png" alt="image">
+        <img id="pic" class = "niceShadow" src="Images/Beau1.png" alt="image">
     </div>
-    <div id="frame">
+    <div id="frame" class = "niceShadow">
         <button class="btn" onclick="backward()">
             <i class="fas fa-backward"></i>
         </button>
@@ -138,21 +132,26 @@ background: radial-gradient(circle,  #0ff 0%, #e0e5ec 60%);
     let i = 1;
     let direction = 'forward';
 
+    // when the img url changes, the fade in happens
     pic.addEventListener('load', () => { 
-        void(pic.offsetHeight)
+        void(pic.offsetHeight) // I don't know what this does but it makes the transition work
         pic.classList.add('fadeIn')
     });
 
+    // change variables when buttons are clicked to change direction or select a pic
     function forward () {
         direction = 'forward';
     }
-
     function backward () {
         direction = 'backward';
     }
+    function selectPic(num) {
+        i = num;
+        direction = 'neither';
+    }
 
     function display () {
-
+    // manage the scrolling behaviour
         if (direction === 'backward') {
             i--;
             if(i < 1) {
@@ -165,37 +164,37 @@ background: radial-gradient(circle,  #0ff 0%, #e0e5ec 60%);
                 i = 1;
             }
         }
+        // if a number button is clicked the pic is loaded and scrolling stops
         if (direction === 'neither') {
-            i = i;
-            pic.src = `Images/Beau${i}.png`
+            btnLight();
+            pic.src = `Images/Beau${i}.png`;
             clearInterval(start);
         }
-        pic.classList.remove('fadeIn')
-        pic.src = `Images/Beau${i}.png`
 
+        pic.classList.remove('fadeIn');
+        pic.src = `Images/Beau${i}.png`;
+        btnLight();
+    }
+    
+    // light up the current image number button
+    function btnLight() {
         let selPic=document.getElementById(i);
         let otherPic = document.getElementsByName('numBtn');
         otherPic.forEach((element) => {
             element.classList.remove('selected');
         });
         selPic.classList.add('selected');
-    }    
+    }
 
+
+    // call display() every 5s
     function scrolly() {
         let start = setInterval(function() {
             display();
         }, 5000);
     }
-    
-    function selectPic(num) {
-        i = num;
-        direction = 'neither';
-    }
-    
+        
     scrolly();
 
-        
-
-    
 </script>
 </html>
