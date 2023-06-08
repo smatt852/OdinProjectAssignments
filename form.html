@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Abel&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,500;1,200&display=swap"
+      rel="stylesheet"
+    />
+    <title>Form Validation</title>
+    <style>
+      * {
+        font-family: "Source Code Pro";
+        font-weight: 500;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #029c0a;
+      }
+      input:not(:placeholder-shown):not(:focus):invalid,
+      input[type="password"]:not(:placeholder-shown):not(:focus):invalid {
+        background-color: rgb(250, 3, 3);
+        color: white;
+      }
+      .error-message {
+        color: red;
+        font-family: "Abel";
+        font-size: 2.5vh;
+        line-height: 75%;
+      }
+      form {
+        width: 50vh;
+        padding: 10vh;
+        background-color: #fff;
+        border-radius: 20px;
+        box-shadow: 20px 20px 20px #016606;
+        margin: 5vh;
+      }
+      input,
+      input:valid,
+      input:focus {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #ccc;
+        outline: none;
+        background-color: transparent;
+        font-size: 4vh;
+      }
+      input[type="submit"] {
+        opacity: 0;
+      }
+      input[type="submit"]:enabled {
+        opacity: 1;
+        background-color: green;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="myForm">
+      <input
+        type="email"
+        id="email"
+        placeholder="email"
+        autocomplete="off"
+        required
+      />
+      <span class="error-message" id="emailError"></span>
+      <!-- the span tag just pops an error message below the input -->
+
+      <br /><br />
+      <input
+        type="text"
+        id="country"
+        autocomplete="off"
+        placeholder="Country"
+        required
+      />
+      <span class="error-message" id="countryError"></span>
+      <br /><br />
+      <input
+        type="text"
+        id="zipCode"
+        placeholder="Zip Code"
+        autocomplete="off"
+        required
+        pattern="[0-9]{5}"
+      />
+      <span class="error-message" id="zipCodeError"></span>
+      <br /><br />
+      <input
+        type="password"
+        id="password"
+        placeholder="Password"
+        autocomplete="off"
+        required
+        minlength="6"
+        pattern="(?=.*[A-Z])(?=.*\d).+"
+      />
+      <span class="error-message" id="passwordError"></span>
+      <br /><br />
+      <input
+        type="password"
+        id="passwordConfirmation"
+        placeholder="Confirm Password"
+        autocomplete="off"
+        required
+        minlength="6"
+      />
+      <span class="error-message" id="passwordConfirmationError"></span>
+      <br /><br />
+      <input type="submit" value="Submit" disabled="true" id="submitButton" />
+      <!-- the submit button stays disabled until the form is valid -->
+    </form>
+
+    <script>
+      const form = document.getElementById("myForm");
+      const emailInput = document.getElementById("email");
+      const countryInput = document.getElementById("country");
+      const zipCodeInput = document.getElementById("zipCode");
+      const passwordInput = document.getElementById("password");
+      const passwordConfirmationInput = document.getElementById(
+        "passwordConfirmation"
+      );
+      const submitButton = document.getElementById("submitButton");
+
+      emailInput.addEventListener("input", validateEmail);
+      countryInput.addEventListener("input", validateCountry);
+      zipCodeInput.addEventListener("input", validateZipCode);
+      passwordInput.addEventListener("input", validatePassword);
+      passwordConfirmationInput.addEventListener(
+        "input",
+        validatePasswordConfirmation
+      );
+
+      function validateEmail() {
+        if (emailInput.validity.valid) {
+          // validity.valid is from the Constraint Validation API,
+          // it checks validity against the pattern given
+          // and if the input is filled in
+          emailInput.classList.remove("invalid");
+          emailError.textContent = "";
+        } else {
+          emailInput.classList.add("invalid");
+          emailError.textContent = "Please enter a valid email address.";
+          //   this error msg appears in the span tag beneath the input
+        }
+      }
+
+      function validateCountry() {
+        if (countryInput.validity.valid) {
+          countryInput.classList.remove("invalid");
+          countryError.textContent = "";
+        } else {
+          countryInput.classList.add("invalid");
+          countryError.textContent = "Please enter your country.";
+        }
+      }
+
+      function validateZipCode() {
+        if (zipCodeInput.validity.valid) {
+          zipCodeInput.classList.remove("invalid");
+          zipCodeError.textContent = "";
+        } else {
+          zipCodeInput.classList.add("invalid");
+          zipCodeError.textContent = "Please enter a valid 5-digit zip code.";
+        }
+      }
+
+      function validatePassword() {
+        if (passwordInput.validity.valid) {
+          passwordInput.classList.remove("invalid");
+          passwordError.textContent = "";
+        } else {
+          passwordInput.classList.add("invalid");
+          passwordError.textContent =
+            "Please enter a password with at least 6 characters, one capital letter, and one number.";
+        }
+      }
+
+      function validatePasswordConfirmation() {
+        if (passwordConfirmationInput.value === passwordInput.value) {
+          passwordConfirmationInput.classList.remove("invalid");
+          passwordConfirmationError.textContent = "";
+        } else {
+          passwordConfirmationInput.classList.add("invalid");
+          passwordConfirmationError.textContent =
+            "Please enter the same password as above.";
+        }
+      }
+
+      function showAllErrors() {
+        validateEmail();
+        validateCountry();
+        validateZipCode();
+        validatePassword();
+        validatePasswordConfirmation();
+      }
+
+      form.addEventListener("input", function (event) {
+        // using a listener on input checks validity before the form is submitted
+
+        if (form.checkValidity() === false) {
+          // checkValidity() is from the Constraint Validation API,
+          // here it is checking if all fields are validated
+
+          showAllErrors();
+        } else if (
+          form.checkValidity() === true &&
+          passwordConfirmationInput.value === passwordInput.value
+        ) {
+          submitButton.disabled = false;
+        }
+      });
+
+      form.addEventListener("submit", function (event) {
+        if (
+          form.checkValidity() === true &&
+          passwordConfirmationInput.value === passwordInput.value
+        ) {
+          event.preventDefault();
+          alert("High five! The form is submitted.");
+
+          // reset the form
+          emailInput.value = null;
+          countryInput.value = null;
+          zipCodeInput.value = null;
+          passwordInput.value = null;
+          passwordConfirmationInput.value = null;
+          submitButton.disabled = true;
+        }
+      });
+    </script>
+  </body>
+</html>
