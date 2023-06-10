@@ -25,24 +25,23 @@
         height: 100vh;
         background-color: #029c0a;
       }
-      .invalid {
-        background-color: rgb(250, 3, 3);
-        color: white;
-      }
       .error-message {
         color: red;
         font-family: "Abel";
         font-size: 2.5vh;
+        line-height: 90%;
       }
       form {
         display: grid;
-        grid-template-rows: repeat(6 minmax(1vh 0.6fr));
-        padding: 9vh;
+        grid-template-rows: 10vh 1vh 10vh 10vh 1vh 10vh 1vh 10vh 1vh 25vh;
+        padding: 6vh;
         width: 70vh;
         height: 80vh;
         background-color: #fff;
         border-radius: 20px;
         box-shadow: 20px 20px 20px #016606;
+        margin-bottom: 5vh;
+        margin-top: 5vh;
       }
       input,
       select,
@@ -54,22 +53,47 @@
         outline: none;
         background-color: transparent;
         color: black;
+        padding: 0vh 0vh 0vh 0vh;
+        margin-top: 2vh;
       }
-      input[type="submit"] {
+      button {
         opacity: 0;
       }
-      input[type="submit"]:enabled {
+      button:enabled {
         opacity: 1;
         background-color: green;
         border: none;
         border-radius: 5px;
         color: #fff;
         font-weight: bold;
-        align-items: center;
-        justify-content: center;
+        align-self: center;
+        width: 20vh;
+        height: 10vh;
+        box-shadow: 20px 20px 20px #016606;
+        justify-self: center;
       }
       select {
         color: rgb(105, 104, 104);
+      }
+      @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+        * {
+          font-size: 4vw;
+        }
+        .error-message {
+          font-size: 2vw;
+        }
+        form {
+          grid-template-rows: 8vw 1.5vw 9vw 8vw 1.5vw 8vw 1.5vw 8vw 1.5vw 30vw;
+          padding: 6vw;
+          width: 70vw;
+          height: 80vw;
+          margin-bottom: 5vw;
+          margin-top: 5vw;
+        }
+        button:enabled {
+          width: 25vw;
+          height: 11vw;
+        }
       }
     </style>
   </head>
@@ -81,12 +105,13 @@
         placeholder="email"
         autocomplete="off"
         required
+        style="grid-row: 1/2"
       />
-      <span class="error-message" id="emailError"></span>
+      <span class="error-message" style="grid-row: 2/3" id="emailError"></span>
       <!-- the span tag just pops an error message below the input -->
 
       <br /><br />
-      <select id="Country" placeholder="Country" required>
+      <select id="Country" placeholder="Country" required style="grid-row: 3/4">
         <option value="" disabled selected>Please select your country</option>
         <option value="Can">Canada</option>
         <option value="US">United States</option>
@@ -99,8 +124,13 @@
         placeholder="Zip Code"
         autocomplete="off"
         required
+        style="grid-row: 4/5"
       />
-      <span class="error-message" id="zipCodeError"></span>
+      <span
+        style="grid-row: 5/6"
+        class="error-message"
+        id="zipCodeError"
+      ></span>
       <br /><br />
       <input
         type="password"
@@ -110,8 +140,13 @@
         required
         minlength="6"
         pattern="(?=.*[A-Z])(?=.*\d).+"
+        style="grid-row: 6/7"
       />
-      <span class="error-message" id="passwordError"></span>
+      <span
+        class="error-message"
+        style="grid-row: 7/8"
+        id="passwordError"
+      ></span>
       <br /><br />
       <input
         type="password"
@@ -119,10 +154,22 @@
         placeholder="Confirm Password"
         autocomplete="off"
         required
+        style="grid-row: 8/9"
       />
-      <span class="error-message" id="passwordConfirmationError"></span>
+      <span
+        class="error-message"
+        style="grid-row: 9/10"
+        id="passwordConfirmationError"
+      ></span>
       <br /><br />
-      <input type="submit" value="Submit" disabled="true" id="submitButton" />
+      <button
+        type="submit"
+        style="grid-row: 10/11"
+        disabled="true"
+        id="submitButton"
+      >
+        Submit
+      </button>
       <!-- the submit button stays disabled until the form is valid -->
     </form>
 
@@ -159,10 +206,8 @@
           // validity.valid is from the Constraint Validation API,
           // it checks validity against the pattern given
           // and if the input is filled in
-          emailInput.classList.remove("invalid");
           emailError.textContent = "";
         } else {
-          emailInput.classList.add("invalid");
           emailError.textContent = "Please enter a valid email address.";
           //   this error msg appears in the span tag beneath the input
         }
@@ -195,10 +240,8 @@
 
       function validatePassword() {
         if (passwordInput.validity.valid) {
-          passwordInput.classList.remove("invalid");
           passwordError.textContent = "";
         } else {
-          passwordInput.classList.add("invalid");
           passwordError.textContent =
             "Please enter a password with at least 6 characters, one capital letter, and one number.";
         }
@@ -206,20 +249,11 @@
 
       function validatePasswordConfirmation() {
         if (passwordConfirmationInput.value === passwordInput.value) {
-          passwordConfirmationInput.classList.remove("invalid");
           passwordConfirmationError.textContent = "";
         } else {
-          passwordConfirmationInput.classList.add("invalid");
           passwordConfirmationError.textContent =
             "Please enter the same password as above.";
         }
-      }
-
-      function showAllErrors() {
-        validateEmail();
-        validateZipCode();
-        validatePassword();
-        validatePasswordConfirmation();
       }
 
       form.addEventListener("input", function (event) {
