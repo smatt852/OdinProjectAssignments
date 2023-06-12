@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Abel&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,500;1,200&display=swap"
+      rel="stylesheet"
+    />
+    <title>Form Validation</title>
+    <style>
+      * {
+        font-family: "Source Code Pro";
+        font-weight: 500;
+        font-size: 4vh;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #029c0a;
+      }
+      .red {
+        background-color: red;
+        color: white;
+      }
+      .error {
+        color: red;
+        font-family: "Abel";
+        align-self: center;
+        justify-self: center;
+      }
+      form {
+        display: grid;
+        grid-template-rows: 10vh 10vh 10vh 10vh 10vh 15vh 12vh;
+        padding: 6vh;
+        width: 70vh;
+        height: 80vh;
+        background-color: #fff;
+        border-radius: 20px;
+        box-shadow: 20px 20px 20px #016606;
+        margin-bottom: 5vh;
+        margin-top: 5vh;
+      }
+      select,
+      input {
+        width: 95%;
+        border: none;
+        border-bottom: 1px solid #ccc;
+        outline: none;
+        background-color: transparent;
+        color: black;
+        padding: 0vh 0vh 0vh 0vh;
+        margin-top: 2vh;
+      }
+      button {
+        background-color: green;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        font-weight: bold;
+        align-self: center;
+        width: 20vh;
+        height: 10vh;
+        box-shadow: 20px 20px 20px #016606;
+        justify-self: center;
+      }
+      select {
+        color: rgb(105, 104, 104);
+      }
+      .box {
+        display: none;
+      }
+      @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+        * {
+          font-size: 4vw;
+        }
+        form {
+          grid-template-rows: 8vw 1.5vw 9vw 8vw 1.5vw 8vw 1.5vw 8vw 1.5vw 10vw 20vw;
+          padding: 6vw;
+          width: 70vw;
+          height: 80vw;
+          margin-bottom: 5vw;
+          margin-top: 5vw;
+        }
+        button {
+          width: 25vw;
+          height: 11vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <form
+      id="formy"
+      novalidate
+      action="#"
+      method="post"
+      onkeydown="return event.key != 'Enter';"
+    >
+      <input
+        type="email"
+        id="email"
+        placeholder="email"
+        autocomplete="off"
+        required
+        style="grid-row: 1/2"
+      />
+      <select id="Country" placeholder="Country" required style="grid-row: 2/3">
+        <option value="" disabled selected>Please select your country</option>
+        <option value="Canada">Canada</option>
+        <option value="US">US</option>
+      </select>
+      <input
+        type="text"
+        id="zipCode"
+        placeholder="Zip Code"
+        autocomplete="off"
+        required
+        style="grid-row: 3/4"
+      />
+      <input
+        type="password"
+        id="password"
+        placeholder="Password"
+        autocomplete="off"
+        required
+        style="grid-row: 4/5"
+      />
+      <input
+        type="password"
+        id="passwordConfirmation"
+        placeholder="Confirm Password"
+        autocomplete="off"
+        required
+        style="grid-row: 5/6"
+      />
+      <button
+        type="submit"
+        style="grid-row: 7/8"
+        id="submit"
+        style="display: none"
+      >
+        Submit
+      </button>
+      <div id="errorBox" class=".box" style="grid-row: 6/7"></div>
+    </form>
+
+    <script>
+      // Function to validate the email
+      function validateEmail() {
+        const email = document.getElementById("email");
+
+        // Remove previous error message and CSS class, if any
+        const errorElement = email.nextElementSibling;
+        if (errorElement && errorElement.classList.contains("error")) {
+          email.parentNode.removeChild(errorElement);
+        }
+
+        email.classList.remove("red"); // Remove invalid CSS class
+
+        if (email.value.trim() !== "") {
+          const regex =
+            /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+          if (!regex.test(email.value)) {
+            showError(email, "Please enter a valid email address.");
+            return false;
+          }
+        }
+        return true;
+      }
+
+      // Function to validate the zipcode based on the selected country
+      function validateZipCode() {
+        const country = document.getElementById("Country").value;
+        const zipcode = document.getElementById("zipCode");
+
+        // Remove previous error message and CSS class, if any
+        const errorElement = zipcode.nextElementSibling;
+        if (errorElement && errorElement.classList.contains("error")) {
+          zipcode.parentNode.removeChild(errorElement);
+        }
+
+        zipcode.classList.remove("red"); // Remove invalid CSS class
+
+        if (zipcode.value.trim() !== "") {
+          if (country === "Canada") {
+            const regex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
+            if (!regex.test(zipcode.value)) {
+              showError(
+                zipcode,
+                "Please enter a valid Canadian postal code (e.g., A1A 1A1)."
+              );
+              return false;
+            }
+          } else if (country === "US") {
+            const regex = /^\d{5}(?:[-\s]\d{4})?$/;
+            if (!regex.test(zipcode.value)) {
+              showError(
+                zipcode,
+                "Please enter a valid US ZIP code (e.g., 12345 or 12345-6789)."
+              );
+              return false;
+            }
+          }
+        }
+
+        return true;
+      }
+
+      function validatePassword() {
+        const password = document.getElementById("password");
+
+        // Remove previous error message and CSS class, if any
+        const errorElement = password.nextElementSibling;
+        if (errorElement && errorElement.classList.contains("error")) {
+          password.parentNode.removeChild(errorElement);
+        }
+
+        password.classList.remove("red"); // Remove invalid CSS class
+
+        if (password.value.trim() !== "") {
+          const regex = /(?=.*[A-Z])(?=.*\d).+/;
+          if (!regex.test(password.value)) {
+            showError(
+              password,
+              "Password must be longer than 6 characters, contain at least one capital and one number."
+            );
+            return false;
+          }
+        }
+        return true;
+      }
+
+      function validatePasswordConfirmation() {
+        const passwordC = document.getElementById("passwordConfirmation");
+        const password = document.getElementById("password");
+
+        // Remove previous error message and CSS class, if any
+        const errorElement = passwordC.nextElementSibling;
+        if (errorElement && errorElement.classList.contains("error")) {
+          passwordC.parentNode.removeChild(errorElement);
+        }
+
+        passwordC.classList.remove("red"); // Remove invalid CSS class
+
+        if (passwordC.value.trim() !== "") {
+          if (passwordC.value !== password.value) {
+            showError(passwordC, "Please enter the same password.");
+            return false;
+          }
+        }
+        return true;
+      }
+
+      // Function to show error message and mark input as invalid
+      function showError(x, errorMessage) {
+        x.classList.add("red");
+        const errorBox = document.getElementById("errorBox");
+        errorBox.style.display = "block";
+        errorBox.classList.add("error");
+        errorBox.textContent = errorMessage;
+      }
+
+      function noneEmpty() {
+        let result = [];
+        let inputs = document.getElementsByTagName("input");
+        for (let i = 0; i < inputs.length; i++) {
+          result[i] = inputs[i].value;
+        }
+        if (result.includes("")) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+
+      function toggleSubmitButton() {
+        const isValid =
+          validateZipCode() &&
+          validateEmail() &&
+          validatePassword() &&
+          validatePasswordConfirmation();
+        const submitButton = document.getElementById("submit");
+        const errorBox = document.getElementById("errorBox");
+        if (isValid && noneEmpty()) {
+          errorBox.setAttribute("style", "opacity: 0;");
+          submitButton.style.display = "block";
+        } else {
+          submitButton.style.display = "none";
+          errorBox.setAttribute("style", "opacity: 1;");
+        }
+      }
+
+      window.onload = () => {
+        const submitButton = document.getElementById("submit");
+        submitButton.style.display = "none";
+      };
+
+      // Event listeners to handle input changes and form submission
+
+      document
+        .getElementById("Country")
+        .addEventListener("change", toggleSubmitButton);
+
+      document.getElementById("zipCode").addEventListener("blur", function () {
+        validateZipCode();
+        toggleSubmitButton();
+      });
+
+      document.getElementById("email").addEventListener("blur", function () {
+        validateEmail();
+        toggleSubmitButton();
+      });
+
+      document.getElementById("password").addEventListener("blur", function () {
+        validatePassword();
+        toggleSubmitButton();
+      });
+
+      document
+        .getElementById("passwordConfirmation")
+        .addEventListener("blur", function () {
+          validatePasswordConfirmation();
+          toggleSubmitButton();
+        });
+
+      document
+        .getElementById("submit")
+        .addEventListener("click", function (event) {
+          // reset the form
+          document.getElementById("email").value = null;
+          document.getElementById("Country").value = "";
+          document.getElementById("zipCode").value = null;
+          document.getElementById("password").value = null;
+          document.getElementById("passwordConfirmation").value = null;
+          toggleSubmitButton();
+          event.preventDefault();
+          alert("High five! The form is submitted.");
+        });
+    </script>
+  </body>
+</html>
