@@ -152,18 +152,13 @@
     </form>
 
     <script>
+      const errorBox = document.getElementById("errorBox");
+      const submitButton = document.getElementById("submit");
+
       // Function to validate the email
       function validateEmail() {
         const email = document.getElementById("email");
-
-        // Remove previous error message and CSS class, if any
-        const errorElement = email.nextElementSibling;
-        if (errorElement && errorElement.classList.contains("error")) {
-          email.parentNode.removeChild(errorElement);
-        }
-
-        email.classList.remove("red"); // Remove invalid CSS class
-
+        email.classList.remove("red");
         if (email.value.trim() !== "") {
           const regex =
             /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
@@ -172,6 +167,7 @@
             return false;
           }
         }
+        errorBox.style.display = "none";
         return true;
       }
 
@@ -179,15 +175,7 @@
       function validateZipCode() {
         const country = document.getElementById("Country").value;
         const zipcode = document.getElementById("zipCode");
-
-        // Remove previous error message and CSS class, if any
-        const errorElement = zipcode.nextElementSibling;
-        if (errorElement && errorElement.classList.contains("error")) {
-          zipcode.parentNode.removeChild(errorElement);
-        }
-
-        zipcode.classList.remove("red"); // Remove invalid CSS class
-
+        zipcode.classList.remove("red");
         if (zipcode.value.trim() !== "") {
           if (country === "Canada") {
             const regex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
@@ -209,21 +197,13 @@
             }
           }
         }
-
+        errorBox.style.display = "none";
         return true;
       }
 
       function validatePassword() {
         const password = document.getElementById("password");
-
-        // Remove previous error message and CSS class, if any
-        const errorElement = password.nextElementSibling;
-        if (errorElement && errorElement.classList.contains("error")) {
-          password.parentNode.removeChild(errorElement);
-        }
-
-        password.classList.remove("red"); // Remove invalid CSS class
-
+        password.classList.remove("red");
         if (password.value.trim() !== "") {
           const regex = /(?=.*[A-Z])(?=.*\d).+/;
           if (!regex.test(password.value)) {
@@ -234,34 +214,27 @@
             return false;
           }
         }
+        errorBox.style.display = "none";
         return true;
       }
 
       function validatePasswordConfirmation() {
         const passwordC = document.getElementById("passwordConfirmation");
         const password = document.getElementById("password");
-
-        // Remove previous error message and CSS class, if any
-        const errorElement = passwordC.nextElementSibling;
-        if (errorElement && errorElement.classList.contains("error")) {
-          passwordC.parentNode.removeChild(errorElement);
-        }
-
-        passwordC.classList.remove("red"); // Remove invalid CSS class
-
+        passwordC.classList.remove("red");
         if (passwordC.value.trim() !== "") {
           if (passwordC.value !== password.value) {
             showError(passwordC, "Please enter the same password.");
             return false;
           }
         }
+        errorBox.style.display = "none";
         return true;
       }
 
       // Function to show error message and mark input as invalid
       function showError(x, errorMessage) {
         x.classList.add("red");
-        const errorBox = document.getElementById("errorBox");
         errorBox.style.display = "block";
         errorBox.classList.add("error");
         errorBox.textContent = errorMessage;
@@ -286,46 +259,51 @@
           validateEmail() &&
           validatePassword() &&
           validatePasswordConfirmation();
-        const submitButton = document.getElementById("submit");
-        const errorBox = document.getElementById("errorBox");
         if (isValid && noneEmpty()) {
-          errorBox.setAttribute("style", "opacity: 0;");
+          errorBox.style.display = "none";
           submitButton.style.display = "block";
-        } else {
-          submitButton.style.display = "none";
-          errorBox.setAttribute("style", "opacity: 1;");
         }
       }
 
       window.onload = () => {
-        const submitButton = document.getElementById("submit");
         submitButton.style.display = "none";
       };
 
       // Event listeners to handle input changes and form submission
 
+      // remove error msg when click outside input
+      let inputs = document.getElementsByTagName("input");
+      for (let i = 0; i < inputs.length; i++) {
+        inputs[i].addEventListener("blur", function () {
+          let errorBox = document.getElementById("errorBox");
+          errorBox.style.display = "none";
+        });
+      }
+
       document
         .getElementById("Country")
         .addEventListener("change", toggleSubmitButton);
 
-      document.getElementById("zipCode").addEventListener("blur", function () {
+      document.getElementById("zipCode").addEventListener("keyup", function () {
         validateZipCode();
         toggleSubmitButton();
       });
 
-      document.getElementById("email").addEventListener("blur", function () {
+      document.getElementById("email").addEventListener("keyup", function () {
         validateEmail();
         toggleSubmitButton();
       });
 
-      document.getElementById("password").addEventListener("blur", function () {
-        validatePassword();
-        toggleSubmitButton();
-      });
+      document
+        .getElementById("password")
+        .addEventListener("keyup", function () {
+          validatePassword();
+          toggleSubmitButton();
+        });
 
       document
         .getElementById("passwordConfirmation")
-        .addEventListener("blur", function () {
+        .addEventListener("keyup", function () {
           validatePasswordConfirmation();
           toggleSubmitButton();
         });
@@ -339,9 +317,10 @@
           document.getElementById("zipCode").value = null;
           document.getElementById("password").value = null;
           document.getElementById("passwordConfirmation").value = null;
-          toggleSubmitButton();
           event.preventDefault();
           alert("High five! The form is submitted.");
+          errorBox.style.display = "none";
+          submitButton.style.display = "none";
         });
     </script>
   </body>
