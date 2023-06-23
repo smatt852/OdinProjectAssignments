@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+      body {
+        height: 90vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .imgDiv {
+        display: flex;
+        flex: 10;
+        align-items: center;
+        justify-content: center;
+      }
+      .buttonDiv {
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="imgDiv">
+      <img src="#" />
+    </div>
+    <div class="buttonDiv">
+      <input
+        type="text"
+        id="q"
+        name="q"
+        placeholder="Search"
+        value="cavalier"
+      />
+      <button onclick="searchGifs()">Search</button>
+    </div>
+
+    <script>
+      function searchGifs() {
+        const img = document.querySelector("img");
+        const q = document.getElementById("q");
+        let url1 = `https://api.giphy.com/v1/gifs/translate?api_key=qTYfz57g8oNn3ot2rMrI7jkYJsHRybFo&s=${q.value}`;
+        console.log(url1);
+        fetch(url1, { mode: "cors" })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (response) {
+            img.src = response.data.images.original.url;
+          })
+          .catch(function (err) {
+            alert("Try again");
+          });
+      }
+
+      window.onload = function () {
+        searchGifs();
+      };
+    </script>
+  </body>
+</html>
