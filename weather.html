@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Ysabeau+Infant&display=swap"
+      rel="stylesheet"
+    />
+    <title>Weather</title>
+    <style>
+      * {
+        font-family: "Ysabeau Infant";
+      }
+      body {
+        height: 100vh;
+        background: rgba(0, 0, 255, 0.247);
+        background: -webkit-linear-gradient(rgba(0, 0, 255, 0.247), white);
+        background: -moz-linear-gradient(rgba(0, 0, 255, 0.247), white);
+        background: linear-gradient(rgba(0, 0, 255, 0.247), white);
+      }
+      .container {
+        height: 90vh;
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+        align-content: center;
+        justify-items: center;
+        gap: 4vw;
+      }
+      .conditionBox {
+        display: grid;
+        grid-row: 1/2;
+        grid-template-rows: 3fr 3fr 3fr 0.5fr 0.5fr;
+        align-items: center;
+        justify-items: center;
+      }
+      .otherBox {
+        display: grid;
+        grid-row: 2/3;
+        grid-template-columns: 1fr 1fr 1fr;
+        align-items: center;
+        justify-items: center;
+      }
+      .buttonBox {
+        display: grid;
+        grid-row: 3/4;
+        grid-template-columns: 3fr 1fr;
+      }
+      #wIcon {
+        grid-row: 1/2;
+      }
+      .condition {
+        grid-row: 2/3;
+        font-size: 5vw;
+        font-family: "Caprasimo";
+      }
+      .temp {
+        grid-row: 3/4;
+        font-size: 5vw;
+        font-family: "Caprasimo";
+      }
+      .humBox {
+        grid-row: 4/5;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .other1 {
+        grid-column: 1/2;
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+      }
+      .other2 {
+        grid-column: 2/3;
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+      }
+      .other3 {
+        grid-column: 3/4;
+        display: grid;
+        grid-template-columns: 5.5vw 4vw 7vw;
+      }
+      .forecast1 {
+        grid-column: 1/2;
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+      }
+      .forecast2 {
+        grid-column: 2/3;
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+      }
+      .forecast3 {
+        grid-column: 3/4;
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+      }
+      @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
+        .container {
+          grid-template-rows: 4fr 5fr 0.4fr;
+          gap: 5vw;
+        }
+        .condition {
+          font-size: 17vw;
+        }
+        .temp {
+          font-size: 17vw;
+        }
+        .otherBox {
+          grid-template-rows: 1fr 1fr 1fr;
+          grid-template-columns: none;
+          align-items: center;
+          justify-items: center;
+        }
+        .other1 {
+          grid-row: 1/2;
+          grid-column: none;
+        }
+        .other2 {
+          grid-row: 2/3;
+          grid-column: none;
+        }
+        .other3 {
+          grid-row: 3/4;
+          grid-column: none;
+          display: grid;
+          grid-template-columns: 18vw 11vw 25vw;
+        }
+      }
+      @media only screen and (device-width: 896px) and (device-height: 414px) and (-webkit-device-pixel-ratio: 3) {
+        .other3 {
+          grid-template-columns: 9vw 6vw 11vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container" class="container">
+      <div class="conditionBox">
+        <div class="condition" id="condition"></div>
+        <img id="wIcon" src="#" />
+        <div class="temp" id="temp"></div>
+        <div class="humBox" id="humBox">
+          <div class="fahrenheit" id="fahrenheit"></div>
+          <div class="humidity" id="humidity"></div>
+        </div>
+        <div class="chanceRain" id="chanceRain"></div>
+      </div>
+      <div class="otherBox">
+        <div class="other1" id="other1">
+          <div class="precip" id="precip"></div>
+          <div class="feelsLike" id="feelsLike"></div>
+          <div class="wind" id="wind"></div>
+        </div>
+        <div class="other2" id="other2">
+          <div id="highTide1"></div>
+          <div id="highTide2"></div>
+          <div id="sunrise"></div>
+          <div id="sunset"></div>
+        </div>
+        <div class="other3" id="other3">
+          <div id="forecast1">
+            <div id="forecast">forecast</div>
+            <div id="tomorrow">tomorrow</div>
+            <div id="next day">next day</div>
+          </div>
+          <div id="forecast2">
+            <div id="tempForecast">temp</div>
+            <div id="tomorrowTemp"></div>
+            <div id="nextDayTemp"></div>
+          </div>
+          <div id="forecast3">
+            <div id="chanceRainForecast">chance of rain</div>
+            <div id="tomorrowChanceRain"></div>
+            <div id="nextDayChanceRain"></div>
+          </div>
+        </div>
+      </div>
+      <div class="buttonBox">
+        <input
+          type="text"
+          id="q"
+          name="q"
+          placeholder="Search"
+          value="Halifax"
+        />
+        <button onclick="weather()">Weather</button>
+      </div>
+    </div>
+  </body>
+  <script>
+    function weather() {
+      const q = document.getElementById("q");
+      let url1 = `https://api.weatherapi.com/v1/current.json?key=0864bf6ac71c4592b00120411232506&q=${q.value}`;
+      fetch(url1, { mode: "cors" })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (response) {
+          console.log(response);
+          document.getElementById("condition").textContent =
+            response.current.condition.text;
+          document.getElementById(
+            "wIcon"
+          ).src = `http:${response.current.condition.icon}`;
+          document.getElementById(
+            "temp"
+          ).textContent = `${response.current.temp_c} C`;
+          document.getElementById(
+            "fahrenheit"
+          ).textContent = `${response.current.temp_f} F`;
+          document.getElementById(
+            "humidity"
+          ).textContent = `humidty ${response.current.humidity}`;
+          document.getElementById(
+            "feelsLike"
+          ).textContent = `feels like  ${response.current.feelslike_c} C`;
+          document.getElementById(
+            "precip"
+          ).textContent = `precip  ${response.current.precip_mm} mm`;
+          document.getElementById(
+            "wind"
+          ).textContent = `wind  ${response.current.wind_kph} km`;
+        });
+      let url2 = `https://api.weatherapi.com/v1/marine.json?key=0864bf6ac71c4592b00120411232506&q=${q.value}`;
+      fetch(url2, { mode: "cors" })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (response) {
+          document.getElementById(
+            "highTide1"
+          ).textContent = `high tide  ${response.forecast.forecastday[0].day.tides[0].tide[0].tide_time.slice(
+            -5
+          )}`;
+          document.getElementById(
+            "highTide2"
+          ).textContent = `high tide  ${response.forecast.forecastday[0].day.tides[0].tide[2].tide_time.slice(
+            -5
+          )}`;
+          document.getElementById(
+            "sunrise"
+          ).textContent = `sunrise  ${response.forecast.forecastday[0].astro.sunrise.slice(
+            -7
+          )}`;
+          document.getElementById(
+            "sunset"
+          ).textContent = `sunset  ${response.forecast.forecastday[0].astro.sunset.slice(
+            -7
+          )}`;
+        });
+      let url3 = `https://api.weatherapi.com/v1/forecast.json?key=0864bf6ac71c4592b00120411232506&days=3&q=${q.value}`;
+      fetch(url3, { mode: "cors" })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (response) {
+          console.log(
+            response.forecast.forecastday[1].day.daily_chance_of_rain
+          );
+          document.getElementById(
+            "chanceRain"
+          ).textContent = `chance of rain ${response.forecast.forecastday[0].day.daily_chance_of_rain} %`;
+          document.getElementById(
+            "tomorrowTemp"
+          ).textContent = `${response.forecast.forecastday[1].day.avgtemp_c} C`;
+          document.getElementById(
+            "nextDayTemp"
+          ).textContent = `${response.forecast.forecastday[2].day.avgtemp_c} C`;
+          document.getElementById(
+            "tomorrowChanceRain"
+          ).textContent = `${response.forecast.forecastday[1].day.daily_chance_of_rain} %`;
+          document.getElementById(
+            "nextDayChanceRain"
+          ).textContent = `${response.forecast.forecastday[2].day.daily_chance_of_rain} %`;
+        });
+    }
+    weather();
+  </script>
+</html>
