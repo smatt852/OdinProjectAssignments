@@ -50,11 +50,15 @@
       }
       #wIcon {
         grid-row: 1/2;
+        align-self: self-end;
       }
       .condition {
         grid-row: 2/3;
         font-size: 5vw;
         font-family: "Caprasimo";
+        align-content: center;
+        justify-items: center;
+        text-align: center;
       }
       .temp {
         grid-row: 3/4;
@@ -64,7 +68,7 @@
       .humBox {
         grid-row: 4/5;
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 5vw 12vw;
       }
       .other1 {
         grid-column: 1/2;
@@ -100,12 +104,16 @@
         .container {
           grid-template-rows: 4fr 5fr 0.4fr;
           gap: 5vw;
+          height: 80vh;
         }
         .condition {
           font-size: 17vw;
         }
         .temp {
           font-size: 17vw;
+        }
+        .humBox {
+          grid-template-columns: 11vw 24vw;
         }
         .otherBox {
           grid-template-rows: 1fr 1fr 1fr;
@@ -125,7 +133,7 @@
           grid-row: 3/4;
           grid-column: none;
           display: grid;
-          grid-template-columns: 18vw 11vw 25vw;
+          grid-template-columns: 18vw 12vw 25vw;
         }
       }
       @media only screen and (device-width: 896px) and (device-height: 414px) and (-webkit-device-pixel-ratio: 3) {
@@ -212,7 +220,7 @@
           ).textContent = `${response.current.temp_f} F`;
           document.getElementById(
             "humidity"
-          ).textContent = `humidty ${response.current.humidity}`;
+          ).textContent = `humidty ${response.current.humidity} %`;
           document.getElementById(
             "feelsLike"
           ).textContent = `feels like  ${response.current.feelslike_c} C`;
@@ -222,6 +230,9 @@
           document.getElementById(
             "wind"
           ).textContent = `wind  ${response.current.wind_kph} km`;
+        })
+        .catch(function (err) {
+          alert("Try searching again");
         });
       let url2 = `https://api.weatherapi.com/v1/marine.json?key=0864bf6ac71c4592b00120411232506&q=${q.value}`;
       fetch(url2, { mode: "cors" })
