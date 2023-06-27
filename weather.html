@@ -22,7 +22,7 @@
         background: linear-gradient(rgba(0, 0, 255, 0.247), white);
       }
       .container {
-        height: 90vh;
+        height: 80vh;
         display: grid;
         grid-template-rows: 1fr 1fr 1fr;
         align-content: center;
@@ -102,10 +102,13 @@
       }
       @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
         .container {
-          grid-template-rows: 1.5fr 5fr 0.4fr;
+          grid-template-rows: 1fr 5fr 0.4fr;
           gap: 3vw;
-          height: 80vh;
-          margin: 10vw;
+          height: 65vh;
+          margin: 15vw;
+        }
+        .conditionBox {
+          grid-template-rows: 1.5fr 1.5fr 1.5fr 0.5fr 0.5fr;
         }
         .condition {
           font-size: 17vw;
@@ -117,7 +120,7 @@
           grid-template-columns: 11vw 25vw;
         }
         .otherBox {
-          grid-template-rows: 0.6fr 0.6fr 1fr;
+          grid-template-rows: 0.6fr 0.6fr 1.3fr;
           grid-template-columns: none;
           align-items: center;
           justify-items: center;
