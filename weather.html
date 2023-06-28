@@ -13,6 +13,7 @@
     <style>
       * {
         font-family: "Ysabeau Infant";
+        border: 0.5px solid black;
       }
       body {
         height: 100vh;
@@ -46,7 +47,8 @@
       .buttonBox {
         display: grid;
         grid-row: 4/5;
-        grid-template-columns: 3fr 1fr;
+        grid-template-columns: 2fr 1fr;
+        justify-items: left;
       }
       #wIcon {
         grid-row: 1/2;
@@ -78,9 +80,8 @@
       .forecast {
         grid-row: 3/4;
         display: grid;
-        grid-template-columns: 11vw 6vw 10.5vw;
-        align-content: center;
-        justify-items: center;
+        grid-template-columns: 8vw 6vw 8vw;
+        gap: 0vw;
       }
       .forecast1 {
         grid-column: 1/2;
@@ -99,9 +100,12 @@
       }
       input {
         font-size: 2vw;
+        width: 40vw;
       }
       button {
         font-size: 2vw;
+        align-self: left;
+        width: 100%;
       }
       @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
         .container {
@@ -119,7 +123,7 @@
           font-size: 15vw;
         }
         .forecast {
-          grid-template-columns: 18vw 12vw 25vw;
+          grid-template-columns: 21vw 12vw 25vw;
         }
         input {
           font-size: 5vw;
@@ -132,9 +136,29 @@
         * {
           font-size: 1.2vw;
         }
+        .container {
+          height: 75vh;
+          grid-template-rows: 30vh 20vh 13vh 4vh;
+        }
+        .conditionBox {
+          grid-template-rows: 0.6fr 1fr 1fr;
+        }
+        .condition {
+          font-size: 2vw;
+        }
+        .temp {
+          font-size: 2vw;
+        }
         .other3 {
           grid-template-columns: 3vw 2vw 8vw;
           gap: 0vw;
+        }
+        .buttonBox {
+          width: 50%;
+        }
+        .forecast {
+          gap: 0vw;
+          grid-template-columns: 7vw 4vw 9vw;
         }
       }
     </style>
