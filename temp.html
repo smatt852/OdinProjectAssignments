@@ -1,0 +1,10 @@
+#!/usr/bin/node
+
+function fibs(num) {
+  for(let i=2, i<=num, i++) {
+    let arr = [0, 1];
+    arr[i] = arr[i-1] + arr[i-2];
+  }
+  return arr;
+}
+fibs(8);

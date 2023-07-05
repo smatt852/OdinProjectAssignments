@@ -1,116 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap"
+      rel="stylesheet"
+    />
     <title>Slide in Menu</title>
     <style>
-        :root {
-            font-size: 3vw;
-            display: flex;
-            flex: 1;
-            color: white;
-            font-family: 'Barlow Condensed'
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            gap: 1vw;
-        }
-        .level1 {
-            justify-content: center;
-            align-items: center;
-            padding: 2vw;
-            background-color: dodgerblue;
-            position: absolute;
-            width: 15.5vw;
-        }
-        .level2 {
-            width: min-content;
-            white-space: nowrap;
-            padding: 2vw;
-            flex-direction: column;
-            background-color: dodgerblue;
-            position: absolute;
-            left: 200px;
-            transition: left 1s ease;
-            opacity: 0;
-            pointer-events: none;
-        }
-        #level11 { 
-            top: 0;
-            left: 0;
-        }
-        #level12 {
-            top: 8vw;
-            left: 0vw;
-        }
-        #level21 {
-            top: 0;
-        }
-        #level22 {
-            top: 0;
-            left: 0;
-        }
-        a:link, a:visited {
-            color: white;
-            text-decoration: none;
-        }
-        a:hover {
-            color: gold;
-        }
+      :root {
+        font-size: 3vw;
+        display: flex;
+        flex: 1;
+        color: white;
+        font-family: "Barlow Condensed";
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        gap: 1vw;
+      }
+      .level1 {
+        justify-content: center;
+        align-items: center;
+        padding: 2vw;
+        background-color: dodgerblue;
+        position: absolute;
+        width: 15.5vw;
+      }
+      .level2 {
+        width: min-content;
+        white-space: nowrap;
+        padding: 2vw;
+        flex-direction: column;
+        background-color: dodgerblue;
+        position: absolute;
+        left: 200px;
+        transition: left 1s ease;
+        opacity: 0;
+        pointer-events: none;
+      }
+      #level11 {
+        top: 0;
+        left: 0;
+      }
+      #level12 {
+        top: 8vw;
+        left: 0vw;
+      }
+      #level21 {
+        top: 0;
+      }
+      #level22 {
+        top: 0;
+        left: 0;
+      }
+      a:link,
+      a:visited {
+        color: white;
+        text-decoration: none;
+      }
+      a:hover {
+        color: gold;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div id=level11 class="level1">One
-            <div id=level21 class="level2">
-                <div class="level2Item"><a href="#">One</a></div>
-                <div class="level2Item"><a href="#">Two</a></div>
-                <div class="level2Item"><a href="#">Three</a></div>
-                <div class="level2Item"><a href="#">Four</a></div>
-            </div>
+      <div id="level11" class="level1">
+        One
+        <div id="level21" class="level2">
+          <div class="level2Item"><a href="#">One</a></div>
+          <div class="level2Item"><a href="#">Two</a></div>
+          <div class="level2Item"><a href="#">Three</a></div>
+          <div class="level2Item"><a href="#">Four</a></div>
         </div>
-        <div id=level12 class="level1">Two
-            <div id=level22 class="level2">
-                <div class="level2Item"><a href="#">One</a></div>
-                <div class="level2Item"><a href="#">Two</a></div>
-                <div class="level2Item"><a href="#">Three</a></div>
-                <div class="level2Item"><a href="#">Four</a></div>
-            </div>
+      </div>
+      <div id="level12" class="level1">
+        Two
+        <div id="level22" class="level2">
+          <div class="level2Item"><a href="#">One</a></div>
+          <div class="level2Item"><a href="#">Two</a></div>
+          <div class="level2Item"><a href="#">Three</a></div>
+          <div class="level2Item"><a href="#">Four</a></div>
         </div>
+      </div>
     </div>
-</body>
-<script>
-    let level11=document.getElementById('level11');
-    let level12=document.getElementById('level12');
-    let level21=document.getElementById('level21');
-    let level22=document.getElementById('level22');
+  </body>
+  <script>
+    let level11 = document.getElementById("level11");
+    let level12 = document.getElementById("level12");
+    let level21 = document.getElementById("level21");
+    let level22 = document.getElementById("level22");
 
-    level11.addEventListener('mouseover', () => {
-        level22.setAttribute('style', 'opacity:0; left: 30vw;');
-        level21.setAttribute('style', 'opacity:1; left:20vw; pointer-events: initial');
-    })
-    level21.addEventListener('mouseout', () => {
-        level21.setAttribute('style', 'opacity:0; left: 30vw;');
-    })
-    level21.addEventListener('mouseover', () => {
-        level22.setAttribute('style', 'opacity:0; left: 30vw;');
-    })
-    level12.addEventListener('mouseover', () => {
-        level21.setAttribute('style', 'opacity:0; left: 30vw;');
-        level22.setAttribute('style', 'opacity:1; left:20vw; pointer-events: initial');
-    })
-    level22.addEventListener('mouseout', () => {
-        level22.setAttribute('style', 'opacity:0; left: 30vw;');
-    })
-    level22.addEventListener('mouseover', () => {
-        level21.setAttribute('style', 'opacity:0; left: 30vw;');
-    })
-
-</script>
+    level11.addEventListener("mouseover", () => {
+      level22.setAttribute("style", "opacity:0; left: 30vw;");
+      level21.setAttribute(
+        "style",
+        "opacity:1; left:20vw; pointer-events: initial"
+      );
+    });
+    level21.addEventListener("mouseout", () => {
+      level21.setAttribute("style", "opacity:0; left: 30vw;");
+    });
+    level21.addEventListener("mouseover", () => {
+      level22.setAttribute("style", "opacity:0; left: 30vw;");
+    });
+    level12.addEventListener("mouseover", () => {
+      level21.setAttribute("style", "opacity:0; left: 30vw;");
+      level22.setAttribute(
+        "style",
+        "opacity:1; left:20vw; pointer-events: initial"
+      );
+    });
+    level22.addEventListener("mouseout", () => {
+      level22.setAttribute("style", "opacity:0; left: 30vw;");
+    });
+    level22.addEventListener("mouseover", () => {
+      level21.setAttribute("style", "opacity:0; left: 30vw;");
+    });
+  </script>
 </html>

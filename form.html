@@ -230,10 +230,8 @@
         // Build the constraint checker
         constraint = new RegExp(rule, "");
         if (constraint.test(zipCodeInput.value)) {
-          zipCodeInput.classList.remove("invalid");
           zipCodeError.textContent = "";
         } else {
-          zipCodeInput.classList.add("invalid");
           zipCodeError.textContent = errorMsg;
         }
       }
