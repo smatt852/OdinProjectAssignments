@@ -138,6 +138,49 @@ class LinkedList {
     strin = strin + `(${temp.value}) -> (null)`;
     return strin;
   }
+
+  insertAt(v, index) {
+    if (index > this.size()) {
+      console.log(`The list is ${this.size()} nodes long.`);
+    } else {
+      const newNode = new Node(v);
+      let i = 0;
+      let temp = this.head;
+      if (index === 0) {
+        this.prepend(v);
+      } else {
+        while (i !== index - 1 && temp.next !== null) {
+          i++;
+          temp = temp.next;
+        }
+        const afterNode = temp.next;
+        newNode.next = afterNode;
+        temp.next = newNode;
+      }
+    }
+  }
+
+  remove(index) {
+    if (index < this.size() - 1) {
+      let j = 0;
+      let temp = this.head;
+      if (index === 0) {
+        this.head = temp.next;
+      } else {
+        while (j !== index - 1 && temp.next !== null) {
+          j++;
+          temp = temp.next;
+        }
+        const before = temp;
+        temp = temp.next;
+        temp = temp.next;
+        const after = temp;
+        before.next = after;
+      }
+    } else {
+      console.log(`The list is ${this.size()} nodes long.`);
+    }
+  }
 }
 
 // create and populate the list
@@ -160,3 +203,11 @@ console.log(`after pop: ${list1.toString()}`);
 console.log(`contains 8: ${list1.contains(8)}`);
 console.log(`contains 16: ${list1.contains(16)}`);
 console.log(`find 16: ${list1.find(16)}`);
+console.log(list1.toString());
+list1.insertAt(7, 0);
+list1.insertAt(7, 100);
+list1.insertAt(7, 3);
+console.log(list1.toString());
+list1.remove(100);
+list1.remove(3);
+console.log(list1.toString());
