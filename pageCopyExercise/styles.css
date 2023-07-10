@@ -1,0 +1,162 @@
+html,
+body {
+  height: 100%;
+  font-family: Roboto;
+  background-color: black;
+}
+.con {
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+a {
+  text-decoration: none;
+  color: white;
+}
+.right ul {
+  display: flex;
+  gap: 10%;
+}
+.left {
+  font-size: 24px;
+  color: white;
+}
+.box1 {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  margin: 10%;
+  align-items: stretch;
+  color: white;
+  background-color: #1f2937;
+}
+.box1a {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: #1f2937;
+  color: white;
+}
+.box1b {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(165, 163, 163);
+  color: white;
+  font-size: 0.7em;
+}
+button {
+  color: white;
+  background-color: #3882f6;
+  width: 60px;
+  border: 1px solid white;
+}
+.bigger {
+  color: white;
+  font-weight: 800;
+  font-size: 48px;
+}
+.box2 {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin: 0px;
+  padding: 10%;
+  background-color: white;
+}
+.box2a {
+  background-color: white;
+  color: black;
+  font-size: 36px;
+  font-weight: 800;
+}
+.box2b {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  background-color: white;
+  justify-content: space-between;
+  gap: 5%;
+  margin: 0px;
+  padding: 0px;
+}
+.box2b1 {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 20%;
+  margin: 0px;
+  padding: 0px;
+}
+img {
+  width: 100%;
+  object-fit: cover;
+}
+figure {
+  border: 3px #3882f6 solid;
+  border-radius: 5%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+figcaption {
+  background-color: white;
+  color: black;
+  font-size: 0.7em;
+  text-align: center;
+}
+.box3 {
+  display: block;
+  flex-direction: row;
+  background-color: #e5e7eb;
+  justify-content: space-around;
+  font-size: 36px;
+  font-style: italic;
+  font-weight: 100;
+  padding: 10%;
+}
+footer {
+  font-weight: 700;
+  text-align: right;
+  font-size: 0.7em;
+}
+.box4 {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: last baseline;
+  gap: 10%;
+  padding: 10%;
+  background-color: #3882f6;
+  border-radius: 10px;
+  margin: 5%;
+  color: #f9faf8;
+  flex-direction: row;
+  font-size: 30px;
+}
+.box4 p {
+  margin: 0px;
+}
+.small {
+  font-size: 12px;
+}
+.box5 {
+  display: flex;
+  font-size: 12px;
+  justify-content: center;
+  align-items: center;
+  height: 40%;
+  background-color: #1f2937;
+  color: white;
+}
