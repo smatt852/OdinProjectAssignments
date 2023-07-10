@@ -17,17 +17,18 @@
       body {
         height: 100vh;
         background: rgba(0, 0, 255, 0.247);
-        background: -webkit-linear-gradient(rgba(0, 0, 255, 0.247), white);
-        background: -moz-linear-gradient(rgba(0, 0, 255, 0.247), white);
-        background: linear-gradient(rgba(0, 0, 255, 0.247), white);
+        background: -webkit-linear-gradient(white, rgba(0, 0, 255, 0.247), );
+        background: -moz-linear-gradient(white,rgba(0, 0, 255, 0.247));
+        background: linear-gradient(white,rgba(0, 0, 255, 0.247));
       }
       .container {
         height: 80vh;
         display: grid;
-        grid-template-rows: 1fr 1fr 1fr 0.4fr;
+        grid-template-rows: 1fr 1fr 1fr 0.3fr;
         align-content: center;
         justify-items: center;
-        margin: 5vw;
+        margin: 2vw;
+        gap: 3vw;
       }
       .conditionBox {
         display: grid;
@@ -42,12 +43,15 @@
         grid-template-columns: 1fr 1fr;
         align-items: center;
         justify-items: center;
+        gap: 1vw;
       }
       .buttonBox {
         display: grid;
         grid-row: 4/5;
-        grid-template-columns: 2fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         justify-items: left;
+        align-content: end;
+        gap: 1vw;
       }
       #wIcon {
         grid-row: 1/2;
@@ -57,6 +61,7 @@
         grid-row: 2/3;
         font-size: 3vw;
         font-family: "Caprasimo";
+        color: blue;
         align-content: center;
         justify-items: center;
         text-align: center;
@@ -65,70 +70,112 @@
         grid-row: 3/4;
         font-size: 3vw;
         font-family: "Caprasimo";
+        color: blue;
       }
       .other1 {
         grid-column: 1/2;
         display: grid;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        justify-items: right;
       }
       .other2 {
         grid-column: 2/3;
         display: grid;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
       }
       .forecast {
         grid-row: 3/4;
         display: grid;
-        grid-template-columns: 8vw 6vw 8vw;
+        grid-template-columns: 6vw 6vw 8vw;
+        grid-template-rows: 2vw 5vw;
         gap: 0vw;
+        align-content:end;
+      }
+      .forecastTitle {
+        grid-row: 1/2;
+        grid-column: 1/4;
+        color: blue;
+        font-size: 2vw;
+        font-family: 'Caprasimo';
+        text-align:center;
       }
       .forecast1 {
+        grid-row: 2/3;
         grid-column: 1/2;
         display: grid;
         grid-template-rows: 1fr 1fr 1fr;
       }
       .forecast2 {
+        grid-row: 2/3;
         grid-column: 2/3;
         display: grid;
         grid-template-rows: 1fr 1fr 1fr;
       }
       .forecast3 {
+        grid-row: 2/3;
         grid-column: 3/4;
         display: grid;
         grid-template-rows: 1fr 1fr 1fr;
       }
       input {
+        grid-column: 2/3;
         font-size: 2vw;
-        width: 50vw;
+        width: 25vw;
+        border-radius: 30px;
+        text-align: center;
       }
       button {
+        grid-column: 3/4;
+        background-color: rgba(0, 0, 255, 0.247);
         font-size: 2vw;
         align-self: left;
-        width: 100%;
+        width: 40%;
+        border-radius: 30px;
+        border: none;
+        box-shadow: 5px 5px 5px blue;
       }
+
       @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
         .container {
-          height: 70vh;
-          grid-template-rows: 0.4fr 0.8fr 0.6fr 0.2fr;
-          margin-top: 30vw;
+          height: 68vh;
+          grid-template-rows: 1.5fr 0.4fr 0.8fr 0.4fr;
+          margin-top: 25vw;
+          gap: 3vw;
         }
         .conditionBox {
           grid-template-rows: 0.9fr 1.5fr 0.8fr;
         }
         .condition {
-          font-size: 15vw;
+          font-size: 13vw;
         }
         .temp {
-          font-size: 15vw;
+          font-size: 13vw;
         }
         .forecast {
           grid-template-columns: 21vw 12vw 25vw;
+          grid-template-rows: 8vw 10vw;
+          align-self:first baseline;
+          
         }
+        .forecastTitle {
+        font-size: 6vw;
+      }
         input {
-          font-size: 5vw;
+          grid-column: none;
+          grid-row: 1/2;
+          font-size: 7vw;
+          width: 80%;
         }
         button {
-          font-size: 5vw;
+          grid-column: none;
+          grid-row: 2/3;
+          font-size: 7vw;
+          width: 40%;
+        }
+        .buttonBox {
+          gap: 2vw;
+          grid-template-rows: 1fr 1fr;
+          justify-items: center;
         }
       }
       @media only screen and (device-width: 896px) and (device-height: 414px) and (-webkit-device-pixel-ratio: 3) {
@@ -141,6 +188,7 @@
         }
         .conditionBox {
           grid-template-rows: 0.6fr 1fr 1fr;
+          margin-top: 5vw;
         }
         .condition {
           font-size: 2vw;
@@ -153,11 +201,12 @@
           gap: 0vw;
         }
         .buttonBox {
-          width: 50%;
+          width: 100%;
         }
         .forecast {
           gap: 0vw;
           grid-template-columns: 7vw 4vw 9vw;
+          grid-template-rows: 3vw 5vw;
         }
       }
     </style>
@@ -174,20 +223,17 @@
           <div class="fahrenheit" id="fahrenheit"></div>
           <div class="humidity" id="humidity"></div>
           <div class="chanceRain" id="chanceRain"></div>
-          <div class="precip" id="precip"></div>
-          <div class="feelsLike" id="feelsLike"></div>
         </div>
         <div class="other2" id="other2">
+          <div class="precip" id="precip"></div>
+          <div class="feelsLike" id="feelsLike"></div>
           <div class="wind" id="wind"></div>
-          <div id="highTide1"></div>
-          <div id="highTide2"></div>
-          <div id="sunrise"></div>
-          <div id="sunset"></div>
         </div>
       </div>
       <div class="forecast" id="other3">
+        <div class="forecastTitle">FORECAST</div>
         <div id="forecast1">
-          <div id="forecast">FORECAST</div>
+          <div id="forecast">&nbsp</div>
           <div id="tomorrow">tomorrow</div>
           <div id="next day">next day</div>
         </div>
@@ -208,7 +254,7 @@
           id="q"
           name="q"
           placeholder="Search"
-          value="Halifax"
+          value="Enfield"
         />
         <button onclick="weather()">Weather</button>
       </div>
@@ -250,33 +296,6 @@
         })
         .catch(function (err) {
           alert("Try searching again");
-        });
-      let url2 = `https://api.weatherapi.com/v1/marine.json?key=0864bf6ac71c4592b00120411232506&q=${q.value}`;
-      fetch(url2, { mode: "cors" })
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (response) {
-          document.getElementById(
-            "highTide1"
-          ).textContent = `high tide  ${response.forecast.forecastday[0].day.tides[0].tide[0].tide_time.slice(
-            -5
-          )}`;
-          document.getElementById(
-            "highTide2"
-          ).textContent = `high tide  ${response.forecast.forecastday[0].day.tides[0].tide[2].tide_time.slice(
-            -5
-          )}`;
-          document.getElementById(
-            "sunrise"
-          ).textContent = `sunrise  ${response.forecast.forecastday[0].astro.sunrise.slice(
-            -7
-          )}`;
-          document.getElementById(
-            "sunset"
-          ).textContent = `sunset  ${response.forecast.forecastday[0].astro.sunset.slice(
-            -7
-          )}`;
         });
       let url3 = `https://api.weatherapi.com/v1/forecast.json?key=0864bf6ac71c4592b00120411232506&days=3&q=${q.value}`;
       fetch(url3, { mode: "cors" })
