@@ -6,5 +6,6 @@ form.html and form2.html are exercises in form validation
 slideshow2a.html is an image slider of my dog Beau.  
 weather.html and gifSearch.html are simple pages that use public APIs.  
 mergeSort.js is a recursive sorting algorithm that I wrote only after looking at others' code.  
-linkedList.js is a class which makes a linked list with basic editting methods.  
+linkedList.js is a class which makes a linked list with basic editting methods. 
+landingPage is not accessible for some reason so I reuploaded it as copyPageAssignment. It's just an exercise to duplicate a page.
 
