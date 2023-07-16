@@ -20,9 +20,52 @@ class Tree {
   find(value) {
     return findRec(this.node, value);
   }
+  levelOrder(func = treeArray) {
+    return breadthLevelOrder(this.node, (func = treeArray));
+  }
+  preorder(func = saveTree) {
+    let arrayY = [];
+    return depthPreorder(arrayY, this.node, (func = saveTree));
+  }
+  inorder(func = saveTree) {
+    let arrayY = [];
+    return depthInorder(arrayY, this.node, (func = saveTree));
+  }
+  postorder(func = saveTree) {
+    let arrayY = [];
+    return depthPostorder(arrayY, this.node, (func = saveTree));
+  }
+}
+function depthPreorder(arrayY, node, func = saveTree) {
+  if (node === null) return;
+  func(node, arrayY);
+  depthPreorder(arrayY, node.left);
+  depthPreorder(arrayY, node.right);
+  return arrayY;
 }
 
-function levelOrder(func, node) {
+function depthInorder(arrayY, node, func = saveTree) {
+  if (node === null) return;
+  depthInorder(arrayY, node.left);
+  func(node, arrayY);
+  depthInorder(arrayY, node.right);
+  return arrayY;
+}
+
+function depthPostorder(arrayY, node, func = saveTree) {
+  if (node === null) return;
+  depthPostorder(arrayY, node.left);
+  depthPostorder(arrayY, node.right);
+  func(node, arrayY);
+  return arrayY;
+}
+
+function saveTree(node, arrayY) {
+  let x = node.data;
+  arrayY.push(x);
+}
+
+function breadthLevelOrder(node, func = treeArray) {
   let arr = [];
   let q = [];
   if (node === null) {
@@ -43,7 +86,7 @@ function levelOrder(func, node) {
   return func(arr);
 }
 
-function func(arr) {
+function treeArray(arr) {
   let arrayZ = [];
   while (arr.length !== 0) {
     arrayZ.push(arr[0].data);
@@ -203,4 +246,7 @@ prettyPrint(newTree.node);
 prettyPrint(newTree.find(0));
 prettyPrint(newTree.find(3));
 prettyPrint(newTree.find(5));
-console.log(levelOrder(func, newTree.node));
+console.log(`levelorder ${newTree.levelOrder()}`);
+console.log(`preorder ${newTree.preorder()}`);
+console.log(`inorder ${newTree.inorder()}`);
+console.log(`postorder ${newTree.postorder()}`);
