@@ -35,7 +35,103 @@ class Tree {
     let arrayY = [];
     return depthPostorder(arrayY, this.node, (func = saveTree));
   }
+  height(value) {
+    return heightFunc(this.node, value);
+  }
+  depth(value) {
+    return depthFunc(this.node, value);
+  }
 }
+// traverses the tree and makes an array of objects,
+// each containing a nodes and its level
+function levels(node) {
+  let arr = [];
+  let q = [];
+  let r = [];
+  let i = 0;
+  q[0] = node;
+  r[0] = 0;
+  arr[0] = { item: node, level: 0, value: node.data };
+  if (node === null) {
+    return;
+  }
+  while (q.length !== 0) {
+    temp = q[0];
+    if (temp.left !== null || temp.right !== null) {
+      if (temp.left !== null) {
+        r.push(r[0] + 1);
+        arr.push({
+          item: temp.left,
+          level: r[0] + 1,
+          value: temp.left.data,
+        });
+        q.push(temp.left);
+      }
+      if (temp.right !== null) {
+        r.push(r[0] + 1);
+        arr.push({
+          item: temp.right,
+          level: r[0] + 1,
+          value: temp.right.data,
+        });
+        q.push(temp.right);
+      }
+    }
+
+    r.shift();
+    q.shift();
+  }
+  return arr;
+}
+
+function depthFunc(treeRoot, nodeData) {
+  let arr = levels(treeRoot);
+  let x = arr.find((thing) => thing.value === nodeData);
+  if (x === "undefined") {
+    console.log("Value not in tree.");
+    return;
+  }
+  return x.level;
+}
+
+// finds the number of levels from a given node of a given tree to the deepest leaf node
+function heightFunc(treeRoot, nodeData) {
+  let arr = levels(treeRoot);
+  let x = arr.find((thing) => thing.value === nodeData);
+  if (x === "undefined") {
+    console.log("Value not in tree.");
+    return;
+  }
+  if (treeRoot.data !== nodeData) {
+    boundaryLevel = arr.find((thing2) => thing2.level === x.level - 1);
+  }
+  result = [];
+  if (treeRoot.data === nodeData) {
+    for (key in arr) {
+      result.push(arr[key].level);
+    }
+  } else if (x.value < boundaryLevel.value) {
+    for (key in arr) {
+      if (arr[key].value < boundaryLevel.value) result.push(arr[key].level);
+    }
+  } else if (x.value > boundaryLevel.value) {
+    for (key in arr) {
+      if (arr[key].value > boundaryLevel.value) result.push(arr[key].level);
+    }
+  }
+  let height = largest(result, result.length, 0) - x.level;
+  return height;
+}
+
+function largest(arr, n, i) {
+  if (i == n - 1) {
+    return arr[i];
+  }
+  let recMax = largest(arr, n, i + 1);
+  return Math.max(recMax, arr[i]);
+}
+
+// traverses the tree depth-first preorder and send the nodes one at a time to a specified funtion for use
 function depthPreorder(arrayY, node, func = saveTree) {
   if (node === null) return;
   func(node, arrayY);
@@ -44,6 +140,7 @@ function depthPreorder(arrayY, node, func = saveTree) {
   return arrayY;
 }
 
+// traverses the tree depth-first inorder and send the nodes one at a time to a specified funtion for use
 function depthInorder(arrayY, node, func = saveTree) {
   if (node === null) return;
   depthInorder(arrayY, node.left);
@@ -52,6 +149,7 @@ function depthInorder(arrayY, node, func = saveTree) {
   return arrayY;
 }
 
+// traverses the tree depth-first postorder and send the nodes one at a time to a specified funtion for use
 function depthPostorder(arrayY, node, func = saveTree) {
   if (node === null) return;
   depthPostorder(arrayY, node.left);
@@ -60,11 +158,14 @@ function depthPostorder(arrayY, node, func = saveTree) {
   return arrayY;
 }
 
+// takes nodes one at a time from the depth traveral functions and prints data
 function saveTree(node, arrayY) {
   let x = node.data;
   arrayY.push(x);
 }
 
+// traverses tree in breadth-first level order,
+// saves nodes to an array which is then passed to a function for use
 function breadthLevelOrder(node, func = treeArray) {
   let arr = [];
   let q = [];
@@ -86,6 +187,7 @@ function breadthLevelOrder(node, func = treeArray) {
   return func(arr);
 }
 
+// takes the level order array of nodes  from breadthLevelOrder() and prints the data
 function treeArray(arr) {
   let arrayZ = [];
   while (arr.length !== 0) {
@@ -95,7 +197,7 @@ function treeArray(arr) {
   return arrayZ;
 }
 
-// A recursive function to insert a new value in BST
+// A recursive function to find a value in BST
 function findRec(root, value) {
   // If the tree is empty, return
   if (root == null || root.data === value) {
@@ -250,3 +352,9 @@ console.log(`levelorder ${newTree.levelOrder()}`);
 console.log(`preorder ${newTree.preorder()}`);
 console.log(`inorder ${newTree.inorder()}`);
 console.log(`postorder ${newTree.postorder()}`);
+console.log(newTree.height(3));
+console.log(newTree.height(0));
+console.log(newTree.height(-11));
+console.log(newTree.depth(4));
+console.log(newTree.depth(3));
+console.log(newTree.depth(5));
