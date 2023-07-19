@@ -41,7 +41,26 @@ class Tree {
   depth(value) {
     return depthFunc(this.node, value);
   }
+  isBalanced() {
+    return balancedFunc(this.node);
+  }
+  rebalance() {
+    return rebalanceFunc(this.node);
+  }
 }
+
+class unbalancedTree {
+  constructor(array) {
+    this.node = buildUnbalancedTree(prep(array), 0, prep(array).length - 1);
+  }
+  isBalanced() {
+    return balancedFunc(this.node);
+  }
+  rebalance() {
+    return rebalanceFunc(this.node);
+  }
+}
+
 // traverses the tree and makes an array of objects,
 // each containing a nodes and its level
 function levels(node) {
@@ -84,6 +103,38 @@ function levels(node) {
   return arr;
 }
 
+function rebalanceFunc(treeRoot) {
+  let arr = levels(treeRoot);
+  let data = [];
+  for (key in arr) {
+    data.push(arr[key].value);
+  }
+  return new Tree(data);
+}
+
+// determines if tree is balanced (left is less than 2 levels deeper/shallower than right)
+function balancedFunc(treeRoot) {
+  let arr = levels(treeRoot);
+  let left = [];
+  let right = [];
+  for (key in arr) {
+    if (arr[key].value < treeRoot.data) {
+      left.push(arr[key].level);
+    } else {
+      right.push(arr[key].level);
+    }
+  }
+  if (
+    Math.abs(largest(left, left.length, 0) - largest(right, right.length, 0)) <
+    2
+  ) {
+    return "Tree is balanced.";
+  } else {
+    return "Tree is unbalanced.";
+  }
+}
+
+// finds the depth from the root node to a given node
 function depthFunc(treeRoot, nodeData) {
   let arr = levels(treeRoot);
   let x = arr.find((thing) => thing.value === nodeData);
@@ -123,6 +174,7 @@ function heightFunc(treeRoot, nodeData) {
   return height;
 }
 
+// finds the largest value in an array
 function largest(arr, n, i) {
   if (i == n - 1) {
     return arr[i];
@@ -187,7 +239,7 @@ function breadthLevelOrder(node, func = treeArray) {
   return func(arr);
 }
 
-// takes the level order array of nodes  from breadthLevelOrder() and prints the data
+// takes the level order array of nodes from breadthLevelOrder() and prints the data
 function treeArray(arr) {
   let arrayZ = [];
   while (arr.length !== 0) {
@@ -197,7 +249,7 @@ function treeArray(arr) {
   return arrayZ;
 }
 
-// A recursive function to find a value in BST
+// A recursive function to find a value
 function findRec(root, value) {
   // If the tree is empty, return
   if (root == null || root.data === value) {
@@ -208,15 +260,6 @@ function findRec(root, value) {
     return findRec(root.left, value);
   } else if (value > root.data) {
     return findRec(root.right, value);
-  }
-}
-
-// inorder traversal of BST
-function inorder(root) {
-  if (root !== null) {
-    inorder(root.left);
-    console.log(root.key);
-    inorder(root.right);
   }
 }
 
@@ -280,7 +323,7 @@ function deleteNode(root, k) {
   }
 }
 
-// A recursive function to insert a new value in BST
+// A recursive function to insert a new value
 function insertRec(root, value) {
   // If the tree is empty, return a new node
   if (root == null) {
@@ -297,8 +340,7 @@ function insertRec(root, value) {
   return root;
 }
 
-const arrayX = [1, 2, 0, 4, 5, 5, 2, 3, -11];
-
+// remove duplicates and sort the array before building tree
 function prep(arr) {
   //   remove duplicates
   arr = arr.filter((c, index) => {
@@ -311,6 +353,7 @@ function prep(arr) {
   return arr;
 }
 
+// build a balanced tree
 function buildTree(array1, start, end) {
   if (start > end) {
     return null;
@@ -327,6 +370,23 @@ function buildTree(array1, start, end) {
   return node;
 }
 
+// build an unbalanced tree to check isBalanced function
+function buildUnbalancedTree(array1, start, end) {
+  if (start > end) {
+    return null;
+  }
+  /* Get the middle element and make it root */
+  const point = parseInt((start + end) / 4);
+  const node = new Node(array1[point]);
+  /* Recursively construct the left subtree and make it
+     left child of root */
+  node.left = buildTree(array1, start, point - 1);
+  /* Recursively construct the right subtree and make it
+     right child of root */
+  node.right = buildTree(array1, point + 1, end);
+  return node;
+}
+
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
     return;
@@ -339,6 +399,8 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
 };
+
+const arrayX = [1, 2, 0, 4, 5, 5, 2, 3, -11];
 const newTree = new Tree(arrayX);
 prettyPrint(newTree.node);
 newTree.insert(1);
@@ -358,3 +420,36 @@ console.log(newTree.height(-11));
 console.log(newTree.depth(4));
 console.log(newTree.depth(3));
 console.log(newTree.depth(5));
+console.log(newTree.isBalanced());
+let arrayW = [-21, 0, 3, 5, 5.4, 100];
+const secondTree = new unbalancedTree(arrayW);
+console.log(secondTree.isBalanced());
+prettyPrint(secondTree.node);
+console.log(secondTree.rebalance());
+let thirdTree = secondTree.rebalance();
+prettyPrint(thirdTree.node);
+
+let randomArr = [];
+for (let i = 0; i < 10; i++) {
+  randomArr.push(Math.floor(Math.random() * 100) + 1);
+}
+console.log(randomArr);
+const testTree = new Tree(randomArr);
+console.log(testTree.isBalanced());
+console.log(`levelorder ${testTree.levelOrder()}`);
+console.log(`preorder ${testTree.preorder()}`);
+console.log(`inorder ${testTree.inorder()}`);
+console.log(`postorder ${testTree.postorder()}`);
+testTree.insert(103);
+testTree.insert(150);
+testTree.insert(165);
+testTree.insert(200);
+testTree.insert(233);
+console.log(testTree.isBalanced());
+let testTree2 = testTree.rebalance();
+console.log(testTree2.isBalanced());
+console.log(`levelorder ${testTree2.levelOrder()}`);
+console.log(`preorder ${testTree2.preorder()}`);
+console.log(`inorder ${testTree2.inorder()}`);
+console.log(`postorder ${testTree2.postorder()}`);
+prettyPrint(testTree2.node);
