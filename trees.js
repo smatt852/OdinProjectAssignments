@@ -38,6 +38,10 @@ class Tree {
   height(value) {
     return heightFunc(this.node, value);
   }
+  heightRecursive(value) {
+    let node = findRec(this.node, value);
+    return heightFuncRec(node);
+  }
   depth(value) {
     return depthFunc(this.node, value);
   }
@@ -172,6 +176,15 @@ function heightFunc(treeRoot, nodeData) {
   }
   let height = largest(result, result.length, 0) - x.level;
   return height;
+}
+
+// this is a better, recursive way to find height that I copied
+function heightFuncRec(node) {
+  if (node === null) return -1;
+  const leftHeight = heightFuncRec(node.left);
+  const rightHeight = heightFuncRec(node.right);
+  length = Math.max(leftHeight, rightHeight) + 1;
+  return length;
 }
 
 // finds the largest value in an array
@@ -414,12 +427,15 @@ console.log(`levelorder ${newTree.levelOrder()}`);
 console.log(`preorder ${newTree.preorder()}`);
 console.log(`inorder ${newTree.inorder()}`);
 console.log(`postorder ${newTree.postorder()}`);
-console.log(newTree.height(3));
-console.log(newTree.height(0));
-console.log(newTree.height(-11));
-console.log(newTree.depth(4));
-console.log(newTree.depth(3));
-console.log(newTree.depth(5));
+console.log(`height ${newTree.height(3)}`);
+console.log(`height ${newTree.height(0)}`);
+console.log(`height ${newTree.height(-11)}`);
+console.log(`height recursive ${newTree.heightRecursive(3)}`);
+console.log(`height recursive ${newTree.heightRecursive(0)}`);
+console.log(`height recursive ${newTree.heightRecursive(-11)}`);
+console.log(`depth ${newTree.depth(4)}`);
+console.log(`depth ${newTree.depth(3)}`);
+console.log(`depth ${newTree.depth(5)}`);
 console.log(newTree.isBalanced());
 let arrayW = [-21, 0, 3, 5, 5.4, 100];
 const secondTree = new unbalancedTree(arrayW);
