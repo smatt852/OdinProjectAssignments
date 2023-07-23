@@ -1,3 +1,6 @@
+// the shortest path a knight can travel between two squares
+// I got the basic idea to use a queue from etom on the Odin Project website
+
 // each node is the knights path
 class Node {
   constructor(soFar, next) {
