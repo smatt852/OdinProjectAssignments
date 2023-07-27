@@ -7,5 +7,5 @@ slideshow2a.html is an image slider of my dog Beau.
 weather.html and gifSearch.html are simple pages that use public APIs.  
 mergeSort.js is a recursive sorting algorithm that I wrote only after looking at others' code.  
 linkedList.js is a class which makes a linked list with basic editting methods.  
-knight.js is a solution by etom to the Knights Travails problem to find the shortest path between two squares the knight can travel.  After I read his answer I made knight2.js to see if I understood it.  
+knight.html is the Knights Travails problem to find the shortest path between two squares the knight can travel.  After I read etom's answer on the OdinProject Website, I made my own version and added a front end with a clickable chessboard that maps the path.   
 
