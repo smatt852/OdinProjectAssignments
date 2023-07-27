@@ -1,0 +1,227 @@
+<!--  the shortest path a knight can travel between two squares
+ (I got the basic idea to use a queue from etom on the Odin Project website) -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Knight's Path</title>
+
+    <style>
+* {
+  font-size: 5vw;
+}
+body {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin:0;
+}
+.leftHalf {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  width: 100%;
+  height:100%;
+  background-color: rgb(248, 206, 67);
+  background: url('strategy.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.rightHalf {
+  display: flex;
+  flex: 1;
+  gap: 2vw;
+  width: 100%;
+  height:100%;
+  background-color: rgb(146, 145, 145);
+}
+.title {
+  position: absolute;
+  top: 0vw;
+  left: 32.6vw;
+}
+.chessboard {
+  width: 240px;
+  height: 320px;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  box-shadow: 10px 10px 10px black;
+  margin-top: 7vw;
+}
+.square {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: black solid 1px;
+  box-shadow: 10px 10px 10px black;
+}
+.action {
+  border: none;
+  box-shadow: 10px 10px 10px black;
+  border-radius: 30px;
+  font-size: 1.5vw;
+  background-color: forestgreen;
+  padding: 0.5vw;
+  color: white;
+  width: 7vw;
+  margin-left: 1.3vw;
+}
+.butts {
+  display: flex; 
+  flex-direction: column; 
+  gap: 1vw;
+  padding:0vw; 
+  justify-content: end;
+  margin-bottom: 2vw;
+}
+  </style>
+</head>
+
+<body>
+  <div class="leftHalf">
+    <div class="title">Knight's Travails</div>
+  </div>
+  <div class="rightHalf">
+    <div class="butts">
+      <button class="action" id="go" onclick="knight()">go</button>
+      <button class="action" id="reset" onclick="window.location.reload()">reset</button>
+    </div>
+    <div class="chessboard" id="board"></div>
+  </div>
+</body>
+
+
+<script>
+// creates board
+const squares = 8;
+const boardSize = 400;
+const squareSize = boardSize / squares;
+
+for (let row = 0; row < squares; row++) {
+  for (let col = 0; col < squares; col++) {
+    const square = document.createElement('button');
+    square.className = 'square';
+    square.style.width = `${squareSize}px`;
+    square.style.height = `${squareSize}px`;
+    square.style.backgroundColor = (row + col) % 2 === 0 ? 'white' : 'black';
+    square.id = `${col}, ${squares - 1 - row}`;
+    square.onclick = function() {coordinates(square.id)};
+    board.appendChild(square);
+  }
+}
+
+// gets the coordinates of the start and end squares when they
+// are clicked
+let start1 = [];
+let end1 = [];
+function coordinates(id) {
+  if (end1.length > 0) {
+    let reset = document.getElementById(`${end1[0]}, ${end1[1]}`);
+    reset.style.border = 'black solid 1px';
+  }
+  if (start1.length > 0) {
+    end1[0] = parseFloat(id.charAt(0));
+    end1[1] = parseFloat(id.charAt(3));
+    let end = document.getElementById(id);
+    end.style.border = '4px solid rgb(248, 206, 67)';
+    return end1;
+  } else {
+    start1[0] = parseFloat(id.charAt(0));
+    start1[1] = parseFloat(id.charAt(3));
+    let start = document.getElementById(id);
+    start.style.border = '4px solid rgb(248, 206, 67)';
+    return start1;
+  }
+}
+
+// each node is a path
+class Node {
+  constructor(soFar, next) {
+    this.path = soFar.concat([next]);
+  }
+}
+
+// finds path from start to end
+function knightMoves(start, end) {
+  const path = new Node([], start);
+  // a queue holds the possible paths
+  const q = [];
+  let found = false;
+  q.push(path);
+  // loop as long as the end is not found and
+  // there are paths in the queue
+  while (q.length > 0 && found === false) {
+    // take the next path off the queue
+    const current = q.shift();
+    // figure out possible moves
+    const lastMove = current.path[current.path.length - 1];
+    const nextMoves = [
+      [lastMove[0] + 2, lastMove[1] + 1],
+      [lastMove[0] + 2, lastMove[1] - 1],
+      [lastMove[0] - 2, lastMove[1] + 1],
+      [lastMove[0] - 2, lastMove[1] - 1],
+      [lastMove[0] + 1, lastMove[1] + 2],
+      [lastMove[0] + 1, lastMove[1] - 2],
+      [lastMove[0] - 1, lastMove[1] + 2],
+      [lastMove[0] - 1, lastMove[1] - 2],
+    ];
+    // only retain the moves that keep the knight on the board
+    const validMoves = [];
+    nextMoves.forEach((element) => {
+      if (
+        element[0] < 8 &&
+        element[0] > -1 &&
+        element[1] < 8 &&
+        element[1] > -1
+      ) {
+        validMoves.push(element);
+      }
+    });
+    // for each valid move check if the move equals the end
+    // if it does stop the forEach with found=true
+    validMoves.forEach((element) => {
+      if (arraysEqual(element, end)) {
+        found = true;
+      }
+    });
+    // return the path
+    if (found === true) {
+        return current.path.concat([end]);
+    }
+    // if the end is not found, make a new node for each valid move
+    // where the path is the current path plus the valid move
+    for (let i = 0; i < validMoves.length; i++) {
+      const temp = new Node(current.path, validMoves[i]);
+      // push the new paths into the queue
+      q.push(temp);
+    }
+  }
+}
+
+// returns true if two arrays are identical
+function arraysEqual(a, b) {
+  a = Array.isArray(a) ? a : [];
+  b = Array.isArray(b) ? b : [];
+  return a.length === b.length && a.every((el, ix) => el === b[ix]);
+}
+
+// plots the path on the board
+function knight() {
+  let kp = knightMoves(start1, end1);
+  for(let i = 0; i<kp.length; i++){
+    let sq = document.getElementById(`${kp[i][0]}, ${kp[i][1]}`);
+    sq.textContent = `${i}`;
+    sq.style.color = `white`;
+    sq.style.backgroundColor = 'forestgreen';
+  }
+}
+
+
+</script>
+</html>
