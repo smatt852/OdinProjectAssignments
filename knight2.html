@@ -10,7 +10,7 @@
 
     <style>
 * {
-  font-size: 5vw;
+  font-size: 4vw;
 }
 body {
   display: flex;
@@ -42,7 +42,7 @@ body {
 .title {
   position: absolute;
   top: 0vw;
-  left: 32.6vw;
+  left: 36vw;
 }
 .chessboard {
   width: 240px;
@@ -112,6 +112,12 @@ for (let row = 0; row < squares; row++) {
     square.style.backgroundColor = (row + col) % 2 === 0 ? 'white' : 'black';
     square.id = `${col}, ${squares - 1 - row}`;
     square.onclick = function() {coordinates(square.id)};
+    square.addEventListener("mouseover", function() {
+      return (this.style.border = '7px solid rgb(248, 206, 67)');
+    });
+    square.addEventListener("mouseout", function() {
+      return (this.style.border = '1px solid black');
+    });
     board.appendChild(square);
   }
 }
@@ -129,13 +135,19 @@ function coordinates(id) {
     end1[0] = parseFloat(id.charAt(0));
     end1[1] = parseFloat(id.charAt(3));
     let end = document.getElementById(id);
-    end.style.border = '4px solid rgb(248, 206, 67)';
+    end.style.border = '7px solid red';
+    end.addEventListener("mouseout", function() {
+      return (this.style.border = '7px solid red');
+    });
     return end1;
   } else {
     start1[0] = parseFloat(id.charAt(0));
     start1[1] = parseFloat(id.charAt(3));
     let start = document.getElementById(id);
-    start.style.border = '4px solid rgb(248, 206, 67)';
+    start.style.border = '7px solid red';
+    start.addEventListener("mouseout", function() {
+      return (this.style.border = '7px solid red');
+    });
     return start1;
   }
 }
