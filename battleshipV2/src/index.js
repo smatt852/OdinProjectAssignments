@@ -7,6 +7,7 @@ import "./style.css";
 
 let shots = [];
 let fleet = [];
+let ships = [];
 let type = "";
 let size = 0;
 
@@ -60,6 +61,8 @@ class Gameboard {
     btna.onclick = () => {
       type = "A";
       size = 2;
+      removeType("A");
+      this.refreshShips();
     };
     const btnb = document.createElement("button");
     btnb.textContent = "B = 3";
@@ -67,6 +70,8 @@ class Gameboard {
     btnb.onclick = () => {
       type = "B";
       size = 3;
+      removeType("B");
+      this.refreshShips();
     };
     const btnc = document.createElement("button");
     btnc.textContent = "C = 3";
@@ -74,6 +79,8 @@ class Gameboard {
     btnc.onclick = () => {
       type = "C";
       size = 3;
+      removeType("C");
+      this.refreshShips();
     };
     const btnd = document.createElement("button");
     btnd.textContent = "D = 4";
@@ -81,6 +88,8 @@ class Gameboard {
     btnd.onclick = () => {
       type = "D";
       size = 4;
+      removeType("D");
+      this.refreshShips();
     };
     const btne = document.createElement("button");
     btne.textContent = "E = 5";
@@ -88,12 +97,15 @@ class Gameboard {
     btne.onclick = () => {
       type = "E";
       size = 5;
+      removeType("E");
+      this.refreshShips();
     };
     const btnBuild = document.createElement("button");
     btnBuild.textContent = "Build Ship";
     btnBuild.classList.add("controls");
     btnBuild.onclick = () => {
-      window[type] = new Ship(type, size);
+      let newShip = new Ship(type, size);
+      fleet.push(newShip);
     };
     const btnAttack = document.createElement("button");
     btnAttack.textContent = "Attack";
@@ -137,6 +149,29 @@ class Gameboard {
     btns.appendChild(btnReset);
     btns.appendChild(btnBlank);
     document.body.appendChild(btns);
+  }
+
+  refreshShips() {
+    // reset the board
+    const sq = document.getElementsByClassName("square");
+    Array.from(sq).forEach((el) => {
+      el.textContent = "";
+      el.classList.remove("A");
+      el.classList.remove("B");
+      el.classList.remove("C");
+      el.classList.remove("D");
+      el.classList.remove("E");
+    });
+    // put the ships on the board
+    for (let i = 0; i < fleet.length; i++) {
+      for (let j = 0; j < fleet[i].spots.length; j++) {
+        const sq = document.getElementById(
+          `${fleet[i].spots[j].x}, ${fleet[i].spots[j].y}`
+        );
+        sq.classList.add(fleet[i].type);
+        sq.textContent = fleet[i].type;
+      }
+    }
   }
 }
 
@@ -223,32 +258,7 @@ class Ship {
     if (this.spots.length !== size) {
       alert("Check that you have selected the correct number of squares");
     }
-    fleet.push(this);
-    this.refreshShips();
     this.validateSpots();
-  }
-
-  refreshShips() {
-    // reset the board
-    const sq = document.getElementsByClassName("square");
-    Array.from(sq).forEach((el) => {
-      el.textContent = "";
-      el.classList.remove("A");
-      el.classList.remove("B");
-      el.classList.remove("C");
-      el.classList.remove("D");
-      el.classList.remove("E");
-    });
-    // put the ships on the board
-    for (let i = 0; i < fleet.length; i++) {
-      for (let j = 0; j < fleet[i].spots.length; j++) {
-        const sq = document.getElementById(
-          `${fleet[i].spots[j].x}, ${fleet[i].spots[j].y}`
-        );
-        sq.classList.add(fleet[i].type);
-        sq.textContent = fleet[i].type;
-      }
-    }
   }
 
   validateSpots() {
@@ -349,12 +359,21 @@ class Ship {
       alert(
         "Select squares next to each other, in either rows or columns. Try again"
       );
-      window.location.reload();
     }
   }
 }
 
-// sorts the x and y corrdinates in an array,
+// removes ships of a certain type from the fleet
+function removeType(kind) {
+  const itemToRemoveIndex = fleet.findIndex(function (item) {
+    return item.type === kind;
+  });
+  if (itemToRemoveIndex !== -1) {
+    fleet.splice(itemToRemoveIndex, 1);
+  }
+}
+
+// sorts the x and y coordinates in an array,
 // called by ship.validateSpots()
 function sortSpots(arr, type) {
   let tempx = [];
@@ -374,6 +393,6 @@ function sortSpots(arr, type) {
 
 const bsBoard = new Gameboard("400px", 10, 40, "Battleship");
 const instructBlurb =
-  "How To Play... <br><br> Click a letter.  Select squares next to each other in rows or columns.  Click Build Ship.  When all ships are built, click Switch Players.  Press Attack and select squares to sink the fleet. Press Reset to play again.";
+  "How To Play... <br><br> Click a letter.  Select squares next to each other in rows or columns.  Click Build Ship.  To delete a ship, press its letter again, and rebuild it.  When all ships are built, click Switch Players.  Press Attack and select squares to sink the fleet. Press Reset to play again.";
 bsBoard.makeInstructions(instructBlurb);
 bsBoard.makeBtns();
