@@ -61,7 +61,7 @@ class Gameboard {
 
   makeBtns() {
     // when a letter button is clicked, the corresponding ship is deleted
-    // and the other ships locations are refreshed, type and size are set
+    // and the other ships' locations are refreshed, type and size are set
     // to change the class of subsequently selected squares
     const btna = document.createElement("button");
     btna.textContent = "A = 2";
@@ -69,7 +69,7 @@ class Gameboard {
     btna.onclick = () => {
       type = "A";
       size = 2;
-      removeType("A");
+      this.removeType("A");
       this.refreshShips();
     };
     const btnb = document.createElement("button");
@@ -78,7 +78,7 @@ class Gameboard {
     btnb.onclick = () => {
       type = "B";
       size = 3;
-      removeType("B");
+      this.removeType("B");
       this.refreshShips();
     };
     const btnc = document.createElement("button");
@@ -87,7 +87,7 @@ class Gameboard {
     btnc.onclick = () => {
       type = "C";
       size = 3;
-      removeType("C");
+      this.removeType("C");
       this.refreshShips();
     };
     const btnd = document.createElement("button");
@@ -96,7 +96,7 @@ class Gameboard {
     btnd.onclick = () => {
       type = "D";
       size = 4;
-      removeType("D");
+      this.removeType("D");
       this.refreshShips();
     };
     const btne = document.createElement("button");
@@ -105,7 +105,7 @@ class Gameboard {
     btne.onclick = () => {
       type = "E";
       size = 5;
-      removeType("E");
+      this.removeType("E");
       this.refreshShips();
     };
     // the ids of the squares selected are used to make a new ship
@@ -148,7 +148,7 @@ class Gameboard {
     // a blank button for nicer design
     const btnBlank = document.createElement("button");
     btnBlank.classList.add("controls");
-    // the control box to hold the buttons is made
+    // the div to hold the buttons
     const btns = document.createElement("div");
     btns.id = "btns";
     btns.style.width = "400px";
@@ -189,6 +189,17 @@ class Gameboard {
       }
     }
   }
+
+  // removes ships of a certain type from the fleet,
+  // called by the letter buttons onclick functions
+  removeType(kind) {
+    const itemToRemoveIndex = fleet.findIndex(function (item) {
+      return item.type === kind;
+    });
+    if (itemToRemoveIndex !== -1) {
+      fleet.splice(itemToRemoveIndex, 1);
+    }
+  }
 }
 
 // when a square is clicked
@@ -196,62 +207,70 @@ class SquareClick {
   constructor(id, type) {
     this.coord = id;
     this.type = type;
-    const shotTaken = document.getElementById(this.coord);
+    this.shotTaken = document.getElementById(this.coord);
+    this.shotOrNot();
+  }
 
+  shotOrNot() {
     // if the click is a shot change the class
     // and save it to an array
     if (this.type === "shot") {
-      shotTaken.classList.remove("A");
-      shotTaken.classList.remove("B");
-      shotTaken.classList.remove("C");
-      shotTaken.classList.remove("D");
-      shotTaken.classList.remove("E");
-      shotTaken.classList.add(this.type);
+      this.shotTaken.classList.remove("A");
+      this.shotTaken.classList.remove("B");
+      this.shotTaken.classList.remove("C");
+      this.shotTaken.classList.remove("D");
+      this.shotTaken.classList.remove("E");
+      this.shotTaken.classList.add(this.type);
       shots.push(this.coord);
-
-      // check if the shot is a hit
-      const shotx = parseFloat(this.coord.charAt(0));
-      const shoty = parseFloat(this.coord.charAt(3));
-      for (let i = 0; i < fleet.length; i++) {
-        for (let j = 0; j < fleet[i].spots.length; j++) {
-          if (fleet[i].spots[j].x === shotx) {
-            if (fleet[i].spots[j].y === shoty) {
-              fleet[i].spots[j].hit = true;
-              shotTaken.classList.remove("shot");
-              shotTaken.classList.add("hit");
-              shotTaken.textContent = fleet[i].type;
-            }
-          }
-        }
-      }
-
-      // check if the fleet is sunk
-      let sunk = 0;
-      for (let i = 0; i < fleet.length; i++) {
-        let hits = 0;
-        for (let j = 0; j < fleet[i].spots.length; j++) {
-          if (fleet[i].spots[j].hit === true) {
-            hits++;
-          }
-        }
-        if (hits === fleet[i].size) {
-          sunk++;
-        }
-      }
-      // if the fleet is sunk, end the game
-      if (sunk === fleet.length) {
-        alert(`The fleet is sunk in ${shots.length} shots!`);
-        const temp3 = document.getElementsByClassName("square");
-        for (let z = 0; z < temp3.length; z++) {
-          temp3[z].disabled = true;
-        }
-      }
-
+      this.hitOrNot();
+      this.sunkOrNot();
       // if the click is a ship coordinate, not a shot,
       // just change the class and add the type as textContent
     } else {
-      shotTaken.classList.add(this.type);
-      shotTaken.textContent = this.type;
+      this.shotTaken.classList.add(this.type);
+      this.shotTaken.textContent = this.type;
+    }
+  }
+
+  // check if the shot is a hit
+  hitOrNot() {
+    const shotx = parseFloat(this.coord.charAt(0));
+    const shoty = parseFloat(this.coord.charAt(3));
+    for (let i = 0; i < fleet.length; i++) {
+      for (let j = 0; j < fleet[i].spots.length; j++) {
+        if (fleet[i].spots[j].x === shotx) {
+          if (fleet[i].spots[j].y === shoty) {
+            fleet[i].spots[j].hit = true;
+            this.shotTaken.classList.remove("shot");
+            this.shotTaken.classList.add("hit");
+            this.shotTaken.textContent = fleet[i].type;
+          }
+        }
+      }
+    }
+  }
+
+  // check if all spots in the fleet are hit
+  sunkOrNot() {
+    let sunk = 0;
+    for (let i = 0; i < fleet.length; i++) {
+      let hits = 0;
+      for (let j = 0; j < fleet[i].spots.length; j++) {
+        if (fleet[i].spots[j].hit === true) {
+          hits++;
+        }
+      }
+      if (hits === fleet[i].size) {
+        sunk++;
+      }
+    }
+    // if the fleet is sunk, end the game
+    if (sunk === fleet.length) {
+      alert(`The fleet is sunk in ${shots.length} shots!`);
+      const temp3 = document.getElementsByClassName("square");
+      for (let z = 0; z < temp3.length; z++) {
+        temp3[z].disabled = true;
+      }
     }
   }
 }
@@ -264,7 +283,8 @@ class Ship {
     // coordinates for the ship
     this.spots = [];
 
-    // put the ids of all the squares of the type into the ships coordinates
+    // put the ids of all the squares of the type
+    // into the ships coordinates
     const temp = document.getElementsByClassName(this.type);
     Array.from(temp).forEach((el) => {
       const newx = parseFloat(el.id.charAt(0));
@@ -312,7 +332,7 @@ class Ship {
     }
     // and so on for each ship this.type...
     if (this.type === "B" || this.type === "C") {
-      const s = sortSpots(this.spots, type);
+      const s = this.sortSpots(this.spots, type);
       if (allEqual(s.sortedx)) {
         if (
           s.sortedy[0] === s.sortedy[2] + 2 ||
@@ -333,7 +353,7 @@ class Ship {
     }
 
     if (this.type === "D") {
-      const s = sortSpots(this.spots, type);
+      const s = this.sortSpots(this.spots, type);
       if (allEqual(s.sortedx)) {
         if (
           s.sortedy[0] === s.sortedy[3] + 3 ||
@@ -354,7 +374,7 @@ class Ship {
     }
 
     if (this.type === "E") {
-      const s = sortSpots(this.spots, type);
+      const s = this.sortSpots(this.spots, type);
       if (allEqual(s.sortedx)) {
         if (
           s.sortedy[0] === s.sortedy[4] + 4 ||
@@ -380,40 +400,27 @@ class Ship {
       );
     }
   }
-}
 
-// auxillary functions
-
-// removes ships of a certain type from the fleet,
-// called by the letter buttons onclick functions
-function removeType(kind) {
-  const itemToRemoveIndex = fleet.findIndex(function (item) {
-    return item.type === kind;
-  });
-  if (itemToRemoveIndex !== -1) {
-    fleet.splice(itemToRemoveIndex, 1);
+  // sorts the x and y coordinates in an array,
+  // called by ship.validateSpots()
+  sortSpots(arr, type) {
+    let tempx = [];
+    let tempy = [];
+    for (let i = 0; i < arr.length; i++) {
+      tempx[i] = arr[i].x;
+      tempy[i] = arr[i].y;
+    }
+    tempx = tempx.sort(function (a, b) {
+      return b - a;
+    });
+    tempy = tempy.sort(function (a, b) {
+      return b - a;
+    });
+    return { sortedx: tempx, sortedy: tempy };
   }
 }
 
-// sorts the x and y coordinates in an array,
-// called by ship.validateSpots()
-function sortSpots(arr, type) {
-  let tempx = [];
-  let tempy = [];
-  for (let i = 0; i < arr.length; i++) {
-    tempx[i] = arr[i].x;
-    tempy[i] = arr[i].y;
-  }
-  tempx = tempx.sort(function (a, b) {
-    return b - a;
-  });
-  tempy = tempy.sort(function (a, b) {
-    return b - a;
-  });
-  return { sortedx: tempx, sortedy: tempy };
-}
-
-// game setup (game play results only from clicking buttons on the DOM)
+// game setup
 let bdSquares = 10;
 let bdTitle = "Battleship";
 let bdSize = "400";
@@ -423,7 +430,6 @@ if (screen.width < 420) {
   bdSqSize = 30;
 }
 const bsBoard = new Gameboard(bdSize, bdSquares, bdSqSize, bdTitle);
-
 const instructBlurb =
   "Sink the fleet in the fewest shots... <br><br> Select a letter. &nbsp;  Click on the specified number of squares, adjacent to each other in rows or columns.  &nbsp; Press 'Build Ship'. &nbsp; To delete a ship, press its letter again, and rebuild it. &nbsp; When all ships are built, click 'Switch Players' and change players. &nbsp; Press 'Attack' and select squares to sink the fleet. &nbsp; Press 'Reset' to play again.";
 bsBoard.makeInstructions(instructBlurb);
