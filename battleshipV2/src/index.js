@@ -5,12 +5,16 @@
 
 import "./style.css";
 
+// The game is made from 3 classes, Gameboard(), SquareClick() and Ship().
+// Once the board is set up, all play results from clicking buttons
+// on the DOM.
+
 let shots = [];
 let fleet = [];
-let ships = [];
 let type = "";
 let size = 0;
 
+// make the board
 class Gameboard {
   constructor(width, sqAcross, sqSize, titl) {
     this.width = width;
@@ -27,8 +31,9 @@ class Gameboard {
         square.className = "square";
         square.style.width = `${squareSize}px`;
         square.style.height = `${squareSize}px`;
+        // each button has an id that serves as coordinates for the ships
         square.id = `${col}, ${squares - 1 - row}`;
-        // dynamic variable names for the squareClicks
+        // when a square is click a new object is made that directs gameplay
         square.onclick = function () {
           window["sq" + square.id] = new SquareClick(square.id, type);
         };
@@ -55,6 +60,9 @@ class Gameboard {
   }
 
   makeBtns() {
+    // when a letter button is clicked, the corresponding ship is deleted
+    // and the other ships locations are refreshed, type and size are set
+    // to change the class of subsequently selected squares
     const btna = document.createElement("button");
     btna.textContent = "A = 2";
     btna.classList.add("controls");
@@ -100,6 +108,7 @@ class Gameboard {
       removeType("E");
       this.refreshShips();
     };
+    // the ids of the squares selected are used to make a new ship
     const btnBuild = document.createElement("button");
     btnBuild.textContent = "Build Ship";
     btnBuild.classList.add("controls");
@@ -107,18 +116,21 @@ class Gameboard {
       let newShip = new Ship(type, size);
       fleet.push(newShip);
     };
+    // type is changed to shot
     const btnAttack = document.createElement("button");
     btnAttack.textContent = "Attack";
     btnAttack.classList.add("controls");
     btnAttack.onclick = () => {
       type = "shot";
     };
+    // the page is refreshed to reset the game
     const btnReset = document.createElement("button");
     btnReset.textContent = "Reset";
     btnReset.classList.add("controls");
     btnReset.onclick = () => {
       window.location.reload();
     };
+    // the board is blanked so the opponent can't see the ships
     const btnPassDevice = document.createElement("button");
     btnPassDevice.textContent = "Switch Players";
     btnPassDevice.classList.add("controls");
@@ -133,11 +145,14 @@ class Gameboard {
         el.classList.remove("E");
       });
     };
+    // a blank button for nicer design
     const btnBlank = document.createElement("button");
     btnBlank.classList.add("controls");
+    // the control box to hold the buttons is made
     const btns = document.createElement("div");
     btns.id = "btns";
     btns.style.width = "400px";
+    // everything is added to the board
     btns.appendChild(btna);
     btns.appendChild(btnb);
     btns.appendChild(btnc);
@@ -151,6 +166,7 @@ class Gameboard {
     document.body.appendChild(btns);
   }
 
+  // the board is blanked and the ships are reloaded from the fleet array
   refreshShips() {
     // reset the board
     const sq = document.getElementsByClassName("square");
@@ -210,7 +226,6 @@ class SquareClick {
       }
 
       // check if the fleet is sunk
-
       let sunk = 0;
       for (let i = 0; i < fleet.length; i++) {
         let hits = 0;
@@ -223,16 +238,17 @@ class SquareClick {
           sunk++;
         }
       }
+      // if the fleet is sunk, end the game
       if (sunk === fleet.length) {
-        alert("Fleet is sunk");
+        alert(`The fleet is sunk in ${shots.length} shots!`);
         const temp3 = document.getElementsByClassName("square");
         for (let z = 0; z < temp3.length; z++) {
           temp3[z].disabled = true;
         }
       }
 
-      // if the click is not a shot just change the class
-      // and add the type as textContent
+      // if the click is a ship coordinate, not a shot,
+      // just change the class and add the type as textContent
     } else {
       shotTaken.classList.add(this.type);
       shotTaken.textContent = this.type;
@@ -240,10 +256,12 @@ class SquareClick {
   }
 }
 
+// build a ship object
 class Ship {
   constructor(type, size) {
     this.type = type;
     this.size = size;
+    // coordinates for the ship
     this.spots = [];
 
     // put the ids of all the squares of the type into the ships coordinates
@@ -261,6 +279,7 @@ class Ship {
     this.validateSpots();
   }
 
+  // check if spots occur next to each other in a row or column
   validateSpots() {
     // check that the spots selected for the ships are
     // next to each other in a row or column
@@ -357,13 +376,16 @@ class Ship {
     // send error message if selected squares are not valid
     if (valid === false) {
       alert(
-        "Select squares next to each other, in either rows or columns. Try again"
+        "Select squares next to each other, in either rows or columns. Press the ship's letter button to try again"
       );
     }
   }
 }
 
-// removes ships of a certain type from the fleet
+// auxillary functions
+
+// removes ships of a certain type from the fleet,
+// called by the letter buttons onclick functions
 function removeType(kind) {
   const itemToRemoveIndex = fleet.findIndex(function (item) {
     return item.type === kind;
@@ -391,8 +413,18 @@ function sortSpots(arr, type) {
   return { sortedx: tempx, sortedy: tempy };
 }
 
-const bsBoard = new Gameboard("400px", 10, 40, "Battleship");
+// game setup (game play results only from clicking buttons on the DOM)
+let bdSquares = 10;
+let bdTitle = "Battleship";
+let bdSize = "400";
+let bdSqSize = 40;
+if (screen.width < 420) {
+  bdSize = "300";
+  bdSqSize = 30;
+}
+const bsBoard = new Gameboard(bdSize, bdSquares, bdSqSize, bdTitle);
+
 const instructBlurb =
-  "How To Play... <br><br> Click a letter.  Select squares next to each other in rows or columns.  Click Build Ship.  To delete a ship, press its letter again, and rebuild it.  When all ships are built, click Switch Players.  Press Attack and select squares to sink the fleet. Press Reset to play again.";
+  "Sink the fleet in the fewest shots... <br><br> Select a letter. &nbsp;  Click on the specified number of squares, adjacent to each other in rows or columns.  &nbsp; Press 'Build Ship'. &nbsp; To delete a ship, press its letter again, and rebuild it. &nbsp; When all ships are built, click 'Switch Players' and change players. &nbsp; Press 'Attack' and select squares to sink the fleet. &nbsp; Press 'Reset' to play again.";
 bsBoard.makeInstructions(instructBlurb);
 bsBoard.makeBtns();

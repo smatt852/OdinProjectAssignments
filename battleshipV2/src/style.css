@@ -5,9 +5,9 @@
   }
 * {
     font-family: 'Bruno Ace SC';
+    font-size: 1vw;
 }
 body {
-    height: 95vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -20,8 +20,8 @@ body {
 #instructions {
     padding: 20px;
     position: absolute;
-    right: 150px;
-    bottom: 80px;
+    right: 80px;
+    top: 60px;
     max-width: 200px;
     border-radius: 30px;
     background-color: #819baa65;
@@ -32,7 +32,7 @@ body {
 #title {
     margin: 0;
     padding: 0;
-    font-size: 3vw;
+    font-size: 2vw;
     text-align: center;
 }
 .square {
@@ -82,4 +82,37 @@ body {
     border-right: #244857 solid 2px;
     border-top: 2px solid #5ab4db solid 2px;
     border-left: 2px solid #5ab4db solid 2px;
+    height: 40px;
+}
+
+@media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
+    
+    * {
+        font-size: 2.6vw;
+    }
+    body {
+        height: 95vh;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 20vw;
+    }
+    #instructions {
+        position: absolute;
+        top: 540px;
+        right: 40px;
+        left: 40px;
+        max-width: 330px;
+    }
+    #title {
+        margin-top: 3vw;
+        font-size: 7vw;
+    }
+    .controls {
+        height: 30px;
+        width: 60px;
+    }
+    #btns {
+        max-width: 300px;
+        gap: 0;
+    }
 }
