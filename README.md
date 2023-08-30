@@ -9,4 +9,4 @@ mergeSort.js is a recursive sorting algorithm that I wrote only after looking at
 linkedList.js is a class which makes a linked list with basic editting methods.  
 knight.html is the Knights Travails problem to find the shortest path between two squares the knight can travel.  After I read etom's answer on the OdinProject Website, I made my own version and added a front end with a clickable chessboard that maps the path.   
 testing folder contains simple functions and tests for them, in Jest.  
-battleship is the classic game, implemented for two players, one board at a time. battleshipV2 is the same but made using classes.  
+battleshipV2 is the Battleship game made using only classes and their methods. One player adds ships to the board then the ships are hidden and the device is passed to the second player. Whoever sinks the fleet in the least shots wins. It uses buttons on the DOM to drive game play. 
