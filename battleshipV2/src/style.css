@@ -25,7 +25,7 @@ body {
     max-width: 200px;
     border-radius: 30px;
     background-color: #819baa65;
-    box-shadow: 10px 10px 10px #366c84;
+    box-shadow: 10px 10px 10px #1e3c49;
     border-top: 3px solid rgba(238, 238, 248, 0.973);
     border-left: 3px solid rgba(238, 238, 248, 0.973);
 }
@@ -37,10 +37,10 @@ body {
 }
 .square {
     background-color: #819baa65;
-    border-bottom: #366c84 solid 0.5px;
-    border-right: #366c84 solid 0.5px;
-    border-top: 0.5px solid rgba(238, 238, 248, 0.973);
-    border-left: 0.5px solid rgba(238, 238, 248, 0.973);
+    border-bottom: #244958 solid 0.5px;
+    border-right: #244958 solid 0.5px;
+    border-top: 0.5px solid white;
+    border-left: 0.5px solid white;
 }
 .A, .B, .C, .D, .E {
     margin: 0;
@@ -88,7 +88,7 @@ body {
 @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
     
     * {
-        font-size: 2.6vw;
+        font-size: 3.4vw;
     }
     body {
         height: 95vh;
@@ -110,6 +110,8 @@ body {
     .controls {
         height: 30px;
         width: 60px;
+        font-size: 2.3vw;
+        padding:0vw;
     }
     #btns {
         max-width: 300px;
