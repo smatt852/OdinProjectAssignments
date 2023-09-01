@@ -118,7 +118,7 @@ body {
         height: 95vh;
         justify-content: flex-start;
         align-items: center;
-        margin-top: 20vw;
+        margin-top: 10vw;
     }
     #instructions {
         position: absolute;
