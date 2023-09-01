@@ -16,23 +16,21 @@ let size = 0;
 
 // make the board
 class Gameboard {
-  constructor(width, sqAcross, sqSize, titl) {
-    this.width = width;
+  constructor(bdWidth, sqAcross, sqSize, titl) {
+    this.width = bdWidth;
     this.sqAcross = sqAcross;
     this.sqSize = sqSize;
     const board = document.createElement("div");
     board.id = "board";
-    const squares = this.sqAcross;
     board.style.width = this.width;
-    const squareSize = this.sqSize;
-    for (let row = 0; row < squares; row++) {
-      for (let col = 0; col < squares; col++) {
+    for (let row = 0; row < this.sqAcross; row++) {
+      for (let col = 0; col < this.sqAcross; col++) {
         const square = document.createElement("button");
         square.className = "square";
-        square.style.width = `${squareSize}px`;
-        square.style.height = `${squareSize}px`;
+        square.style.width = this.sqSize;
+        square.style.height = this.sqSize;
         // each button has an id that serves as coordinates for the ships
-        square.id = `${col}, ${squares - 1 - row}`;
+        square.id = `${col}, ${this.sqAcross - 1 - row}`;
         // when a square is click a new object is made that directs gameplay
         square.onclick = function () {
           window["sq" + square.id] = new SquareClick(square.id, type);
@@ -421,15 +419,16 @@ class Ship {
 }
 
 // game setup
-let bdSquares = 10;
+
+let sqAcross = 10;
 let bdTitle = "Battleship";
-let bdSize = "400";
-let bdSqSize = 40;
-if (screen.width < 420) {
-  bdSize = "300";
-  bdSqSize = 30;
+let bdWidth = "30vw";
+let sqSize = "3vw";
+if (screen.height > screen.width) {
+  bdWidth = "90vw";
+  sqSize = "9vw";
 }
-const bsBoard = new Gameboard(bdSize, bdSquares, bdSqSize, bdTitle);
+const bsBoard = new Gameboard(bdWidth, sqAcross, sqSize, bdTitle);
 const instructBlurb =
   "Sink the fleet in the fewest shots... <br><br> Select a letter. &nbsp;  Click on the specified number of squares, adjacent to each other in rows or columns.  &nbsp; Press 'Build Ship'. &nbsp; To delete a ship, press its letter again, and rebuild it. &nbsp; When all ships are built, click 'Switch Players' and change players. &nbsp; Press 'Attack' and select squares to sink the fleet. &nbsp; Press 'Reset' to play again.";
 bsBoard.makeInstructions(instructBlurb);

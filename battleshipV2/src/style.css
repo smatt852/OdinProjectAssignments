@@ -3,26 +3,26 @@
     font-family: 'Bruno Ace SC';
     src: url('./BrunoAceSC-Regular.ttf');
   }
-* {
+
+  * {
     font-family: 'Bruno Ace SC';
-    font-size: 1vw;
+    font-size: 4vw;
 }
 body {
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     background: url('./water.jpg');
     background-repeat: no-repeat;
-    background-position: 50% 0;
-    background-size: cover;
+    background-position: 50% 50%;
+    background-size:auto;
 }
 #instructions {
     padding: 20px;
     position: absolute;
-    right: 80px;
-    top: 60px;
-    max-width: 200px;
+    bottom: 5vh;
+    max-width: 90vw;
     border-radius: 30px;
     background-color: #819baa65;
     box-shadow: 10px 10px 10px #1e3c49;
@@ -30,9 +30,9 @@ body {
     border-left: 3px solid rgba(238, 238, 248, 0.973);
 }
 #title {
-    margin: 0;
+    margin-top: 10vh;
     padding: 0;
-    font-size: 2vw;
+    font-size: 5vw;
     text-align: center;
 }
 .square {
@@ -85,6 +85,30 @@ body {
     height: 40px;
 }
 
+
+
+@media only screen and (device-width: 1366px) and (device-height: 665px) {
+
+* {
+    font-size: 1vw;
+}
+body {
+    background-position: 50% 0;
+    background-size: cover;
+}
+#instructions {
+    right: 5vw;
+    max-width: 200px;
+}
+#title {
+    margin-top: 0vw;
+    font-size: 2vw;
+}
+.controls {
+    height: 35px;
+}
+}
+
 @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
     
     * {
@@ -118,3 +142,4 @@ body {
         gap: 0;
     }
 }
+
