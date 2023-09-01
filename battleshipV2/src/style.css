@@ -6,7 +6,7 @@
 
   * {
     font-family: 'Bruno Ace SC';
-    font-size: 4vw;
+    font-size: 2.5vw;
 }
 body {
     height: 100vh;
@@ -108,31 +108,3 @@ body {
     height: 35px;
 }
 }
-
-/* @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
-    
-    * {
-        font-size: 3.4vw;
-    }
-    body {
-        height: 95vh;
-        justify-content: flex-start;
-        align-items: center;
-        margin-top: 10vw;
-    }
-    #title {
-        margin-top: 3vw;
-        font-size: 7vw;
-    }
-    .controls {
-        height: 30px;
-        width: 60px;
-        font-size: 2.3vw;
-        padding:0vw;
-    }
-    #btns {
-        max-width: 300px;
-        gap: 0;
-    }
-}
- */
