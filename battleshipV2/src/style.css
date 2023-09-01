@@ -30,7 +30,7 @@ body {
     border-left: 3px solid rgba(238, 238, 248, 0.973);
 }
 #title {
-    margin-top: 10vh;
+    margin-top: 5vh;
     padding: 0;
     font-size: 5vw;
     text-align: center;
@@ -109,7 +109,7 @@ body {
 }
 }
 
-@media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
+/* @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
     
     * {
         font-size: 3.4vw;
@@ -119,13 +119,6 @@ body {
         justify-content: flex-start;
         align-items: center;
         margin-top: 10vw;
-    }
-    #instructions {
-        position: absolute;
-        top: 540px;
-        right: 40px;
-        left: 40px;
-        max-width: 330px;
     }
     #title {
         margin-top: 3vw;
@@ -142,4 +135,4 @@ body {
         gap: 0;
     }
 }
-
+ */
