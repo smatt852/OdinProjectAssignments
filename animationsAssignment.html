@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animations Assignment</title>
+<style>
+/* part 3 dropdown menu bounces */
+.dropdown-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+  width: 250px;
+  margin: 40px auto;
+  text-align: center;
+  line-height: 50px;
+  font-size: 15px;
+  color: rgb(247, 247, 247);
+  cursor: pointer;
+}
+.menu-title {
+  background-color: rgb(163, 162, 162);
+}
+.dropdown-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: rgb(99, 97, 97);
+  display: none;
+}
+ul.dropdown-menu li:hover {
+  background: rgb(47, 46, 46);
+}
+.visible {
+  display: block;
+}
+
+/* I added the next two items to animate a height change of the li */
+ul.dropdown-menu li {
+    height: 40px;
+    animation-duration: 0.6s;
+  animation-name: bounce;
+  animation-iteration-count: 1;
+}
+@keyframes bounce {
+   0% {
+     height: 0px;
+    }
+  45% {
+    height: 40px;
+  }
+  65% {
+    height: 25px;
+  }
+  80% {
+    height: 40px;
+  }
+  90% {
+    height: 35px;
+  }
+  100% {
+    height: 40px;
+  }
+}
+
+/* The solution was to animate everything in the visible class
+by scaling in the y-direction
+.visible {
+  animation: expand 500ms ease-in-out;
+  transform-origin: top;
+}
+@keyframes expand {
+  0% {
+    transform: scaleY(0);
+  }
+  70% {
+    transform: scaleY(1.1);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+} */
+
+
+/* part 1 button that gets bigger on hover */
+#transition-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .button0 {
+    border: none;
+    border-radius: 5px;
+    background-color: #2563eb;
+    color: white;
+    text-align: center;
+    padding: 16px 24px;
+    transition: transform .3s ease-in-out;
+  }
+  
+  .button0:hover {
+    transform: scale(1.2)
+  }
+
+  /* part 2 box drops down and opacity changes on click */
+  * {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+}
+
+.button-container {
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffff;
+  opacity: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button1 {
+  padding: 20px;
+  color: #ffffff;
+  background-color: #0e79dd;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+}
+
+.popup-modal {
+  padding: 32px 64px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  position: fixed;
+  top: 0%;
+  left: 38.5%;
+  pointer-events: none;
+  opacity: 0%;
+  text-align: center;
+  transition-property: transform opacity;
+  transition-duration: 1s;
+  transition-timing-function: ease;
+  transition-delay: 0.25s;
+}
+
+.popup-modal p {
+  margin-bottom: 24px;
+}
+
+.backdrop {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background: #000;
+  opacity: 0%;
+  transition-property: opacity;
+  transition-duration: 3s;
+  transition-timing-function: ease;
+  transition-delay: 0.25s;
+}
+
+.popup-modal.show {
+  pointer-events: all;
+  transform-origin: (center, top);
+  transform: translate(0%, 80%);
+  opacity: 100%;
+}
+
+.backdrop.show {
+  opacity: 30%;
+}
+/* in the initial class of the element you set the property value
+and add the transition information. Then in the
+class that is the end of the transition, you set
+the ending value of the property.
+Sometimes the property is "transform", in which case
+there is no property value in the initial class, 
+the transform values are given in the class that 
+is the end of the transition.
+The main transforms: rotate, scale, skew, translate, and perspective.
+Opacity and transform can be used without too much trouble but
+if you are using another property set the z-index of the element closer to 1
+so the whole page doesn't have to be redrawn for the transition*/
+
+
+</style>
+</head>
+<body>
+
+<!-- part 3 drop down menu bounces -->
+<div class="dropdown-container">
+    <div class="menu-title">MENU</div>
+    <ul class="dropdown-menu">
+        <li>ITEM 1</li>
+        <li>ITEM 2</li>
+        <li>ITEM 3</li>
+        <li>ITEM 4</li>
+        <li>ITEM 5</li>
+    </ul>
+</div>
+
+
+<!-- part 1 button that gets bigger on hover  -->
+    <div id=transition-container>
+        <button class="button0">Transition!</button>
+    </div>
+
+<!-- part 2 box drops down and opacity changes on click -->
+    <div class="backdrop"></div>
+    <div class="popup-modal">
+      <h1>Look at me!</h1>
+      <p>I'm a pop up dialog!</p>
+      <button class="button1" id="close-modal">Close Modal</button>
+    </div>
+    <div class="button-container">
+      <button class="button1" id="trigger-modal">Open Modal</button>
+    </div>
+
+
+
+</body>
+<script>
+
+// part 2 box drops down and opacity changes on click
+const openButton = document.getElementById('trigger-modal');
+const closeButton = document.getElementById('close-modal');
+function toggleModal() {
+  const modalDiv = document.querySelector('.popup-modal');
+  const backdrop = document.querySelector('.backdrop');
+  modalDiv.classList.toggle('show');
+  backdrop.classList.toggle('show');
+}
+openButton.addEventListener('click', toggleModal);
+closeButton.addEventListener('click', toggleModal);
+
+
+// part 3 drop down menu bounces 
+const dropdownContainer = document.querySelector(".dropdown-container");
+const menuTitle = document.querySelector(".menu-title");
+const dropdownMenu = document.querySelector(".dropdown-menu");
+
+// I don't know what currentTarget is, but if a click occurs on the menu bar
+// make the menu appear
+menuTitle.addEventListener("click", (e) => {
+  if (e.target === e.currentTarget) {
+    dropdownMenu.classList.toggle("visible");
+  }  
+})
+
+// if a click occurs outside the menu, make it go away
+window.addEventListener("click", (e) => {
+  if (!dropdownContainer.contains(e.target)) {
+    dropdownMenu.classList.remove("visible")
+  }
+})
+</script>
+</html>

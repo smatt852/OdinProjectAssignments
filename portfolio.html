@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odin Project Portfolio</title>
+    <style> 
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .no-pad {
+        padding:0;
+        margin:0;
+    }
+    html {
+        scroll-behavior: smooth;
+    }
+    section {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .blurb {
+        padding: 10vh;
+    }
+    #home{
+        background-color: crimson;
+        display: flex;
+        flex-direction: column;
+        gap: 10vh;
+    }
+    #projects {
+        background-color: royalblue;
+    }
+    #contact {
+        background-color: goldenrod;
+    }
+    nav {
+        /* position: sticky;
+        top: 0; */
+        background-color: #fff;
+    }
+    nav .container {
+        width:90%;
+        max-width: 1000px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 10px;
+    }
+    nav .container ul {
+        list-style: none;
+    }
+    nav .container ul li {
+        display: inline-block;
+    }
+    a {
+        display: inline-block;
+        padding: 10px 20px;
+        color: black;
+        text-decoration: none;
+    }
+    .active {
+        background-color: red;
+        transition: 0.7 ease background-color;
+    }
+    .active a {
+        color: white;
+    }
+    /* Page content */
+    .content {
+    padding: 16px;
+    }
+    /* The sticky class is added to the navbar with JS when it reaches its scroll position */
+    .sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    }
+    /* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+    .sticky + .content {
+    padding-top: 60px;
+    }
+    .header {
+    background-color: #f1f1f1;
+    padding: 30px;
+    text-align: center;
+    height: 100vh;
+    width: 100%;
+    background: url('keyboard.png');
+    background-size: cover;
+    }
+    .intro {
+    opacity: 0%;
+    margin-top: 50px;
+    color: lightgrey;
+    transition-property: transform opacity;
+    transition-duration: 3s;
+    transition-timing-function: ease;
+    }
+    .end {
+    transform-origin: (center, top);
+    transform: translate(0%, 10%);
+    opacity: 100%;
+    }
+    .end2 {
+    transform-origin: (center, top);
+    transform: translate(0%, 20%);
+    opacity: 100%;
+    }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div id="int1" class="intro">Shelley Matthews</div>
+        <div id="int2" class="intro">Odin Project Portfolio</div>
+    </div>
+    <nav>
+        <div class=container>
+            <ul>
+                <li class="home active"><a href=#home>Home</a></li>
+                <li class="projects"><a href=#projects>Projects</a></li>
+                <li class="contact"><a href=#contact>Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <section id="home">
+        <div class="blurb">
+            <h1><a class=no-pad href= https://www.theodinproject.com/about>The Odin Project</a></h1>
+            It is a free, comprehensive curriculum that equips learners to be full stack developers, whatever their experience level. 
+            It emphasizes practice and learning by doing. Learning happens while building projects. 
+            Topics include HTML, CSS, JavaScript, Accessibility, GitHub and Programming Logic. It is open source and community driven.
+        </div>
+        <div class="blurb">
+            <h1>Shelley Matthews</h1>
+            (she/her)<br>
+            Shelley started programming in R for Data Science to further her skills in Statistics. 
+            She enjoys front end development because it uses both logic and graphic design
+            to create useful tools. Her background includes Environmental Science, Librarianship, 
+            and Visual Arts. She lives in Canada with her Cavalier puppy.
+        </div>
+    </section>
+    <section id="projects"></section>
+    <section id="contact"></section>
+</body>
+<script>
+
+window.setTimeout(function() {
+    let int1 = document.getElementById('int1');
+    int1.classList.add("end");
+    }, 1500);
+window.setTimeout(function() {
+    let int2 = document.getElementById('int2');
+    int2.classList.add("end2");
+    }, 2500);
+
+
+// When the user scrolls the page, execute myFunction
+window.onscroll = function() {myFunction()};
+
+// Get the navbar
+var navbar = document.querySelector("nav");
+
+// Get the offset position of the navbar
+var sticky = navbar.offsetTop;
+
+// Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+
+    const sections = document.querySelectorAll('section');
+    const navli = document.querySelectorAll('nav .container ul li');
+    window.addEventListener('scroll', ()=> {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset > sectionTop - sectionHeight/1.5) {
+                current = section.getAttribute('id');
+            }
+        });
+        navli.forEach(li => {
+            li.classList.remove('active');
+            if(li.classList.contains(current)) {
+                li.classList.add('active');
+            }
+        });
+    });
+</script>
+</html>
