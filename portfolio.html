@@ -43,6 +43,7 @@
     }
     .blurb {
         margin: 5vw;
+        font-size: 1.1vw;
     }
     .homeEdge {
         background: url('leaf.png');
@@ -67,6 +68,12 @@
         width: 23vw;
         height: 35vh;
         border-radius: 15px;
+        font-size: 0.4vw;
+    }
+    p {
+        padding: 2vw;
+        margin: 0;
+        font-size: 0.9vw;
     }
     .cardTop {
         height: 10vh;
@@ -84,6 +91,9 @@
     }
     #contact {
         background-color: black;
+        align-items: end;
+        justify-content: end;
+        padding: 20vw;
     }
     nav {
         background-color: #fff;
@@ -130,8 +140,7 @@
     padding-top: 60px;
     }
     .header {
-    background-color: #f1f1f1;
-    padding: 30px;
+    padding: 30vh;
     text-align: center;
     height: 100vh;
     width: 100%;
@@ -140,11 +149,11 @@
     }
     .intro {
     opacity: 0%;
-    margin-top: 50px;
     color: lightgrey;
     transition-property: transform opacity;
-    transition-duration: 3s;
-    transition-timing-function: ease;
+    transition-duration: 1s;
+    transition-timing-function: ease-in;
+    font-size: 1.8vw;
     }
     .end {
     transform-origin: (center, top);
@@ -155,6 +164,27 @@
     transform-origin: (center, top);
     transform: translate(0%, 20%);
     opacity: 100%;
+    }
+    img {
+        object-fit:scale-down;
+        margin:0;
+        padding:0;
+    }
+    .white {
+        color: white;
+        padding: 0;
+        margin: 0;
+    }
+    .githubContact {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-items:flex-end;
+    }
+    h1:hover {
+        scale: 1.5;
+    }
+    h1 {
+        font-size: 1.2vw;
     }
     
     </style>
@@ -167,9 +197,9 @@
     <nav>
         <div class=container>
             <ul>
-                <li class="home active"><a href=#home>Home</a></li>
-                <li class="projects"><a href=#projects>Projects</a></li>
-                <li class="contact"><a href=#contact>Contact</a></li>
+                <li class="home active"><a href=#home><h1>Home</h1></a></li>
+                <li class="projects"><a href=#projects><h1>Projects</h1></a></li>
+                <li class="contact"><a href=#contact><h1>Contact</h1></a></li>
             </ul>
         </div>
     </nav>
@@ -177,9 +207,12 @@
         <div class="homeBlurbBox">
             <div class="blurb">
                 <h1><a class=no-pad href= https://www.theodinproject.com/about>The Odin Project</a></h1>
-                It is a free, comprehensive curriculum that equips learners to be full stack developers, whatever their experience level. 
-                It emphasizes practice and learning by doing. Learning happens while building projects. 
-                Topics include HTML, CSS, JavaScript, Accessibility, GitHub and Programming Logic. It is open source and community driven.
+                It is a free, comprehensive curriculum that equips learners to be full stack developers, 
+                whatever their experience level. Topics include HTML, CSS, JavaScript, Accessibility, GitHub 
+                and Programming Logic. It is open source and community driven.
+                It emphasizes practice and learning by doing. Learning happens while building projects;
+                a few have been provided here as examples. 
+                
             </div>
             <div class="blurb">
                 <h1>Shelley Matthews</h1>
@@ -195,24 +228,49 @@
     <section id="projects">
         <div class="card">
             <div class="card2 cardTop"><h1>To Do List App</h1></div>
+            <p>A useful app to help you be productive. 
+            Put action items in a list and set the urgency level and deadline.
+            Classify them into categories and view by category.
+            Take a quick look at what's due today.</p>
         </div>
         <div class="card">
             <div class="card2 cardTop"><h1>Battleship Game</h1></div>
+            <p>The classic game of Battleship. Build your fleet on the grid
+                and hide them, then pass your device to your opponent and hope
+                they can't find them. When the fleet is sunk, see how many 
+                shots it took and try to beat it.
+            </p>
         </div>
         <div class="card">
             <div class="card2 cardTop"><h1>Photo Slideshow</h1></div>
+            <p>Organise your pics into a little slideshow. You can scroll 
+                forward or backward at your own pace, or let the app do it 
+                for you. Pause on a good shot whenever you want.</p>
         </div>
         <div class="card">
             <div class="card2 cardTop"><h1>Knight's Path in Chess</h1></div>
+            <p>Knights can cover the whole chess board. Pick your start and end
+                positions, and the app will show you how the knight can get 
+                there in the least moves.
+            </p>
         </div>
         <div class="card">
-            <div class="card2 cardTop"><h1>Rock Paper Scissors Game</h1></div>
+            <div class="card2 cardTop"><h1>Rock Paper Scissors</h1></div>
+            <p>Another classic game. Try to beat the computer with your best
+                choices. Win three games to win the match.
+            </p>
         </div>
         <div class="card">
-            <div class="card2 cardTop"><h1>TicTacToe Game</h1></div>
+            <div class="card2 cardTop"><h1>TicTacToe</h1></div>
+            <p>Play the computer to win this time-tested game.</p>
         </div>
     </section>
-    <section id="contact"></section>
+    <section id="contact">
+        <div class="githubContact">
+            <img src="githubIcon.png">
+            <p class="white">smatt852</p>
+        </div>
+    </section>
 </body>
 <script>
 
@@ -227,7 +285,7 @@ window.setTimeout(function() {
 
 
 // When the user scrolls the page, execute myFunction
-window.onscroll = function() {myFunction()};
+window.onscroll = function() {sticks()};
 
 // Get the navbar
 var navbar = document.querySelector("nav");
@@ -236,7 +294,7 @@ var navbar = document.querySelector("nav");
 var sticky = navbar.offsetTop;
 
 // Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
-function myFunction() {
+function sticks() {
   if (window.pageYOffset >= sticky) {
     navbar.classList.add("sticky")
   } else {
