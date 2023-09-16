@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mooli&display=swap" rel="stylesheet">
     <title>Odin Project Portfolio</title>
     <style> 
-    * {
+    * { 
+        font-family: 'Mooli';
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -21,27 +25,67 @@
         height: 100vh;
         width: 100%;
         display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .blurb {
-        padding: 10vh;
     }
     #home{
-        background-color: crimson;
+        padding-left: 10vw;
+        padding-right: 0;
+        margin-right: 0;
+        background-color: #d62828;
         display: flex;
+        flex-direction: row;
+        justify-content: right;
+    }
+    .homeBlurbBox {
+        flex: 3;
         flex-direction: column;
-        gap: 10vh;
+        gap: 30vw;
+        padding: 5vw;
+    }
+    .blurb {
+        margin: 5vw;
+    }
+    .homeEdge {
+        background: url('leaf.png');
+        background-size: cover;
+        flex: 1;
+        height: 100vh;
+        padding: 0;
+        margin: 0;
     }
     #projects {
-        background-color: royalblue;
+        background-image: linear-gradient(#d62828, black);
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        padding-left: 10vw;
+        padding-right:10vw;
+        padding-top: 10vh;
+        padding-bottom: 10vh;
+    }
+    .card {
+        background-color: white;
+        width: 23vw;
+        height: 35vh;
+        border-radius: 15px;
+    }
+    .cardTop {
+        height: 10vh;
+        width: 23.5vw;
+        border-radius: 15px;
+        position: relative;
+        right: 0.3vw;
+    }
+    .card2 {
+        background-color: rgb(223, 30, 5);
+        box-shadow: 20px 20px 20px red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     #contact {
-        background-color: goldenrod;
+        background-color: black;
     }
     nav {
-        /* position: sticky;
-        top: 0; */
         background-color: #fff;
     }
     nav .container {
@@ -64,7 +108,8 @@
         text-decoration: none;
     }
     .active {
-        background-color: red;
+        background-color: #d62828;
+        border-radius: 20px;
         transition: 0.7 ease background-color;
     }
     .active a {
@@ -111,6 +156,7 @@
     transform: translate(0%, 20%);
     opacity: 100%;
     }
+    
     </style>
 </head>
 <body>
@@ -128,22 +174,44 @@
         </div>
     </nav>
     <section id="home">
-        <div class="blurb">
-            <h1><a class=no-pad href= https://www.theodinproject.com/about>The Odin Project</a></h1>
-            It is a free, comprehensive curriculum that equips learners to be full stack developers, whatever their experience level. 
-            It emphasizes practice and learning by doing. Learning happens while building projects. 
-            Topics include HTML, CSS, JavaScript, Accessibility, GitHub and Programming Logic. It is open source and community driven.
+        <div class="homeBlurbBox">
+            <div class="blurb">
+                <h1><a class=no-pad href= https://www.theodinproject.com/about>The Odin Project</a></h1>
+                It is a free, comprehensive curriculum that equips learners to be full stack developers, whatever their experience level. 
+                It emphasizes practice and learning by doing. Learning happens while building projects. 
+                Topics include HTML, CSS, JavaScript, Accessibility, GitHub and Programming Logic. It is open source and community driven.
+            </div>
+            <div class="blurb">
+                <h1>Shelley Matthews</h1>
+                (she/her)<br>
+                Shelley started programming in R for Data Science to further her skills in Statistics. 
+                She enjoys front end development because it uses both logic and graphic design
+                to create useful tools. Her background includes Environmental Science, Librarianship, 
+                and Visual Arts. She lives in Canada with her Cavalier puppy.
+            </div>
         </div>
-        <div class="blurb">
-            <h1>Shelley Matthews</h1>
-            (she/her)<br>
-            Shelley started programming in R for Data Science to further her skills in Statistics. 
-            She enjoys front end development because it uses both logic and graphic design
-            to create useful tools. Her background includes Environmental Science, Librarianship, 
-            and Visual Arts. She lives in Canada with her Cavalier puppy.
+        <div class="homeEdge"></div>
+    </section>
+    <section id="projects">
+        <div class="card">
+            <div class="card2 cardTop"><h1>To Do List App</h1></div>
+        </div>
+        <div class="card">
+            <div class="card2 cardTop"><h1>Battleship Game</h1></div>
+        </div>
+        <div class="card">
+            <div class="card2 cardTop"><h1>Photo Slideshow</h1></div>
+        </div>
+        <div class="card">
+            <div class="card2 cardTop"><h1>Knight's Path in Chess</h1></div>
+        </div>
+        <div class="card">
+            <div class="card2 cardTop"><h1>Rock Paper Scissors Game</h1></div>
+        </div>
+        <div class="card">
+            <div class="card2 cardTop"><h1>TicTacToe Game</h1></div>
         </div>
     </section>
-    <section id="projects"></section>
     <section id="contact"></section>
 </body>
 <script>
