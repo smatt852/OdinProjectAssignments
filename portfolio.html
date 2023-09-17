@@ -26,16 +26,16 @@
         width: 100%;
         display: flex;
     }
-    #home{
+    #about{
         padding-left: 10vw;
         padding-right: 0;
         margin-right: 0;
         background-color: #d62828;
-        display: flex;
-        flex-direction: row;
-        justify-content: right;
+        display: grid;
+        grid-template-columns: 3fr 1fr;
     }
-    .homeBlurbBox {
+    .aboutBlurbBox {
+        grid-column: 1/2;
         flex: 3;
         flex-direction: column;
         gap: 30vw;
@@ -45,8 +45,9 @@
         margin: 5vw;
         font-size: 1.1vw;
     }
-    .homeEdge {
-        background: url('leaf.png');
+    .aboutEdge {
+        grid-column: 2/3;
+        background: url('leaf2.png');
         background-size: cover;
         flex: 1;
         height: 100vh;
@@ -120,7 +121,7 @@
     .active {
         background-color: #d62828;
         border-radius: 20px;
-        transition: 0.7 ease background-color;
+        transition: 0.7s ease background-color;
     }
     .active a {
         color: white;
@@ -151,9 +152,9 @@
     opacity: 0%;
     color: lightgrey;
     transition-property: transform opacity;
-    transition-duration: 1s;
+    transition-duration: 0.5s;
     transition-timing-function: ease-in;
-    font-size: 1.8vw;
+    font-size: 1vw;
     }
     .end {
     transform-origin: (center, top);
@@ -186,6 +187,9 @@
     h1 {
         font-size: 1.2vw;
     }
+    h2 {
+        font-size: 0.8vw;
+    }
     
     </style>
 </head>
@@ -197,14 +201,14 @@
     <nav>
         <div class=container>
             <ul>
-                <li class="home active"><a href=#home><h1>Home</h1></a></li>
-                <li class="projects"><a href=#projects><h1>Projects</h1></a></li>
-                <li class="contact"><a href=#contact><h1>Contact</h1></a></li>
+                <li class="about active"><a href=#about><h2>About</h1></a></li>
+                <li class="projects"><a href=#projects><h2>Projects</h1></a></li>
+                <li class="contact"><a href=#contact><h2>Contact</h1></a></li>
             </ul>
         </div>
     </nav>
-    <section id="home">
-        <div class="homeBlurbBox">
+    <section id="about">
+        <div class="aboutBlurbBox">
             <div class="blurb">
                 <h1><a class=no-pad href= https://www.theodinproject.com/about>The Odin Project</a></h1>
                 It is a free, comprehensive curriculum that equips learners to be full stack developers, 
@@ -223,7 +227,7 @@
                 and Visual Arts. She lives in Canada with her Cavalier puppy.
             </div>
         </div>
-        <div class="homeEdge"></div>
+        <div class="aboutEdge"></div>
     </section>
     <section id="projects">
         <div class="card">
