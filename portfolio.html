@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mooli&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mooli&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
     <title>Odin Project Portfolio</title>
     <style> 
     * { 
@@ -42,8 +42,12 @@
         padding: 5vw;
     }
     .blurb {
-        margin: 5vw;
+        margin-left: 5vw;
+        margin-bottom:2vw;
         font-size: 1.1vw;
+        box-shadow: inset 5px 5px 5px 5px #af2121;
+        border-radius: 15px;
+        padding: 2vw;
     }
     .aboutEdge {
         grid-column: 2/3;
@@ -85,16 +89,16 @@
     }
     .card2 {
         background-color: rgb(223, 30, 5);
-        box-shadow: 20px 20px 20px red;
+        box-shadow: 5px 0px 10px 10px red;
         display: flex;
         justify-content: center;
         align-items: center;
     }
     #contact {
         background-color: black;
+        display: flex;
         align-items: end;
         justify-content: end;
-        padding: 20vw;
     }
     nav {
         background-color: #fff;
@@ -152,7 +156,7 @@
     opacity: 0%;
     color: lightgrey;
     transition-property: transform opacity;
-    transition-duration: 0.5s;
+    transition-duration: 1s;
     transition-timing-function: ease-in;
     font-size: 1vw;
     }
@@ -175,13 +179,15 @@
         color: white;
         padding: 0;
         margin: 0;
+        align-self: self-end;
     }
     .githubContact {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        justify-items:flex-end;
+        justify-items: last baseline;
+        margin-bottom: 15vw;
     }
-    h1:hover {
+    a:hover {
         scale: 1.5;
     }
     h1 {
@@ -189,6 +195,14 @@
     }
     h2 {
         font-size: 0.8vw;
+        padding: 0;
+        margin: 0;
+    }
+    #cr {
+        color:rgb(134, 133, 133);
+        font-size: 1vw;
+        margin: 5vw;
+        margin-bottom: 2vw;
     }
     
     </style>
@@ -201,16 +215,16 @@
     <nav>
         <div class=container>
             <ul>
-                <li class="about active"><a href=#about><h2>About</h1></a></li>
-                <li class="projects"><a href=#projects><h2>Projects</h1></a></li>
-                <li class="contact"><a href=#contact><h2>Contact</h1></a></li>
+                <li class="about active"><a href=#about><h2>About</h2></a></li>
+                <li class="projects"><a href=#projects><h2>Projects</h2></a></li>
+                <li class="contact"><a href=#contact><h2>Contact</h2></a></li>
             </ul>
         </div>
     </nav>
     <section id="about">
         <div class="aboutBlurbBox">
             <div class="blurb">
-                <h1><a class=no-pad href= https://www.theodinproject.com/about>The Odin Project</a></h1>
+                <h1><a class=no-pad href= https://www.theodinproject.com/about>THE ODIN PROJECT</a></h1>
                 It is a free, comprehensive curriculum that equips learners to be full stack developers, 
                 whatever their experience level. Topics include HTML, CSS, JavaScript, Accessibility, GitHub 
                 and Programming Logic. It is open source and community driven.
@@ -219,7 +233,7 @@
                 
             </div>
             <div class="blurb">
-                <h1>Shelley Matthews</h1>
+                <h1>SHELLEY MATTHEWS</h1>
                 (she/her)<br>
                 Shelley started programming in R for Data Science to further her skills in Statistics. 
                 She enjoys front end development because it uses both logic and graphic design
@@ -272,20 +286,23 @@
     <section id="contact">
         <div class="githubContact">
             <img src="githubIcon.png">
-            <p class="white">smatt852</p>
+            <a class="white" href="https://github.com/smatt852">smatt852</a>
         </div>
+        <div id="cr"></div>
     </section>
 </body>
 <script>
+const copyright = document.getElementById('cr')
+copyright.textContent = `Copyright © ${new Date().getFullYear()} Shelley Matthews`;
 
 window.setTimeout(function() {
     let int1 = document.getElementById('int1');
     int1.classList.add("end");
-    }, 1500);
+    }, 1000);
 window.setTimeout(function() {
     let int2 = document.getElementById('int2');
     int2.classList.add("end2");
-    }, 2500);
+    }, 1500);
 
 
 // When the user scrolls the page, execute myFunction
