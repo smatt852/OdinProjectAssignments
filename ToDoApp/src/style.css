@@ -155,3 +155,54 @@ form {
 .input:focus {
   background-color: white;
 }
+
+
+/* media query to suit most phones */
+@media only screen and (device-width: 396px) and (device-height: 427px) {
+  * { 
+    font-size: 2.7vw;
+  }
+  .container {
+    grid-template-rows: 25vw 80vw 4vw;
+}
+  .header {
+    grid-template-columns: 2fr 4fr 2fr;
+    grid-template-rows: 15vw 5vw;
+    margin: 0px;
+    padding: 0px;
+}
+.title {
+  font-size: 6vw; 
+  grid-row: 2/3;
+  grid-column: 1/4;
+}
+.linkbox {
+  margin-top: 5vw;
+  grid-row: 1/2;
+  grid-column: 3/4;
+}
+  button {
+    font-size: 2.5vw;
+    width: 14vw;
+    height: 9vw;
+  }
+  .newProjectButton {
+    width: 14vw;
+    height: 9vw;
+  }
+  .saveButton {
+    width: 14vw;
+    height: 9vw;
+    margin-top: 3vw;
+  }
+  .main {
+    grid-template-columns: 1fr 10fr 1fr;
+}
+.noButton {
+  font-size: 3vw;
+  width: 4vw;
+  height: 3vw;
+  padding: 0;
+  margin: 0;
+}
+}

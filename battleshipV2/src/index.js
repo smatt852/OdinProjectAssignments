@@ -149,7 +149,7 @@ class Gameboard {
     // the div to hold the buttons
     const btns = document.createElement("div");
     btns.id = "btns";
-    btns.style.width = "400px";
+    btns.style.width = this.width;
     // everything is added to the board
     btns.appendChild(btna);
     btns.appendChild(btnb);
@@ -425,11 +425,11 @@ let bdTitle = "Battleship";
 let bdWidth = "30vw";
 let sqSize = "3vw";
 if (screen.height > screen.width) {
-  bdWidth = "90vw";
-  sqSize = "9vw";
+  bdWidth = "80vw";
+  sqSize = "8vw";
 }
 const bsBoard = new Gameboard(bdWidth, sqAcross, sqSize, bdTitle);
 const instructBlurb =
   "Sink the fleet in the fewest shots... <br><br> Select a letter. &nbsp;  Click on the specified number of squares, adjacent to each other in rows or columns.  &nbsp; Press 'Build Ship'. &nbsp; To delete a ship, press its letter again, and rebuild it. &nbsp; When all ships are built, click 'Switch Players' and change players. &nbsp; Press 'Attack' and select squares to sink the fleet. &nbsp; Press 'Reset' to play again.";
-bsBoard.makeInstructions(instructBlurb);
 bsBoard.makeBtns();
+bsBoard.makeInstructions(instructBlurb);

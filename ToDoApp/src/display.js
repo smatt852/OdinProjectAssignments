@@ -30,13 +30,15 @@ function displayTasks() {
   taskList.sort(sortFunction);
   for (let i = 0; i < taskList.length; i++) {
     const taskLi = document.createElement("li");
+    taskLi.id = i;
 
     // add delete button
     const deleteButton = document.createElement("button");
     deleteButton.classList.add("noButton");
     deleteButton.innerHTML = "delete";
-    deleteButton.onclick = function () {
-      taskList.splice(i, 1);
+    deleteButton.onclick = function (element) {
+      const num1 = this.parentElement.id;
+      taskList.splice(num1, 1);
       storeTasks(taskList);
       displayTasks();
     };
@@ -45,15 +47,17 @@ function displayTasks() {
     const editButton = document.createElement("button");
     editButton.classList.add("noButton");
     editButton.innerHTML = "edit";
-    editButton.onclick = function () {
-      openEditForm(i);
+    editButton.onclick = function (element) {
+      const num2 = this.parentElement.id;
+      console.log(num2);
+      openEditForm(num2);
     };
 
     // add the task info
     const task = taskList[i];
     let name = task.taskName;
     name = name.toUpperCase();
-    taskLi.innerHTML = `${task.deadline}&nbsp&nbsp&nbsp${name}&nbsp${task.details}&nbsp<i>${task.project}</i>`;
+    taskLi.innerHTML = `${task.deadline}&nbsp&nbsp${name}&nbsp${task.details}&nbsp<i>${task.project}</i>`;
     if (task.complete === "complete") {
       taskLi.classList.add("complete");
     }

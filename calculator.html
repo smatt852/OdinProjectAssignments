@@ -8,19 +8,46 @@
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Share&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Share&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet" />
     <title>Calculator</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Michroma&display=swap"
-      rel="stylesheet"
-    />
 
     <style>
+      /* styled for most phones with a media query for my Dell laptop below */
+     * {
+        margin:0;
+        padding:0;
+      }
       body {
-        background-color: rgba(21, 92, 12, 0.932);
+        font-family: "Michroma";
+        height: 100%;
+        background-color: rgb(4, 123, 128);
+      }
+      .navigation {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: white;
+        margin-bottom: 5vw;
+      }
+      .navbox {
+        display: flex;
+        flex: 1;
+        margin: 2vw;
+        justify-content: center;
+        color: rgb(4, 187, 194);
+        font-size: 2.5vw;
+        background-color: white;
+      }
+      a:link {
+        color: rgb(4, 187, 194);
+        text-decoration: none;
+        background-color: white;
+      }
+      a:visited {
+        color: rgb(4, 187, 194);
+        text-decoration: none;
+        background-color: white;
       }
       .base {
         display: flex;
@@ -38,24 +65,6 @@
         justify-content: top;
         gap: 1vw;
         flex: 2;
-      }
-      .navigation {
-        display: flex;
-        flex-direction: row;
-        flex: 1;
-        margin-bottom: 5vw;
-      }
-      .navbox {
-        display: flex;
-        flex: 1;
-        font-size: 2vw;
-        font-family: "Michroma";
-      }
-      a:link,
-      a:visited {
-        color: black;
-        text-decoration: none;
-        color: rgba(46, 201, 25, 0.932);
       }
       .display {
         display: flex;
@@ -86,23 +95,34 @@
         border-radius: 10%;
         justify-content: center;
       }
+       /* media query for my Dell laptop */
+       @media only screen and (device-width: 1366px) and (device-height: 665px) {
+        body {
+          height: 95vh;
+        }
+        .navbox {
+          font-size: 1.5vw;
+        }
+        .display {
+        font-size: 3vw;
+        height: 4vw;
+        margin-bottom: 0.5vw;
+      }
+      button {
+        font-size: 3vw;
+      }
+       }
     </style>
   </head>
   <body onload="clearDisplay()">
+      <div class="navigation">
+        <div class="navbox"><a href="rps.html">Rock Paper Scissors</a></div>
+        <div class="navbox"><a href="ttt.html">Tic Tac Toe</a></div>
+        <div class="navbox"><a href="etchAsketch.html">Etch-A-Sketch</a></div>
+    </div>
     <div class="base">
       <div class="column"></div>
       <div class="mainColumn">
-        <div class="navigation">
-          <div class="navbox">
-            <a href="index.html">Rock Paper Scissors</a>
-          </div>
-          <div class="navbox">
-            <a href="ttt.html">Tic Tac Toe</a>
-          </div>
-          <div class="navbox">
-            <a href="etchAsketch.html">Etch-A-Sketch</a>
-          </div>
-        </div>
         <div class="display" id="display"></div>
         <div class="row">
           <button value="0" id="0" onclick="addToString('0')">0</button>
@@ -208,7 +228,11 @@
       } else if (x === "-") {
         newNum = num2 - num1;
       }
+      if ( typeof newNum == 'number' && Number.isFinite(newNum)) {
       return newNum;
+      } else {
+        return "error";
+      }
     };
 
     const op = ["*", "/", "+", "-"];
@@ -217,7 +241,6 @@
       //find all indexes where the operation occurs
       let occurs = count(str);
       for (let k = 0; k < occurs[x]; k++) {
-        console.log(occurs[x]);
         let indices = [];
         let newNum = "";
         for (let i = 0; i < str.length; i++) {
@@ -264,7 +287,6 @@
         operation(str, op[m]);
       }
       disp.innerHTML = str;
-      console.log(disp.innerHTML);
       return disp.innerHTML;
     };
   </script>

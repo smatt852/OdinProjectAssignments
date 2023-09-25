@@ -15,7 +15,7 @@
         font-family: "Ysabeau Infant";
       }
       body {
-        height: 100vh;
+        height: 100%;
         background: rgba(0, 0, 255, 0.247);
         background: -webkit-linear-gradient(white, rgba(0, 0, 255, 0.247), );
         background: -moz-linear-gradient(white,rgba(0, 0, 255, 0.247));
@@ -99,19 +99,19 @@
         font-family: 'Caprasimo';
         text-align:center;
       }
-      .forecast1 {
+      #forecast1 {
         grid-row: 2/3;
         grid-column: 1/2;
         display: grid;
         grid-template-rows: 1fr 1fr 1fr;
       }
-      .forecast2 {
+      #forecast2 {
         grid-row: 2/3;
         grid-column: 2/3;
         display: grid;
         grid-template-rows: 1fr 1fr 1fr;
       }
-      .forecast3 {
+      #forecast3 {
         grid-row: 2/3;
         grid-column: 3/4;
         display: grid;
@@ -135,78 +135,57 @@
         box-shadow: 5px 5px 5px blue;
       }
 
-      @media only screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
+      @media only screen and (device-width: 396px) and (device-height: 427px) {
+        * {
+          margin: 0;
+          padding: 0;
+        }
         .container {
-          height: 68vh;
-          grid-template-rows: 1.5fr 0.4fr 0.8fr 0.4fr;
-          margin-top: 25vw;
-          gap: 3vw;
+          height: 100vh;
+          grid-template-rows: 0.7fr 1fr 1fr 1fr;
+          margin: 0;
+          margin-top: 5vw;
+          gap: 1vw;
         }
         .conditionBox {
-          grid-template-rows: 0.9fr 1.5fr 0.8fr;
+          grid-template-rows: 0.7fr 1.5fr 0.4fr;
         }
         .condition {
-          font-size: 13vw;
+          font-size: 5vw;
         }
         .temp {
-          font-size: 13vw;
+          font-size: 5vw;
         }
         .forecast {
-          grid-template-columns: 21vw 12vw 25vw;
-          grid-template-rows: 8vw 10vw;
+          grid-template-columns: 21vw 12vw 30vw;
+          grid-template-rows: 5vw 10vw;
           align-self:first baseline;
           
         }
         .forecastTitle {
-        font-size: 6vw;
+        font-size: 4vw;
+      }
+      #forecast3 {
+        justify-items: center;
+        align-items: center;
       }
         input {
-          grid-column: none;
-          grid-row: 1/2;
-          font-size: 7vw;
-          width: 80%;
-        }
-        button {
-          grid-column: none;
-          grid-row: 2/3;
-          font-size: 7vw;
-          width: 40%;
-        }
-        .buttonBox {
-          gap: 2vw;
-          grid-template-rows: 1fr 1fr;
-          justify-items: center;
-        }
-      }
-      @media only screen and (device-width: 896px) and (device-height: 414px) and (-webkit-device-pixel-ratio: 3) {
-        * {
-          font-size: 1.2vw;
-        }
-        .container {
-          height: 75vh;
-          grid-template-rows: 30vh 20vh 13vh 4vh;
-        }
-        .conditionBox {
-          grid-template-rows: 0.6fr 1fr 1fr;
-          margin-top: 5vw;
-        }
-        .condition {
-          font-size: 2vw;
-        }
-        .temp {
-          font-size: 2vw;
-        }
-        .other3 {
-          grid-template-columns: 3vw 2vw 8vw;
-          gap: 0vw;
-        }
-        .buttonBox {
+          grid-row: none;
+          grid-column: 1/2;
+          font-size: 5vw;
           width: 100%;
         }
-        .forecast {
-          gap: 0vw;
-          grid-template-columns: 7vw 4vw 9vw;
-          grid-template-rows: 3vw 5vw;
+        button {
+          grid-row: none;
+          grid-column: 2/3;
+          font-size: 4vw;
+          width: 100%;
+        }
+        .buttonBox {
+          gap: 1vw;
+          grid-template-columns: 1fr 0.5fr;
+          justify-items: center;
+          padding-bottom: 3vw;
         }
       }
     </style>

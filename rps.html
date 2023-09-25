@@ -10,6 +10,12 @@
     />
     <title>Rock Paper Scissors</title>
     <style>
+      
+      /* css set to suit most phone sizes with media query for my Dell laptop below */
+      * {
+        margin:0;
+        padding:0;
+      }
       body {
         font-family: "Michroma";
         height: 100%;
@@ -19,6 +25,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        background-color: white;
       }
       .navbox {
         display: flex;
@@ -27,15 +34,27 @@
         justify-content: center;
         color: rgb(4, 187, 194);
         font-size: 3vw;
+        background-color: white;
       }
       a:link {
         color: rgb(4, 187, 194);
         text-decoration: none;
+        background-color: white;
       }
-
       a:visited {
         color: rgb(4, 187, 194);
         text-decoration: none;
+        background-color: white;
+      }
+      .container {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+      .container1 {
+        grid-column: 1/1;
+      }
+      .container2 {
+        grid-column: 1/1;
       }
       .playBox {
         /*container for play button*/
@@ -80,6 +99,13 @@
         margin-left: 3vw;
         padding: 1vw;
       }
+      .box2 {
+        display: flex;
+        background-color: rgb(5, 158, 163);
+        color: white; 
+        justify-content: center;
+        font-size: 3vw;
+      }
       .result {
         /*turns the winner red*/
         background-color: red;
@@ -122,6 +148,48 @@
         color: white;
         margin: 0vw;
       }
+      
+      /* media query for my Dell laptop */
+      @media only screen and (device-width: 1366px) and (device-height: 665px) {
+        body {
+          height: 95vh;
+        }
+        .navbox {
+          font-size: 1vw;
+          margin: 1vw;
+        }
+        .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .container1 {
+        grid-column: 1/2;
+      }
+      .container2 {
+        grid-column: 2/3;
+      }
+        .playButton {
+          font-size: 1.5vw;
+        width: 13vw;
+        height: 5vw;
+      }
+      .choiceButton {
+        width: 15vw;
+        height: 15vw;
+        font-size: 1.5vw;
+      }
+      p {
+        /*font for scores*/
+        font-size: 1.5vw;
+      }
+      .p2 {
+        /*small font for results*/
+        font-size: 1.5vw;
+    }
+    .box2 {
+        font-size: 2vw;
+      }
+    }
     </style>
   </head>
 
@@ -131,29 +199,35 @@
       <div class="navbox"><a href="ttt.html">Tic Tac Toe</a></div>
       <div class="navbox"><a href="etchAsketch.html">Etch-A-Sketch</a></div>
   </div>
-    <div class="playBox">
-      <button class="playButton" id="play" onClick="window.location.reload();">
-        Play Again
-      </button>
-    </div>
-    <div class="choicesBox">
-      <button class="choiceButton" id="rock">ROCK</button>
-      <button class="choiceButton" id="paper">PAPER</button>
-      <button class="choiceButton" id="scissors">SCISSORS</button>
-    </div>
-    <div class="navigation" style="color: white; justify-content: center">
-      First to 5 points wins
-    </div>
-    <div class="roundBox">
-      <div class="playerBox" id="playerBox">
-        <p>
-          <b>Player ... <span id="playerScore">0</span></b>
-        </p>
+    <div class="container">
+      <div class="container1">
+        <div class="playBox">
+          <button class="playButton" id="play" onClick="window.location.reload();">
+            Play Again
+          </button>
+        </div>
+        <div class="choicesBox">
+          <button class="choiceButton" id="rock">ROCK</button>
+          <button class="choiceButton" id="paper">PAPER</button>
+          <button class="choiceButton" id="scissors">SCISSORS</button>
+        </div>
       </div>
-      <div class="compBox" id="compBox">
-        <p>
-          <b><span id="compScore">0</span> ... Computer</b>
-        </p>
+      <div class="container2">
+        <div class="box2">
+          First to 5 points wins
+        </div>
+        <div class="roundBox">
+          <div class="playerBox" id="playerBox">
+            <p>
+              <b>Player ... <span id="playerScore">0</span></b>
+            </p>
+          </div>
+          <div class="compBox" id="compBox">
+            <p>
+              <b><span id="compScore">0</span> ... Computer</b>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </body>

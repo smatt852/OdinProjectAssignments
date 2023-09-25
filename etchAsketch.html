@@ -19,7 +19,7 @@
       padding: 0vw;
     }
     body {
-      background-color: rgba(207, 112, 2, 0.986);
+      background-color: rgb(4, 123, 128);
       display: flex;
       justify-content: center;
     }
@@ -77,16 +77,23 @@
     a:link,
     a:visited {
       text-decoration: none;
-      color: rgba(245, 207, 164, 0.795);
+      color: rgb(1, 194, 201);
       font-size: 2.2vw;
     }
+     /* media query for my Dell laptop */
+     @media only screen and (device-width: 1366px) and (device-height: 665px) {
+      a:link,
+    a:visited {
+      font-size: 1.8vw;
+    }
+     }
   </style>
 
   <body>
     <div class="sideColumn"></div>
     <div class="container">
       <div class="bar" id="linkBox">
-        <a href="index.html">Rock Paper Scissors</a>
+        <a href="rps.html">Rock Paper Scissors</a>
         <a href="ttt.html">Tic Tac Toe</a>
         <a href="calculator.html">Calculator</a>
       </div>

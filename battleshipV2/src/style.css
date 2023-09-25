@@ -17,12 +17,11 @@ body {
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-size:auto;
+    padding: 2vw;
 }
 #instructions {
     padding: 20px;
-    position: absolute;
-    bottom: 5vh;
-    max-width: 90vw;
+    max-width: 70vw;
     border-radius: 30px;
     background-color: #819baa65;
     box-shadow: 10px 10px 10px #1e3c49;
@@ -95,10 +94,12 @@ body {
 body {
     background-position: 50% 0;
     background-size: cover;
+    padding: 0;
 }
 #instructions {
+    position: absolute;
     right: 5vw;
-    max-width: 200px;
+    max-width: 20vw;
 }
 #title {
     margin-top: 0vw;

@@ -80,6 +80,64 @@ body {
   justify-content: end;
   margin-bottom: 2vw;
 }
+/* media query to suit most phones */
+@media only screen and (device-width: 396px) and (device-height: 427px) {
+  * {
+  font-size: 6vw;
+}
+  body {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-content: center;
+  height: 100vh;
+  margin:0;
+  background-color: rgb(248, 206, 67);
+}
+.leftHalf {
+  flex-direction: column;
+  width: 100%;
+  height:fit-content;
+  background-color: rgb(248, 206, 67);
+  background: url('strategy.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.rightHalf {
+  background-color: rgb(248, 206, 67);
+  flex-direction: column;
+  gap: 0vw;
+  width: 100%;
+  height:100%;
+  align-content: center;
+  justify-items: center;
+}
+#board {
+  position:absolute;
+  left: 10vw;
+}
+.title {
+  position: absolute;
+  top: 3vw;
+  left: 36vw;
+  background-color:rgb(248, 206, 67);
+}
+.butts {
+  flex-direction: row; 
+  gap: 1vw;
+  padding:0vw; 
+  justify-content: center;
+  margin-bottom: 2vw;
+}
+.action {
+  font-size: 3.5vw;
+  background-color: forestgreen;
+  padding: 0.5vw;
+  color: white;
+  width: 12vw;
+  margin-left: 1.3vw;
+}
+}
   </style>
 </head>
 
@@ -100,7 +158,10 @@ body {
 <script>
 // creates board
 const squares = 8;
-const boardSize = 400;
+let boardSize = 400;
+if (screen.height > screen.width) {
+  boardSize = 320;
+}
 const squareSize = boardSize / squares;
 
 for (let row = 0; row < squares; row++) {
