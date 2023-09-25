@@ -197,7 +197,7 @@
         margin-bottom: 2vw;
     }
 
-/* media query to suit most phones */
+/* media query to suit some phones */
     @media only screen and (device-width: 396px) and (device-height: 427px) {
         section {
         height:70vh;
@@ -214,7 +214,6 @@
     .intro {
     font-size: 3vw;
     }
-    
     nav .container {
         padding: 2px;
     }
@@ -285,6 +284,78 @@
     #cr {
         margin: 0;
         margin-bottom: 2vw;
+    }
+}
+/* for iphone 11 pro max */
+@media only screen and (device-width: 414px) and (device-height: 896px) {
+    .header {
+    background: url('keyboard.png');
+    background-size:contain;
+    background-repeat: no-repeat;
+    height: 40vh;
+    background-color: #302f2f;
+    padding: 0;
+    padding-top: 20vh;
+    }
+    .intro {
+    font-size: 6vw;
+    }
+    h2 {
+        font-size: 2.5vw;
+    }
+    h1 {
+        font-size: 2.3vw;
+    }
+    .blurb {
+        font-size: 2.3vw;
+        padding: 4vw;
+    }
+    #about{
+        padding-left: 0vw;
+        padding-top: 5vw;
+        grid-template-columns: 1fr 1fr;
+        height: 60vh;
+    }
+    .aboutBlurbBox {
+        padding-top: 4vw;
+        padding-left: 1vw;
+    }
+    .aboutEdge {
+        background: url('leaf3.png');
+        grid-column: 2/3;
+        background-size: contain;
+        background-repeat: no-repeat;
+        padding: 0;
+        margin: 0;
+    }
+    #projects {
+        padding: 1vh;
+        margin:0;
+        height: 55vh;
+    }
+    .card {
+        width: 26vw;
+        height: 20vh;
+        font-size: 2.3vw;
+    }
+    p {
+        padding: 3vw;
+        font-size: 2.1vw;
+    }
+    .cardTop {
+        height:fit-content;
+        width: 26.5vw;
+    }
+    #contact {
+        height: 40vh;
+        padding:0;
+        margin:0;
+    }
+    #cr {
+        margin: 0;
+        padding: 5vw;
+        margin-right: 6vw;
+        font-size: 1.7vw;
     }
 }
     </style>
