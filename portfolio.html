@@ -15,134 +15,44 @@
         padding: 0;
         box-sizing: border-box;
     }
-    .no-pad {
-        padding:0;
-        margin:0;
-    }
     html {
         scroll-behavior: smooth;
     }
-    section {
-        height: 100vh;
-        width: 100%;
-        display: flex;
-    }
-    #about{
-        padding-left: 10vw;
-        padding-right: 0;
-        margin-right: 0;
+    body {
         background-color: #d62828;
-        display: grid;
-        grid-template-columns: 3fr 1fr;
-    }
-    .aboutBlurbBox {
-        grid-column: 1/2;
-        display: flex;
-        flex-direction: column;
-        gap: 2vw;
-        padding: 5vw;
-    }
-    .blurb {
-        margin-left: 5vw;
-        margin-bottom:2vw;
-        font-size: 1.1vw;
-        box-shadow: inset 5px 5px 5px 5px #af2121;
-        border-radius: 15px;
-        padding: 2vw;
-    }
-    .aboutEdge {
-        grid-column: 2/3;
-        background: url('leaf2.png');
-        background-size: cover;
-        height: 100vh;
-        padding: 0;
         margin: 0;
-    }
-    #projects {
-        background-image: linear-gradient(#d62828, #302f2f);
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        padding-left: 10vw;
-        padding-right:10vw;
-        padding-top: 10vh;
-        padding-bottom: 10vh;
-    }
-    .card {
-        background-color: white;
-        width: 23vw;
-        height: 35vh;
-        border-radius: 15px;
-        font-size: 0.4vw;
-    }
-    p {
-        padding: 2vw;
-        margin: 0;
-        font-size: 0.9vw;
-    }
-    .cardTop {
-        height: 10vh;
-        width: 23.5vw;
-        border-radius: 15px;
-        position: relative;
-        right: 0.3vw;
-    }
-    .card2 {
-        background-color: #d62828;
-        box-shadow: 0px 0px 10px 10px red;
         display: flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
     }
-    #contact {
-        background-color: #302f2f;
+    .wholeThing {
+        width: 375px;
+        height:812px;
+    }
+    section {
         display: flex;
-        align-items: end;
-        justify-content: end;
     }
-    nav {
-        background-color: #fff;
+    h1 {
+        font-size: medium;
     }
-    nav .container {
-        width:90%;
-        max-width: 1000px;
-        margin: 0 auto;
-        text-align: center;
-        padding: 10px;
-    }
-    nav .container ul {
-        list-style: none;
-    }
-    nav .container ul li {
-        display: inline-block;
-    }
-    a {
-        display: inline-block;
-        padding: 5px 10px;
-        color: #302f2f;
-        text-decoration: none;
-    }
-    .active {
-        background-color: #d62828;
-        border-radius: 20px;
-        transition: 0.7s ease background-color;
-    }
-    .active a {
-        color: white;
-    }
-    /* The sticky class is added to the navbar with JS when it reaches its scroll position */
-    .sticky {
-    position: fixed;
-    top: 0;
-    width: 100%;
+    h2 {
+        font-size: medium;
     }
     .header {
-    padding: 30vh;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
     text-align: center;
-    height: 100vh;
     width: 100%;
     background: url('keyboard.png');
     background-size: cover;
+    padding-bottom: 30%;
+    }
+    #int1 {
+        margin-top: 5%;
+        grid-template-rows: 1/2;
+    }
+    #int2 {
+        grid-template-rows: 2/3;
     }
     .intro {
     opacity: 0%;
@@ -150,7 +60,7 @@
     transition-property: transform opacity;
     transition-duration: 1s;
     transition-timing-function: ease-in;
-    font-size: 1vw;
+    font-size: medium;
     }
     .end {
     transform-origin: (center, top);
@@ -162,6 +72,103 @@
     transform: translate(0%, 20%);
     opacity: 100%;
     }
+    nav {
+        background-color: #fff;
+    }
+    nav .container {
+        text-align: center;
+        padding: 1%;
+    }
+    nav .container ul {
+        list-style: none;
+    }
+    nav .container ul li {
+        display: inline-block;
+        padding: 3%;
+    }
+    a {
+        display: inline-block;
+        color: #302f2f;
+        text-decoration: none;
+    }
+    a:hover {
+        scale: 1.5;
+    }
+    /* The sticky class is added to the navbar with JS when it reaches its scroll position */
+    .sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    }
+    #about{
+        background-color: #d62828;
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+    }
+    .aboutBlurbBox {
+        grid-column: 1/2;
+        display: flex;
+        flex-direction: column;
+        padding: 7%;
+        margin-top: 5vw;
+        gap: 5vw;
+    }
+    .blurb {
+        padding: 5%;
+        font-size: small;
+        box-shadow: inset 5px 5px 5px 5px #af2121;
+        border-radius: 15px;
+        margin-bottom: 3%;
+    }
+    .aboutEdge {
+        grid-column: 2/3;
+        background: url('leaf4.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        padding: 0;
+        margin: 0;
+        margin-top: 90%;
+    }
+    #projects {
+        background-image: linear-gradient(#d62828, #302f2f);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        padding-left: 3%;
+        padding-right:3%;
+        padding-top: 10%;
+        padding-bottom: 10%;
+        gap: 3%;
+    }
+    .card {
+        background-color: white;
+        border-radius: 15px;
+        font-size: medium;
+        margin-top: 7%;
+    }
+    p {
+        padding: 6%;
+        font-size: small;
+    }
+    .cardTop {
+        border-radius: 15px;
+        position: relative;
+        padding: 3%;
+        right: 0.3%;
+    }
+    .card2 {
+        background-color: #d62828;
+        box-shadow: 0px 0px 10px 10px red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #contact {
+        background-color: #302f2f;
+        display: flex;
+        flex-direction: column;
+        grid-template-rows: 1fr 1fr;
+    }
     img {
         object-fit:scale-down;
         margin:0;
@@ -169,288 +176,121 @@
     }
     .white {
         color: white;
-        padding: 0;
-        margin: 0;
         align-self: self-end;
+        justify-self: first baseline;
     }
     .githubContact {
+        grid-column: 1/2;
+        margin-top: 50%;
         display: grid;
         grid-template-columns: 1fr 1fr;
         justify-items: last baseline;
-        margin-bottom: 15vw;
-    }
-    a:hover {
-        scale: 1.5;
-    }
-    h1 {
-        font-size: 1.2vw;
-    }
-    h2 {
-        font-size: 0.8vw;
-        padding: 0;
-        margin: 0;
     }
     #cr {
+        grid-column: 2/3;
         color:rgb(190, 189, 189);
-        font-size: 1vw;
-        margin: 5vw;
-        margin-bottom: 2vw;
+        font-size: xx-small;
+        margin: 5%;
+        margin-bottom: 2%;
+        text-align: right;
     }
 
-/* media query to suit some phones */
-    @media only screen and (device-width: 396px) and (device-height: 427px) {
-        section {
-        height:70vh;
-        width: 100%;
-        display: flex;
-    }
-        .header {
-    background: url('keyboard.png');
-    background-size:contain;
-    background-repeat: no-repeat;
-    height: 60vh;
-    background-color: #302f2f;
-    }
-    .intro {
-    font-size: 3vw;
-    }
-    nav .container {
-        padding: 2px;
-    }
-    a {
-        display: inline-block;
-        padding: 5px 10px;
-    }
-    h2 {
-        font-size: 3vw;
-        padding: 0;
-        margin: 0;
-    }
-    h1 {
-        font-size: 2.5vw;
-        padding: 0;
-    }
-    .aboutEdge {
-        background-size: contain;
-        background-repeat: no-repeat;
-        padding: 0;
-        margin: 0;
-    }
-    .blurb {
-        font-size: 2vw;
-        padding: 3vw;
-    }
-    #about{
-        padding-left: 0vw;
-        padding-top: 3vw;
-        grid-template-columns: 2fr 1fr;
-    }
-    .aboutBlurbBox {
-        padding-top: 4vw;
-        padding-left: 1vw;
-    }
-    #projects {
-        padding-left:2vw;
-        gap: 3vw;
-    }
-    .card {
-        width: 30vw;
-        height: 25vh;
-        font-size: 1.5vw;
-    }
-    p {
-        padding: 4vw;
-        font-size: 1.5vw;
-    }
-    .cardTop {
-        height:fit-content;
-        width: 30.5vw;
-    }
-    #contact {
-        height: 50vh;
-        flex-direction: column;
-        padding-top: 5vw;
-        padding-right: 2vw;
-    }
-    .white {
-        font-size: 3vw;
-    }
-    .githubContact {
-        flex: 1;
-        margin-bottom: 5vw;
-        justify-items: bottom;
-        align-content: end;
-    }
-    #cr {
-        margin: 0;
-        margin-bottom: 2vw;
-    }
-}
-/* for iphone 11 pro max */
-@media only screen and (device-width: 414px) and (device-height: 896px) {
-    .header {
-    background: url('keyboard.png');
-    background-size:contain;
-    background-repeat: no-repeat;
-    height: 40vh;
-    background-color: #302f2f;
-    padding: 0;
-    padding-top: 20vh;
-    }
-    .intro {
-    font-size: 6vw;
-    }
-    h2 {
-        font-size: 2.5vw;
-    }
-    h1 {
-        font-size: 2.3vw;
-    }
-    .blurb {
-        font-size: 2.3vw;
-        padding: 4vw;
-    }
-    #about{
-        padding-left: 0vw;
-        padding-top: 5vw;
-        grid-template-columns: 1fr 1fr;
-        height: 60vh;
-    }
-    .aboutBlurbBox {
-        padding-top: 4vw;
-        padding-left: 1vw;
-    }
-    .aboutEdge {
-        background: url('leaf3.png');
-        grid-column: 2/3;
-        background-size: contain;
-        background-repeat: no-repeat;
-        padding: 0;
-        margin: 0;
-    }
-    #projects {
-        padding: 1vh;
-        margin:0;
-        height: 55vh;
-    }
-    .card {
-        width: 26vw;
-        height: 20vh;
-        font-size: 2.3vw;
-    }
-    p {
-        padding: 3vw;
-        font-size: 2.1vw;
-    }
-    .cardTop {
-        height:fit-content;
-        width: 26.5vw;
-    }
-    #contact {
-        height: 40vh;
-        padding:0;
-        margin:0;
-    }
-    #cr {
-        margin: 0;
-        padding: 5vw;
-        margin-right: 6vw;
-        font-size: 1.7vw;
-    }
-}
     </style>
 </head>
 <body>
-    <div class="header">
-        <div id="int1" class="intro">Shelley Matthews</div>
-        <div id="int2" class="intro">Odin Project Portfolio</div>
+    <div class="wholeThing">
+        <div class="header">
+            <div id="int1" class="intro">Shelley Matthews</div>
+            <div id="int2" class="intro">Odin Project Portfolio</div>
+        </div>
+        <nav>
+            <div class=container>
+                <ul>
+                    <li class="about active"><a href=#about><h2>About</h2></a></li>
+                    <li class="projects"><a href=#projects><h2>Projects</h2></a></li>
+                    <li class="contact"><a href=#contact><h2>Contact</h2></a></li>
+                </ul>
+            </div>
+        </nav>
+        <section id="about">
+            <div class="aboutBlurbBox">
+                <div class="blurb">
+                    <h1>SHELLEY MATTHEWS</h1>
+                    (she/her)<br>
+                    Shelley started programming in R for Data Science to further her skills in Statistics. 
+                    She enjoys front end development because it uses both logic and graphic design
+                    to create useful tools. Her background includes Environmental Science, Librarianship, 
+                    and Visual Arts. She lives in Canada with her Cavalier puppy.
+                </div>
+                <div class="blurb">
+                    <h1><a href= https://www.theodinproject.com/about>THE ODIN PROJECT</a></h1>
+                    It is a free, comprehensive curriculum that equips learners to be full stack developers, 
+                    whatever their experience level. Topics include HTML, CSS, JavaScript, Accessibility, GitHub 
+                    and Programming Logic. It is open source and community driven.
+                    It emphasizes practice and learning by doing. Learning happens while building projects;
+                    a few have been provided here as examples. 
+                </div>
+            </div>
+            <div class="aboutEdge"></div>
+        </section>
+        <section id="projects">
+            <div class="card">
+                <div class="card2 cardTop"><h1><a href="ToDoApp/dist/index.html">To Do List App</a></h1></div>
+                <p>A useful app to help you be productive. 
+                Put action items in a list and set the urgency level and deadline.
+                Classify them into categories and view by category.
+                Take a quick look at what's due today.</p>
+            </div>
+            <div class="card">
+                <div class="card2 cardTop"><h1><a href="battleshipV2/dist/index.html">Battleship Game</a></h1></div>
+                <p>The classic game of Battleship. Build your fleet on the grid
+                    and hide them, then pass your device to your opponent and hope
+                    they can't find them. When the fleet is sunk, see how many 
+                    shots it took and try to beat it.
+                </p>
+            </div>
+            <div class="card">
+                <div class="card2 cardTop"><h1><a href="slideshow/slideshow2a.html">Photo Slideshow</a></h1></div>
+                <p>Organise your pics into a little slideshow. You can scroll 
+                    forward or backward at your own pace, or let the app do it 
+                    for you. Pause on a good shot whenever you want.</p>
+            </div>
+            <div class="card">
+                <div class="card2 cardTop"><h1><a href="knight2.html">Knight's Path</a></h1></div>
+                <p>Knights can cover the whole chess board. Pick your start and end
+                    positions, and the app will show you how the knight can get 
+                    there in the least moves.
+                </p>
+            </div>
+            <div class="card">
+                <div class="card2 cardTop"><h1><a href="rps.html">Rock Paper Scissors</a></h1></div>
+                <p>Another classic game. Try to beat the computer with your best
+                    choices. Win five games to win the match. There are bonus links to 3 other
+                    apps: a calculator, tic-tac-toe and an etch-a-sketch app.
+                </p>
+            </div>
+            <div class="card">
+                <div class="card2 cardTop"><h1><a href="weather.html">Weather App</a></h1></div>
+                <p>Keep up to date on the weather conditions using this simple weather 
+                    app that relies on data from a readily-available API.
+                Enter the name of your city to get the latest weather and the forecast for the next two days.</p>
+            </div>
+        </section>
+        <section id="contact">
+            <div class="githubContact">
+                <img src="githubIcon.png">
+                <a class="white" href="https://github.com/smatt852">smatt852</a>
+            </div>
+            <div id="cr"></div>
+        </section>
     </div>
-    <nav>
-        <div class=container>
-            <ul>
-                <li class="about active"><a href=#about><h2>About</h2></a></li>
-                <li class="projects"><a href=#projects><h2>Projects</h2></a></li>
-                <li class="contact"><a href=#contact><h2>Contact</h2></a></li>
-            </ul>
-        </div>
-    </nav>
-    <section id="about">
-        <div class="aboutBlurbBox">
-            <div class="blurb">
-                <h1><a class=no-pad href= https://www.theodinproject.com/about>THE ODIN PROJECT</a></h1>
-                It is a free, comprehensive curriculum that equips learners to be full stack developers, 
-                whatever their experience level. Topics include HTML, CSS, JavaScript, Accessibility, GitHub 
-                and Programming Logic. It is open source and community driven.
-                It emphasizes practice and learning by doing. Learning happens while building projects;
-                a few have been provided here as examples. 
-                
-            </div>
-            <div class="blurb">
-                <h1>SHELLEY MATTHEWS</h1>
-                (she/her)<br>
-                Shelley started programming in R for Data Science to further her skills in Statistics. 
-                She enjoys front end development because it uses both logic and graphic design
-                to create useful tools. Her background includes Environmental Science, Librarianship, 
-                and Visual Arts. She lives in Canada with her Cavalier puppy.
-            </div>
-        </div>
-        <div class="aboutEdge"></div>
-    </section>
-    <section id="projects">
-        <div class="card">
-            <div class="card2 cardTop"><h1><a href="ToDoApp/dist/index.html">To Do List App</a></h1></div>
-            <p>A useful app to help you be productive. 
-            Put action items in a list and set the urgency level and deadline.
-            Classify them into categories and view by category.
-            Take a quick look at what's due today.</p>
-        </div>
-        <div class="card">
-            <div class="card2 cardTop"><h1><a href="battleshipV2/dist/index.html">Battleship Game</a></h1></div>
-            <p>The classic game of Battleship. Build your fleet on the grid
-                and hide them, then pass your device to your opponent and hope
-                they can't find them. When the fleet is sunk, see how many 
-                shots it took and try to beat it.
-            </p>
-        </div>
-        <div class="card">
-            <div class="card2 cardTop"><h1><a href="slideshow/slideshow2a.html">Photo Slideshow</a></h1></div>
-            <p>Organise your pics into a little slideshow. You can scroll 
-                forward or backward at your own pace, or let the app do it 
-                for you. Pause on a good shot whenever you want.</p>
-        </div>
-        <div class="card">
-            <div class="card2 cardTop"><h1><a href="knight2.html">Knight's Path</a></h1></div>
-            <p>Knights can cover the whole chess board. Pick your start and end
-                positions, and the app will show you how the knight can get 
-                there in the least moves.
-            </p>
-        </div>
-        <div class="card">
-            <div class="card2 cardTop"><h1><a href="rps.html">Rock Paper Scissors</a></h1></div>
-            <p>Another classic game. Try to beat the computer with your best
-                choices. Win five games to win the match. There are bonus links to 3 other
-                apps: a calculator, tic-tac-toe and an etch-a-sketch app.
-            </p>
-        </div>
-        <div class="card">
-            <div class="card2 cardTop"><h1><a href="weather.html">Weather App</a></h1></div>
-            <p>Keep up to date on the weather conditions using this simple weather 
-                app that relies on data from a readily-available API.
-            Enter the name of your city to get the latest weather and the forecast for the next two days.</p>
-        </div>
-    </section>
-    <section id="contact">
-        <div class="githubContact">
-            <img src="githubIcon.png">
-            <a class="white" href="https://github.com/smatt852">smatt852</a>
-        </div>
-        <div id="cr"></div>
-    </section>
 </body>
 <script>
+// copyright statement
 const copyright = document.getElementById('cr')
 copyright.textContent = `Copyright © ${new Date().getFullYear()} Shelley Matthews`;
 
+// adds the into text
 window.setTimeout(function() {
     let int1 = document.getElementById('int1');
     int1.classList.add("end");
@@ -461,15 +301,12 @@ window.setTimeout(function() {
     }, 1500);
 
 
-// When the user scrolls the page, execute myFunction
+// When the user scrolls the page
 window.onscroll = function() {sticks()};
-
 // Get the navbar
 var navbar = document.querySelector("nav");
-
 // Get the offset position of the navbar
 var sticky = navbar.offsetTop;
-
 // Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
 function sticks() {
   if (window.pageYOffset >= sticky) {
@@ -479,23 +316,24 @@ function sticks() {
   }
 }
 
-    const sections = document.querySelectorAll('section');
-    const navli = document.querySelectorAll('nav .container ul li');
-    window.addEventListener('scroll', ()=> {
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (pageYOffset > sectionTop - sectionHeight/1.5) {
-                current = section.getAttribute('id');
-            }
-        });
-        navli.forEach(li => {
-            li.classList.remove('active');
-            if(li.classList.contains(current)) {
-                li.classList.add('active');
-            }
-        });
-    });
+// // change the active section as user scrolls down page
+//     const sections = document.querySelectorAll('section');
+//     const navli = document.querySelectorAll('nav .container ul li');
+//     window.addEventListener('scroll', ()=> {
+//         let current = '';
+//         sections.forEach(section => {
+//             const sectionTop = section.offsetTop;
+//             const sectionHeight = section.clientHeight;
+//             if (pageYOffset > sectionTop - sectionHeight) {
+//                 current = section.getAttribute('id');
+//             }
+//         });
+//         navli.forEach(li => {
+//             li.classList.remove('active');
+//             if(li.classList.contains(current)) {
+//                 li.classList.add('active');
+//             }
+//         });
+//     });
 </script>
 </html>
