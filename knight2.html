@@ -10,47 +10,42 @@
 
     <style>
 * {
-  font-size: 4vw;
+  font-size:x-large;
+  margin:0;
+  padding: 0;
 }
 body {
+  background-color:rgb(248, 206, 67);
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin:0;
+  width: 100%;
 }
-.leftHalf {
+.wholeThing {
+  max-width: 100vw;
   display: flex;
   flex: 1;
-  flex-direction: row;
-  width: 100%;
-  height:100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: rgb(248, 206, 67);
-  background: url('strategy.png');
-  background-repeat: no-repeat;
-  background-size: cover;
 }
-.rightHalf {
-  display: flex;
-  flex: 1;
-  gap: 2vw;
-  width: 100%;
-  height:100%;
-  background-color: rgb(146, 145, 145);
+img {
+  margin-top: 50px;
+  height:48px;
+  width: 52px;
 }
 .title {
-  position: absolute;
-  top: 0vw;
-  left: 36vw;
+  margin: 5%;
 }
 .chessboard {
   width: 240px;
-  height: 320px;
+  height: 240px;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   box-shadow: 10px 10px 10px black;
-  margin-top: 7vw;
+  margin-top: 7%;
 }
 .square {
   width: 30px;
@@ -65,92 +60,37 @@ body {
   border: none;
   box-shadow: 10px 10px 10px black;
   border-radius: 30px;
-  font-size: 1.5vw;
+  font-size: large;
   background-color: forestgreen;
-  padding: 0.5vw;
+  width: 60px;
   color: white;
-  width: 7vw;
-  margin-left: 1.3vw;
 }
 .butts {
-  display: flex; 
-  flex-direction: column; 
-  gap: 1vw;
-  padding:0vw; 
-  justify-content: end;
-  margin-bottom: 2vw;
-}
-/* media query to suit most phones */
-@media only screen and (device-width: 396px) and (device-height: 427px) {
-  * {
-  font-size: 6vw;
-}
-  body {
   display: flex;
-  flex-direction: column;
-  justify-items: center;
-  align-content: center;
-  height: 100vh;
-  margin:0;
-  background-color: rgb(248, 206, 67);
-}
-.leftHalf {
-  flex-direction: column;
-  width: 100%;
-  height:fit-content;
-  background-color: rgb(248, 206, 67);
-  background: url('strategy.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-.rightHalf {
-  background-color: rgb(248, 206, 67);
-  flex-direction: column;
-  gap: 0vw;
-  width: 100%;
-  height:100%;
-  align-content: center;
-  justify-items: center;
-}
-#board {
-  position:absolute;
-  left: 10vw;
-}
-.title {
-  position: absolute;
-  top: 3vw;
-  left: 36vw;
-  background-color:rgb(248, 206, 67);
-}
-.butts {
   flex-direction: row; 
   gap: 1vw;
-  padding:0vw; 
-  justify-content: center;
   margin-bottom: 2vw;
 }
-.action {
-  font-size: 3.5vw;
-  background-color: forestgreen;
-  padding: 0.5vw;
-  color: white;
-  width: 12vw;
-  margin-left: 1.3vw;
+#instr {
+  margin-top: 10%;
+  margin-left: 20%;
+  margin-right: 20%;
+  font-size: large;
 }
-}
+
   </style>
 </head>
 
 <body>
-  <div class="leftHalf">
-    <div class="title">Knight's Travails</div>
-  </div>
-  <div class="rightHalf">
+  <div class="wholeThing">
+    <img src="strategy.png">
+    <div class="title">Knight's Path</div>
     <div class="butts">
       <button class="action" id="go" onclick="knight()">go</button>
       <button class="action" id="reset" onclick="window.location.reload()">reset</button>
     </div>
     <div class="chessboard" id="board"></div>
+    <div id="instr">Select two squares and press "go" to see the Knight's Path."</div>
   </div>
 </body>
 
@@ -158,10 +98,7 @@ body {
 <script>
 // creates board
 const squares = 8;
-let boardSize = 400;
-if (screen.height > screen.width) {
-  boardSize = 320;
-}
+let boardSize = 240;
 const squareSize = boardSize / squares;
 
 for (let row = 0; row < squares; row++) {
