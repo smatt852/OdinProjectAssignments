@@ -9,7 +9,6 @@
 }
 * { 
     font-family: "Itim"; 
-    font-size: 1.5vw;
     text-shadow: 1px 1px 5px white;
   }
 body:before {
@@ -30,48 +29,45 @@ body:before {
   position: relative;
 }
 .container {
+    width: 375px;
     display: grid;
-    grid-template-rows: 6vw 30vw 2vw;
+    grid-template-rows: 150px 600px 50px;
 }
 .header {
     grid-row: 1/2;
     display: grid;
-    grid-template-columns: 2fr 4fr 2fr;
-    grid-template-rows: 2vw 2.5vw;
-    margin: 0px;
+    grid-template-rows: 1fr 1.5fr;
+    margin: 10px;
     padding: 0px;
 }
 footer {
     grid-row: 3/4;
     text-align: right;
-    margin-right: 5px;
-    padding: 0px;
+    margin-right: 20px;
 }
 .title {
-    /* text-align: center; */
     justify-self: center;
-    grid-column: 1/4;
-    grid-row: 1/2;
-    padding: 0px;
-    margin-top: 1vw; 
-    font-size: 3.5vw; 
+    grid-row: 2/3;
+    font-size: x-large; 
 }
 .linkbox {
-    grid-row: 2/3;
-    grid-column: 3/4;
+    grid-row: 1/2;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    margin: 30px;
 }
 button {
   border-radius: 30px;
-  font-size: 1vw;
+  font-size: small;
+  width: 60px;
 }
 .noButton {
   background-color: transparent;
   border: none;
   font-family:"Icons";
-  font-size: 1.5vw;
+  font-size: small;
+  width: 5px;
 }
 .active {
     background-color: #f8cb02;
@@ -80,7 +76,7 @@ button {
 .main {
     grid-row: 2/3;
     display: grid; 
-    grid-template-columns: 2fr 4fr 2fr;
+    grid-template-columns: 0.5fr 4fr 0.5fr;
     overflow: hidden;
 }
 .content {
@@ -132,15 +128,13 @@ form {
 }
 .newProjectButton {
   border-radius: 30px;
-  width: 6vw;
-  height: 2.5vw;
+  width: 60px;
   line-height: 0.8;
 }
 .saveButton {
   border-radius: 30px;
-  width: 6vw;
-  height: 2.5vw;
-  margin-top: 3vw;
+  width: 60px;
+  margin-top: 10px;
   align-self: center;
   background-color: #f8cb02;
 }
@@ -157,52 +151,3 @@ form {
 }
 
 
-/* media query to suit most phones */
-@media only screen and (device-width: 396px) and (device-height: 427px) {
-  * { 
-    font-size: 2.7vw;
-  }
-  .container {
-    grid-template-rows: 25vw 80vw 4vw;
-}
-  .header {
-    grid-template-columns: 2fr 4fr 2fr;
-    grid-template-rows: 15vw 5vw;
-    margin: 0px;
-    padding: 0px;
-}
-.title {
-  font-size: 6vw; 
-  grid-row: 2/3;
-  grid-column: 1/4;
-}
-.linkbox {
-  margin-top: 5vw;
-  grid-row: 1/2;
-  grid-column: 3/4;
-}
-  button {
-    font-size: 2.5vw;
-    width: 14vw;
-    height: 9vw;
-  }
-  .newProjectButton {
-    width: 14vw;
-    height: 9vw;
-  }
-  .saveButton {
-    width: 14vw;
-    height: 9vw;
-    margin-top: 3vw;
-  }
-  .main {
-    grid-template-columns: 1fr 10fr 1fr;
-}
-.noButton {
-  font-size: 3vw;
-  width: 4vw;
-  height: 3vw;
-  padding: 0;
-  margin: 0;
-}
-}
