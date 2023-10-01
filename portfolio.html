@@ -166,8 +166,7 @@
     }
     #contact {
         background-color: #302f2f;
-        display: flex;
-        flex-direction: column;
+        display: grid;
         grid-template-rows: 1fr 1fr;
     }
     img {
@@ -178,17 +177,17 @@
     .white {
         color: white;
         align-self: self-end;
-        justify-self: first baseline;
     }
     .githubContact {
-        grid-column: 1/2;
+        grid-row: 1/2;
         margin-top: 50%;
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 10fr 1fr;
         justify-items: last baseline;
+        margin: 5%;
     }
     #cr {
-        grid-column: 2/3;
+        grid-row: 2/3;
         color:rgb(190, 189, 189);
         font-size: xx-small;
         margin: 5%;
