@@ -19,7 +19,7 @@
       body {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 1fr 5fr;
+        grid-template-rows: 0.3fr 5fr;
         height: 95vh;
       }
       .play {
@@ -71,7 +71,7 @@
         flex-direction: row;
         justify-content: space-between;
         background-color: white;
-        margin-bottom: 2vw;
+        margin-bottom: 30px;
         padding: 0;
       }
       .navbox {
@@ -79,7 +79,7 @@
         flex: 1;
         justify-content: center;
         color: rgb(4, 187, 194);
-        font-size: 1.2vw;
+        font-size: 13px;
         background-color: white;
       }
       a:link {
@@ -93,22 +93,6 @@
         text-decoration: none;
         background-color: white;
       }
-      @media only screen and (device-width: 396px) and (device-height: 427px) {
-        .navbox {
-          font-size: 2.5vw;
-          padding-top: 2vw;
-        }
-        .winBanner {
-        grid-row: 2/3;
-      }
-      .container {
-        width: 60vw;
-        height: 90vw;
-      }
-      .navigation {
-        margin-bottom: 4vw;
-      }
-    }
 
     </style>
   </head>
