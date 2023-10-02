@@ -228,8 +228,10 @@
       } else if (x === "-") {
         newNum = num2 - num1;
       }
-      if ( typeof newNum == 'number' && Number.isFinite(newNum)) {
-      return newNum;
+      let numbers = /^[0-9]/;
+      let numStr = newNum.toString();
+      if(numStr.match(numbers)) {
+        return newNum;
       } else {
         return "error";
       }
@@ -252,23 +254,23 @@
         let right = 0;
         let left = 0;
         //the numbers to the right
-        i = indices[0] + 1;
-        while (i < str.length && hasNumber(str[i])) {
-          num1.push(str[i]);
-          i++;
+        j = indices[0] + 1;
+        while (j < str.length && hasNumber(str[j])) {
+          num1.push(str[j]);
+          j++;
           right++;
         }
         num1 = num1.join("");
-        num1 = parseInt(num1);
+        num1 = parseFloat(num1);
         //the number to the left
-        i = indices[0] - 1;
-        while (i >= 0 && hasNumber(str[i])) {
-          num2.push(str[i]);
-          i--;
+        p = indices[0] - 1;
+        while (p >= 0 && hasNumber(str[p])) {
+          num2.push(str[p]);
+          p--;
           left++;
         }
         num2 = num2.reverse().join("");
-        num2 = parseInt(num2);
+        num2 = parseFloat(num2);
         //perform the math operation
         newNum = condense(num1, num2, x);
         //put the answer into the string
