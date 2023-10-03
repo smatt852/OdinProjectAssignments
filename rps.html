@@ -17,23 +17,38 @@
       }
       body {
         font-family: "Michroma";
-        height: 100%;
         background-color: rgb(4, 123, 128);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .wholeThing {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
       }
       .navigation {
         display: flex;
+        flex:1;
         flex-direction: row;
         justify-content: space-between;
         background-color: white;
+        width: 100%;
+        padding-left: 30px;
       }
       .navbox {
         display: flex;
         flex: 1;
-        margin: 2vw;
-        justify-content: center;
         color: rgb(4, 187, 194);
-        font-size: 3vw;
+        font-size: 30px;
+        padding-top:40px;
+        padding-bottom: 30px;
         background-color: white;
+        width: 100%;
       }
       a:link {
         color: rgb(4, 187, 194);
@@ -45,40 +60,40 @@
         text-decoration: none;
         background-color: white;
       }
+
       .container {
         display: grid;
         grid-template-columns: 1fr;
+        width:100%;
+        padding: 30px;
       }
-      .container1 {
+      /* .container1 {
         grid-column: 1/1;
       }
       .container2 {
         grid-column: 1/1;
-      }
+      } */
       .playBox {
         /*container for play button*/
         display: flex;
         flex-direction: row;
         justify-content: center;
-        margin-top: 2vw;
-        margin-bottom: 5vw;
-        padding: 0vw;
+        margin-top: 30px;
+        margin-bottom: 30px;
       }
       .choicesBox {
         /*container for choices buttons*/
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        margin-left: 5vw;
-        margin-right: 5vw;
-        margin-top: 0vw;
-        margin-bottom: 2vw;
-        padding: 0vw;
+        padding: 60px;
       }
       .roundBox {
         /*container for score and results*/
         display: flex;
         flex-direction: row;
+        margin-top: 50px;
+        width: 100%;
       }
       .playerBox {
         /*container for player score and results*/
@@ -86,8 +101,8 @@
         flex-direction: column;
         flex: 1;
         align-items: self-end;
-        margin-right: 2vw;
-        padding: 1vw;
+        padding: 20px;
+        width: 100%;
       }
       .compBox {
         /*container for computer score and results*/
@@ -95,15 +110,17 @@
         flex-direction: column;
         flex: 1;
         align-items: first baseline;
-        margin-left: 3vw;
-        padding: 1vw;
+        padding: 20px;
+        width: 100%;
       }
       .box2 {
         display: flex;
         background-color: rgb(5, 158, 163);
         color: white; 
         justify-content: center;
-        font-size: 3vw;
+        font-size: 40px;
+        margin: 30px;
+        width: 100%;
       }
       .result {
         /*turns the winner red*/
@@ -111,120 +128,80 @@
       }
       .playButton {
         font-family: "Michroma";
-        border: 0.7vw rgb(5, 158, 163) solid;
+        border: 20px rgb(5, 158, 163) solid;
         box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.8);
-        margin-top: 2vw;
-        margin-bottom: 0vw;
-        padding: 0vw;
         font-weight: 600;
         font-style: bold;
-        font-size: 2vw;
-        width: 18vw;
-        height: 7vw;
+        font-size: 30px;
+        width: 160px;
+        height: 150px;
         color: white;
         background-color: transparent;
+        margin: 20px;
+        padding: 10px;
       }
       .choiceButton {
-        font-size: 2.5vw;
-        border: 2vw rgb(4, 187, 194) solid;
+        font-size: 35px;
+        border: 20px rgb(4, 187, 194) solid;
         box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.8);
         border-radius: 100%;
-        width: 20vw;
-        height: 20vw;
+        width: 250px;
+        height: 250px;
         color: rgb(134, 133, 133);
+        padding: 20px;
       }
       p {
         /*font for scores*/
-        font-size: 4vw;
+        font-size: 40px;
         font-weight: 600;
         color: white;
-        margin: 0vw;
       }
       .p2 {
         /*small font for results*/
-        font-size: 2vw;
+        font-size: 40px;
         font-weight: 600;
         color: white;
-        margin: 0vw;
       }
       
-      /* media query for my Dell laptop */
-      @media only screen and (device-width: 1366px) and (device-height: 665px) {
-        body {
-          height: 95vh;
-        }
-        .navbox {
-          font-size: 1vw;
-          margin: 1vw;
-        }
-        .container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-      }
-      .container1 {
-        grid-column: 1/2;
-      }
-      .container2 {
-        grid-column: 2/3;
-      }
-        .playButton {
-          font-size: 1.5vw;
-        width: 13vw;
-        height: 5vw;
-      }
-      .choiceButton {
-        width: 15vw;
-        height: 15vw;
-        font-size: 1.5vw;
-      }
-      p {
-        /*font for scores*/
-        font-size: 1.5vw;
-      }
-      .p2 {
-        /*small font for results*/
-        font-size: 1.5vw;
-    }
-    .box2 {
-        font-size: 2vw;
-      }
-    }
+     
     </style>
   </head>
 
   <body>
-    <div class="navigation">
-      <div class="navbox"><a href="calculator.html">Calculator</a></div>
-      <div class="navbox"><a href="ttt.html">Tic Tac Toe</a></div>
-      <div class="navbox"><a href="etchAsketch.html">Etch-A-Sketch</a></div>
-  </div>
-    <div class="container">
-      <div class="container1">
-        <div class="playBox">
-          <button class="playButton" id="play" onClick="window.location.reload();">
-            Play Again
-          </button>
-        </div>
-        <div class="choicesBox">
-          <button class="choiceButton" id="rock">ROCK</button>
-          <button class="choiceButton" id="paper">PAPER</button>
-          <button class="choiceButton" id="scissors">SCISSORS</button>
-        </div>
+    <div class="wholeThing">
+      <div class="navigation">
+        <div class="navbox"><a href="calculator.html">Calculator</a></div>
+        <div class="navbox"><a href="ttt.html">Tic Tac Toe</a></div>
+        <div class="navbox"><a href="etchAsketch.html">Etch-A-Sketch</a></div>
       </div>
-      <div class="container2">
-        <div class="box2">
-          First to 5 points wins
-        </div>
-        <div class="roundBox">
-          <div class="playerBox" id="playerBox">
-            <p>
-              <b>Player ... <span id="playerScore">0</span></b>
-            </p>
+      <div class="container">
+        <!-- <div class="container1"> -->
+          <div class="playBox">
+            <button class="playButton" id="play" onClick="window.location.reload();">
+              Play Again
+            </button>
           </div>
-          <div class="compBox" id="compBox">
-            <p>
-              <b><span id="compScore">0</span> ... Computer</b>
-            </p>
+          <div class="choicesBox">
+            <button class="choiceButton" id="rock">ROCK</button>
+            <button class="choiceButton" id="paper">PAPER</button>
+            <button class="choiceButton" id="scissors">SCISSORS</button>
+          </div>
+        </div>
+        <!-- <div class="container2"> -->
+          <div class="box2">
+            First to 5 points wins
+          </div>
+          <div class="roundBox">
+            <div class="playerBox" id="playerBox">
+              <p>
+                <b>Player ... <span id="playerScore">0</span></b>
+              </p>
+            </div>
+            <div class="compBox" id="compBox">
+              <p>
+                <b><span id="compScore">0</span> ... Computer</b>
+              </p>
+            </div>
           </div>
         </div>
       </div>
