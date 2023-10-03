@@ -9,7 +9,13 @@ import {
   storeProjects,
   removeDeletedProject,
 } from "./readWrite.js";
-export { displayTasks, makeNewTaskForm, displayProjects, displayTodayTasks };
+export {
+  displayTasks,
+  makeNewTaskForm,
+  displayProjects,
+  displayTodayTasks,
+  sortFunction,
+};
 
 // put tasks in date order
 function sortFunction(a, b) {
@@ -49,7 +55,6 @@ function displayTasks() {
     editButton.innerHTML = "edit";
     editButton.onclick = function (element) {
       const num2 = this.parentElement.id;
-      console.log(num2);
       openEditForm(num2);
     };
 
@@ -94,13 +99,16 @@ function makeNewTaskForm(index, edit) {
   const deadlineInput = document.createElement("input");
   deadlineInput.setAttribute("type", "date");
   deadlineInput.setAttribute("id", "deadline");
+  deadlineInput.setAttribute("autocomplete", "off");
   deadlineInput.setAttribute("placeholder", "Deadline");
   deadlineInput.classList.add("input");
+  deadlineInput.classList.add("dateInput");
   inputBox.appendChild(deadlineInput);
 
   const completeInput = document.createElement("select");
   completeInput.setAttribute("id", "complete");
   completeInput.classList.add("input");
+  completeInput.setAttribute("autocomplete", "off");
   completeInput.setAttribute("placeholder", "Complete or Not");
   const opt = ["not complete", "complete"];
   let options = "";
@@ -113,6 +121,7 @@ function makeNewTaskForm(index, edit) {
   const urgentInput = document.createElement("select");
   urgentInput.setAttribute("id", "urgent");
   urgentInput.classList.add("input");
+  urgentInput.setAttribute("autocomplete", "off");
   urgentInput.setAttribute("placeholder", "Urgent or Normal");
   const opt2 = ["normal", "urgent"];
   let options2 = "";
@@ -135,6 +144,7 @@ function makeNewTaskForm(index, edit) {
   const projectInput = document.createElement("select");
   projectInput.setAttribute("id", "project");
   projectInput.classList.add("input");
+  projectInput.setAttribute("autocomplete", "off");
   projectInput.setAttribute("placeholder", "Project");
   projectInput.innerHTML = "";
   // populate the dropdown list with the projects array
@@ -248,6 +258,7 @@ function openEditForm(index) {
   makeNewTaskForm(index, edit);
   const taskList = getTasks();
   taskList.sort(sortFunction); // sort by date so index matches display form so that the item clicked on for editing matches the item in the edit form
+  // fill the form with th details of the task to be edited
   const objectToEdit = taskList[index];
   const taskNameInput = document.getElementById("taskName");
   taskNameInput.value = objectToEdit.taskName;

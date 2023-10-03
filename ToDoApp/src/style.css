@@ -149,5 +149,8 @@ form {
 .input:focus {
   background-color: white;
 }
+.dateInput {
+  width: 60px;
+}
 
 
