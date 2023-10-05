@@ -126,8 +126,13 @@ form {
   flex-direction: row;
   gap: 20px;
 }
-input[type='date']:after {
-  content: attr(placeholder)
+
+input[type="date"]:before {
+  content: attr(placeholder);
+  margin-right: 0.5em;
+}
+input[type="date"]:focus:before {
+  content: '';
 }
 .newProjectButton {
   border-radius: 30px;
