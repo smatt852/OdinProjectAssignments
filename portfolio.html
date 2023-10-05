@@ -20,7 +20,6 @@
     }
     body {
         background-color: #d62828;
-        margin: 0;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -35,18 +34,14 @@
     h1 {
         font-size: medium;
     }
-    h2 {
-        font-size: medium;
-    }
     .header {
     display: grid;
     grid-template-rows: 1fr 1fr;
     text-align: center;
-    width: 100%;
+    width: 375px;
     background: url('keyboard.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    padding-bottom: 22%;
+    background-size: cover;
+    padding-bottom: 60px;
     }
     #int1 {
         margin-top: 30%;
@@ -77,16 +72,19 @@
         background-color: #fff;
     }
     nav .container {
-        padding: 1%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding-top:20px;
+        padding-bottom: 20px;
     }
     nav .container ul {
         list-style: none;
     }
     nav .container ul li {
         display: inline-block;
-        padding: 3%;
-        padding-left: 8%;
-        padding-right: 8%;
+        padding-left: 20px;
+        padding-right: 20px;
     }
     a {
         display: inline-block;
@@ -106,21 +104,22 @@
         background-color: #d62828;
         display: grid;
         grid-template-columns: 3fr 1fr;
+        padding-left: 30px;
+        padding-bottom: 50px;
     }
     .aboutBlurbBox {
         grid-column: 1/2;
         display: flex;
         flex-direction: column;
-        padding: 7%;
-        margin-top: 5vw;
-        gap: 5vw;
+        margin-top: 70px;
+        gap: 30px;
     }
     .blurb {
         padding: 5%;
         font-size: small;
         box-shadow: inset 5px 5px 5px 5px #af2121;
         border-radius: 15px;
-        margin-bottom: 3%;
+        margin-bottom: 10px;
     }
     .aboutEdge {
         grid-column: 2/3;
@@ -128,34 +127,33 @@
         background-size: contain;
         background-repeat: no-repeat;
         padding: 0;
-        margin: 0;
-        margin-top: 90%;
+        margin-top: 70px;
     }
     #projects {
         background-image: linear-gradient(#d62828, #302f2f);
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr 1fr 1fr;
-        padding-left: 3%;
-        padding-right:3%;
-        padding-top: 10%;
-        padding-bottom: 10%;
-        gap: 3%;
+        padding-left: 10px;
+        padding-right:10px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        gap: 10px;
     }
     .card {
         background-color: white;
         border-radius: 15px;
         font-size: medium;
-        margin-top: 7%;
+        margin-top: 20px;
     }
     p {
-        padding: 6%;
+        padding: 10px;
         font-size: small;
     }
     .cardTop {
         border-radius: 15px;
         position: relative;
-        padding: 3%;
+        padding: 10px;
         right: 0.3%;
     }
     .card2 {
@@ -168,30 +166,32 @@
     #contact {
         background-color: #302f2f;
         display: grid;
+        grid-template-rows: 1fr 0.1fr;
+    }
+    .githubContact {
+        grid-row: 1/2;
+        display: grid;
         grid-template-rows: 1fr 1fr;
+        justify-content: right;
+        margin-right: 10px;
+        margin-top: 190px;
     }
     img {
+        grid-row: 1/2;
         object-fit:scale-down;
         margin:0;
         padding:0;
     }
     .white {
+        grid-row: 2/3;
         color: white;
-        align-self: self-end;
-    }
-    .githubContact {
-        grid-row: 1/2;
-        display: grid;
-        grid-template-columns: 20fr 1fr 1fr;
-        margin-top: 50%;
-        margin: 5%;
     }
     #cr {
         grid-row: 2/3;
         color:rgb(190, 189, 189);
         font-size: xx-small;
-        margin: 5%;
-        margin-bottom: 2%;
+        margin-right: 10px;
+        margin-bottom: 10px;
         text-align: right;
     }
 
@@ -206,9 +206,9 @@
         <nav>
             <div class=container>
                 <ul>
-                    <li class="about active"><a href=#about><h2>About</h2></a></li>
-                    <li class="projects"><a href=#projects><h2>Projects</h2></a></li>
-                    <li class="contact"><a href=#contact><h2>Contact</h2></a></li>
+                    <li class="about active"><a href=#about><h1>About</h2></a></li>
+                    <li class="projects"><a href=#projects><h1>Projects</h2></a></li>
+                    <li class="contact"><a href=#contact><h1>Contact</h2></a></li>
                 </ul>
             </div>
         </nav>

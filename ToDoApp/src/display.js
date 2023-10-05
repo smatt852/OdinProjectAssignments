@@ -100,7 +100,7 @@ function makeNewTaskForm(index, edit) {
   deadlineInput.setAttribute("type", "date");
   deadlineInput.setAttribute("id", "deadline");
   deadlineInput.setAttribute("autocomplete", "off");
-  deadlineInput.setAttribute("placeholder", "Deadline");
+  deadlineInput.placeholder = "Deadline";
   deadlineInput.classList.add("input");
   deadlineInput.classList.add("dateInput");
   inputBox.appendChild(deadlineInput);

@@ -9,7 +9,7 @@
 }
 * { 
     font-family: "Itim"; 
-    text-shadow: 1px 1px 5px white;
+    color: black;
   }
 body:before {
   content: ' ';
@@ -67,7 +67,7 @@ button {
   border: none;
   font-family:"Icons";
   font-size: small;
-  width: 5px;
+  width: 10px;
 }
 .active {
     background-color: #f8cb02;
@@ -125,6 +125,9 @@ form {
   display: flex;
   flex-direction: row;
   gap: 20px;
+}
+input[type='date']:after {
+  content: attr(placeholder)
 }
 .newProjectButton {
   border-radius: 30px;
